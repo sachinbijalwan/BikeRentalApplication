@@ -1,4 +1,4 @@
-package groupfour.software.bikerentalapplication;
+package groupfour.software.bikerental;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

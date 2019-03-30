@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Bike Rental Application</string>
+    <string name="cycle_rental">CYCLE RENTAL</string>
 </resources>
