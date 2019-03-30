@@ -1,4 +1,4 @@
-package groupfour.software.bikerental;
+package groupfour.software.bikerentalapplication;
 
 import org.junit.Test;
 

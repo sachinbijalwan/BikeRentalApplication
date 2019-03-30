@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="groupfour.software.bikerentalapplication.Signup"
+    android:orientation="vertical"
+    android:weightSum="15"
+    android:background="@color/backgroundcolor">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/lightyellow"
+        android:text="Back to Login"
+        android:layout_marginHorizontal="10dip"
+        android:textSize="18dip"
+        android:id="@+id/sign_login"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"/>
+    <TextView
+        android:id="@+id/signtitle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:background="@color/darkblue"
+        android:padding="10dip"
+        android:textColor="@color/lightyellow"
+        android:text="@string/cycle_rental"
+        android:layout_marginHorizontal="30dip"
+        android:textAlignment="center"
+        android:textSize="35sp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/lightyellow"
+        android:text="Please enter the following details"
+        android:layout_marginHorizontal="50dip"
+        android:textSize="18dip"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"/>
+
+    <EditText
+        android:id="@+id/sign_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Username"
+        android:textColorHint="@color/black"
+        android:layout_marginHorizontal="50dip"
+        android:textColor="@color/black"
+        android:background="@drawable/rounded"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"/>
+    <EditText
+        android:id="@+id/sign_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="Email address of IIT Ropar"
+        android:textColorHint="@color/black"
+        android:layout_marginHorizontal="50dip"
+        android:textColor="@color/black"
+        android:background="@drawable/rounded"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"/>
+    <EditText
+        android:id="@+id/sign_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="Password"
+        android:textColorHint="@color/black"
+        android:layout_marginHorizontal="50dip"
+        android:textColor="@color/black"
+        android:background="@drawable/rounded"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="2"/>
+
+    <Button
+        android:id="@+id/sign_sign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SIGN IN"
+        android:textColor="@color/black"
+        android:layout_marginHorizontal="90dip"
+        android:background="@drawable/rounded_button"/>
+
+</LinearLayout>
