@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="groupfour.software.bikerentalapplication.Signup"
+    tools:context="groupfour.software.bikerentalapplication.login.Signup"
     android:orientation="vertical"
     android:weightSum="15"
     android:background="@color/backgroundcolor">

@@ -1,7 +1,9 @@
-package groupfour.software.bikerentalapplication;
+package groupfour.software.bikerentalapplication.login;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import groupfour.software.bikerentalapplication.R;
 
 public class ForgotPass extends AppCompatActivity {
 
