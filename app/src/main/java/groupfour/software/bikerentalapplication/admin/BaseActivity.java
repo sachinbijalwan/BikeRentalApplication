@@ -24,38 +24,7 @@ import groupfour.software.bikerentalapplication.R;
 public class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    protected boolean cycle=true;
     private int activity=0;
-    protected void addcycles(ArrayList<Cycle> cycles){
-        cycles.clear();
-        for(int i=0;i<10;i++){
-            cycles.add(new Cycle("Cycle"+i,"Location"+i));
-        }
-    }
-    protected void addLocations(ArrayList<Cycle> cycles){
-        cycles.clear();
-        for(int i=0;i<10;i++){
-            cycles.add(new Cycle("Location "+i,"Cycle "+i));
-        }
-    }
-    protected void setCycles(){
-        //code for binding array list with cycle adapter
-        //for more info see https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
-        ArrayList<Cycle> cycles=new ArrayList<Cycle>();
-        addcycles(cycles);
-        CycleAdapter adapter=new CycleAdapter(this,cycles);
-        ListView lview=findViewById(R.id.admin_lv);
-        lview.setAdapter(adapter);
-    }
-    protected void setLocations(){
-        //to be changed
-        //make separate Location class or find some workaround
-        ArrayList<Cycle> cycles=new ArrayList<Cycle>();
-        addLocations(cycles);
-        CycleAdapter adapter=new CycleAdapter(this,cycles);
-        ListView lview=findViewById(R.id.admin_lv);
-        lview.setAdapter(adapter);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,27 +90,31 @@ public class BaseActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_cycle) {
-            if(activity!=0 && activity!=1){
+            if(true){
                 Intent i=new Intent(getApplicationContext(),AdminCycle.class);
+                i.putExtra("cycle","1");
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             }
             activity=0;
-            if(!cycle){
-                cycle=true;
-                setCycles();
-            }
+
             // Handle the camera action
         } else if (id == R.id.nav_location) {
-            if(activity!=0 && activity!=1){
+            if(activity!=1){
                 Intent i=new Intent(getApplicationContext(),AdminCycle.class);
+                i.putExtra("cycle","0");
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             }
             activity=1;
-                if(cycle){
-                    cycle=false;
-                    setLocations();
-                }
+
         } else if (id == R.id.nav_transfer) {
+            if(activity!=2){
+                activity=2;
+                Intent i=new Intent(getApplicationContext(),AdminTransfer.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            }
 
         } else if (id == R.id.nav_complaint) {
 
