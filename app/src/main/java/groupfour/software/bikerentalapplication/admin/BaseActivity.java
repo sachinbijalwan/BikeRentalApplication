@@ -1,5 +1,6 @@
 package groupfour.software.bikerentalapplication.admin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,24 +21,24 @@ import java.util.Random;
 
 import groupfour.software.bikerentalapplication.R;
 
-public class admin_main extends AppCompatActivity
+public class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
-    private boolean cycle=true;
-    private void addcycles(ArrayList<Cycle> cycles){
+    protected boolean cycle=true;
+    private int activity=0;
+    protected void addcycles(ArrayList<Cycle> cycles){
         cycles.clear();
         for(int i=0;i<10;i++){
             cycles.add(new Cycle("Cycle"+i,"Location"+i));
         }
     }
-    private void addLocations(ArrayList<Cycle> cycles){
+    protected void addLocations(ArrayList<Cycle> cycles){
         cycles.clear();
         for(int i=0;i<10;i++){
             cycles.add(new Cycle("Location "+i,"Cycle "+i));
         }
     }
-    public void setCycles(){
+    protected void setCycles(){
         //code for binding array list with cycle adapter
         //for more info see https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
         ArrayList<Cycle> cycles=new ArrayList<Cycle>();
@@ -46,7 +47,7 @@ public class admin_main extends AppCompatActivity
         ListView lview=findViewById(R.id.admin_lv);
         lview.setAdapter(adapter);
     }
-    public void setLocations(){
+    protected void setLocations(){
         //to be changed
         //make separate Location class or find some workaround
         ArrayList<Cycle> cycles=new ArrayList<Cycle>();
@@ -55,15 +56,23 @@ public class admin_main extends AppCompatActivity
         ListView lview=findViewById(R.id.admin_lv);
         lview.setAdapter(adapter);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_main);
+        //setContentView(R.layout.activity_admin_main);
+
+
+
+
+
+
+
+
+    }
+    protected void onCreateDrawer(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -72,16 +81,7 @@ public class admin_main extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        if(cycle){
-            setCycles();
-        }
-        else{
-            setLocations();
-        }
-
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -121,12 +121,22 @@ public class admin_main extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_cycle) {
+            if(activity!=0 && activity!=1){
+                Intent i=new Intent(getApplicationContext(),AdminCycle.class);
+                startActivity(i);
+            }
+            activity=0;
             if(!cycle){
                 cycle=true;
                 setCycles();
             }
             // Handle the camera action
         } else if (id == R.id.nav_location) {
+            if(activity!=0 && activity!=1){
+                Intent i=new Intent(getApplicationContext(),AdminCycle.class);
+                startActivity(i);
+            }
+            activity=1;
                 if(cycle){
                     cycle=false;
                     setLocations();
