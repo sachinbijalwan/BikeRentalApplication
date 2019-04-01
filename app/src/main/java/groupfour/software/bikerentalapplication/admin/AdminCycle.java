@@ -11,20 +11,20 @@ import groupfour.software.bikerentalapplication.R;
 
 public class AdminCycle extends BaseActivity {
 
-    protected boolean cycle=true;
-    protected void addcycles(ArrayList<Cycle> cycles){
+    private boolean cycle=true;
+    private void addcycles(ArrayList<Cycle> cycles){
         cycles.clear();
         for(int i=0;i<10;i++){
             cycles.add(new Cycle("Cycle"+i,"Location"+i));
         }
     }
-    protected void addLocations(ArrayList<Cycle> cycles){
+    private void addLocations(ArrayList<Cycle> cycles){
         cycles.clear();
         for(int i=0;i<10;i++){
             cycles.add(new Cycle("Location "+i,"Cycle "+i));
         }
     }
-    protected void setCycles(){
+    private void setCycles(){
         //code for binding array list with cycle adapter
         //for more info see https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
         ArrayList<Cycle> cycles=new ArrayList<Cycle>();
@@ -33,7 +33,7 @@ public class AdminCycle extends BaseActivity {
         ListView lview=findViewById(R.id.admin_lv);
         lview.setAdapter(adapter);
     }
-    protected void setLocations(){
+    private void setLocations(){
         //to be changed
         //make separate Location class or find some workaround
         ArrayList<Cycle> cycles=new ArrayList<Cycle>();

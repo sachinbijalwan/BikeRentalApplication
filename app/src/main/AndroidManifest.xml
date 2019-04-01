@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="groupfour.software.bikerentalapplication">
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
 
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -21,6 +23,7 @@
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
+
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".login.Signup" />
         <activity android:name=".login.OTP" />
@@ -28,7 +31,7 @@
         <activity
             android:name=".admin.BaseActivity"
             android:label="@string/title_activity_admin_main"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity android:name=".admin.AdminCycle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +39,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".admin.AdminTransfer"></activity>
+        <activity android:name=".admin.AdminTransfer" />
+        <activity android:name=".admin.AdminComplaint"></activity>
     </application>
 
 </manifest>

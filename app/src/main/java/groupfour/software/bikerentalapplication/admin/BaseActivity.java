@@ -117,7 +117,12 @@ public class BaseActivity extends AppCompatActivity
             }
 
         } else if (id == R.id.nav_complaint) {
-
+            if(activity!=3){
+                activity=3;
+                Intent i=new Intent(getApplicationContext(),AdminComplaint.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
