@@ -10,15 +10,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".login.LoginActivity">
+
+        </activity>
+        <activity android:name=".login.Signup" />
+        <activity android:name=".login.OTP" />
+        <activity android:name=".login.ForgotPass" />
+        <activity
+            android:name=".admin.admin_main"
+            android:label="@string/title_activity_admin_main"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.Signup" />
-        <activity android:name=".login.OTP" />
-        <activity android:name=".login.ForgotPass"></activity>
     </application>
 
 </manifest>

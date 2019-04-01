@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_cycle"
+            android:title="Cycle Info" />
+        <item
+            android:id="@+id/nav_location"
+            android:title="Location Info" />
+        <item
+            android:id="@+id/nav_transfer"
+            android:title="Transfer Cycle" />
+        <item
+            android:id="@+id/nav_complaint"
+            android:title="Complaints" />
+    </group>
+
+
+
+</menu>
