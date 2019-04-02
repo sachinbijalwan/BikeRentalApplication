@@ -94,7 +94,7 @@
      android:id="@+id/login_create"
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
-     android:text="Crete account"
+     android:text="Create account"
      android:textColor="@color/black"
      android:layout_marginHorizontal="30dip"
      android:background="@drawable/rounded_button_2"/>

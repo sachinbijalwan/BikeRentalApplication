@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Username"
+        android:hint="Username(Atleast 8 characters)"
         android:textColorHint="@color/black"
         android:layout_marginHorizontal="50dip"
         android:textColor="@color/black"
@@ -81,23 +81,24 @@
         android:textColor="@color/black"
         android:background="@drawable/rounded"
         />
-
     <View
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"/>
     <EditText
-        android:id="@+id/sign_password"
+        android:id="@+id/sign_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPassword"
-        android:hint="Password"
+        android:inputType="number"
+        android:hint="Mobile Number"
         android:textColorHint="@color/black"
         android:layout_marginHorizontal="50dip"
         android:textColor="@color/black"
         android:background="@drawable/rounded"
         />
+
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0dip"

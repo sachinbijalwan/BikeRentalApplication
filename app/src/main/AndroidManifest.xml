@@ -16,8 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.Signup" />
-        <activity android:name=".login.OTP" />
+        <activity android:name=".login.Signup"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+        <activity android:name=".login.OTP"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+
         <activity android:name=".login.ForgotPass"></activity>
     </application>
 
