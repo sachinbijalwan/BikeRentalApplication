@@ -80,7 +80,13 @@ public class OTP extends AppCompatActivity {
     }
     //TODO : validate OTP
     private boolean checkOTPValid(String otpText) {
-        return true ;
+        if (otpText.equals("1234")){
+            return  true ;
+        }
+        else {
+            return  false ;
+        }
+
     }
 
     public boolean validatePassword(String password){

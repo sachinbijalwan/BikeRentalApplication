@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dip"
+    android:weightSum="5"
+    android:orientation="vertical"
+>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:text="Username:"
+        android:id="@+id/admin_complaint_username"
+        android:textColor="@color/black"
+        android:textSize="25sp"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="0dip"
+    android:layout_weight="2"
+    android:weightSum="4">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textColor="@color/black"
+        android:text="Complaint"
+        android:layout_marginVertical="20dp"/>
+
+    <TextView
+        android:id="@+id/admin_complaint"
+        android:layout_weight="4"
+        android:layout_width="0dp"
+        android:textSize="25sp"
+        android:layout_height="match_parent"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:text="Complaint"
+        />
+</LinearLayout>
+    <EditText
+        android:id="@+id/admin_complaint_resolve"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:hint="Resolve Complaint Here"
+        android:layout_marginHorizontal="10dip"/>
+    <Button
+        android:id="@+id/admin_complaint_submit"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:textColor="@color/black"
+        android:background="@drawable/rounded_button"
+        android:layout_marginHorizontal="40dip"
+        android:text="SUBMIT"/>
+
+</LinearLayout>
