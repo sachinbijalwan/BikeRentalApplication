@@ -7,7 +7,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".admin.AdminCycle"
     tools:showIn="@layout/app_bar_admin_main"
-    android:background="@color/lightblue">
+    android:background="@color/foreground">
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

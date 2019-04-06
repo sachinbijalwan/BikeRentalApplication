@@ -55,7 +55,7 @@
         android:layout_height="0dip"
         android:layout_weight="1"
         android:textColor="@color/black"
-        android:background="@drawable/rounded_button"
+        android:background="@drawable/high_priority_button"
         android:layout_marginHorizontal="40dip"
         android:text="SUBMIT"/>
 

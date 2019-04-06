@@ -10,7 +10,7 @@
 
     // the inside color
     <solid
-        android:color="@color/darkyellow"
+        android:color="@color/colorPrimaryDark"
         />
     // Add your desired padding
     <padding

@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:weightSum="7"
     android:orientation="vertical"
-    android:background="@color/lightblue">
+    android:background="@color/foreground">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -16,7 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/darkblue"
+            android:background="@color/heading"
             app:popupTheme="@style/AppTheme.PopupOverlay" >
 
         </android.support.v7.widget.Toolbar>
@@ -57,6 +57,6 @@
         android:layout_weight="1"
         android:text="SUBMIT"
         android:textColor="@color/black"
-        android:background="@drawable/rounded_button"
+        android:background="@drawable/high_priority_button"
         android:layout_marginHorizontal="40dip"/>
 </LinearLayout>

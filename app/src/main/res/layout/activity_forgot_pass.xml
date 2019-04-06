@@ -6,53 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".login.ForgotPass"
     android:orientation="vertical"
-    android:background="@color/backgroundcolor"
-    android:weightSum="13">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/lightyellow"
-        android:text="Back to Login"
-        android:layout_marginHorizontal="10dip"
-        android:textSize="18dip"
-        android:id="@+id/forgot_login"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"/>
-    <TextView
+    android:background="@color/white"
+    android:weightSum="13"
+    android:gravity="center"
+   >
 
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:background="@color/darkblue"
-        android:padding="10dip"
-        android:textColor="@color/lightyellow"
-        android:text="@string/cycle_rental"
-        android:layout_marginHorizontal="30dip"
-        android:layout_marginVertical="15dip"
-        android:textAlignment="center"
-
-        android:textSize="35sp" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"/>
     <EditText
         android:id="@+id/forgot_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="number"
+        android:inputType="text"
         android:hint="Email or Username"
         android:textColorHint="@color/black"
         android:layout_marginHorizontal="50dip"
         android:textColor="@color/black"
-        android:background="@drawable/rounded"
+        android:background="@drawable/rounded_button_border"
         />
     <View
         android:layout_width="match_parent"
@@ -65,9 +34,11 @@
         android:layout_height="wrap_content"
         android:text="Get otp"
         android:textAllCaps="true"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:layout_marginHorizontal="90dip"
-        android:background="@drawable/rounded_button"/>
+        android:background="@drawable/high_priority_button"
+        android:autoSizeTextType="uniform"
+        />
 
 
 </LinearLayout>
