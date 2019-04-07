@@ -7,39 +7,8 @@
     tools:context="groupfour.software.bikerentalapplication.login.Signup"
     android:orientation="vertical"
     android:weightSum="15"
-    android:background="@color/backgroundcolor">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/textbox_foreground"
-        android:text="Back to Login"
-        android:layout_marginHorizontal="10dip"
-        android:textSize="18dip"
-        android:id="@+id/sign_login"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"/>
-    <TextView
-        android:id="@+id/signtitle"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:background="@color/heading"
-        android:padding="10dip"
-        android:textColor="@color/textbox_foreground"
-        android:text="@string/cycle_rental"
-        android:layout_marginHorizontal="30dip"
-        android:textAlignment="center"
-        android:textSize="35sp" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"/>
+    android:background="@color/backgroundcolor"
+    android:gravity="center">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,11 +27,11 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Username"
+        android:hint="Username(Atleast 8 characters)"
         android:textColorHint="@color/black"
         android:layout_marginHorizontal="50dip"
         android:textColor="@color/black"
-        android:background="@drawable/rounded"
+        android:background="@drawable/textbox"
         />
 
     <View
@@ -79,25 +48,26 @@
         android:textColorHint="@color/black"
         android:layout_marginHorizontal="50dip"
         android:textColor="@color/black"
-        android:background="@drawable/rounded"
+        android:background="@drawable/textbox"
         />
-
     <View
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"/>
     <EditText
-        android:id="@+id/sign_password"
+        android:id="@+id/sign_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPassword"
-        android:hint="Password"
+        android:inputType="number"
+        android:hint="Mobile Number"
         android:textColorHint="@color/black"
         android:layout_marginHorizontal="50dip"
         android:textColor="@color/black"
-        android:background="@drawable/rounded"
+        android:background="@drawable/textbox"
         />
+
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0dip"
@@ -108,7 +78,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="SIGN IN"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:layout_marginHorizontal="90dip"
         android:background="@drawable/high_priority_button"/>
 

@@ -7,41 +7,9 @@
     tools:context=".login.OTP"
     android:orientation="vertical"
     android:weightSum="13"
-    android:background="@color/backgroundcolor">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/textbox_foreground"
-        android:text="Back to Login"
-        android:layout_marginHorizontal="10dip"
-        android:textSize="18dip"
-        android:id="@+id/sign_login"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"/>
-    <TextView
-        android:id="@+id/signtitle"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:background="@color/heading"
-        android:padding="10dip"
-        android:textColor="@color/textbox_foreground"
-        android:text="@string/cycle_rental"
-        android:layout_marginHorizontal="30dip"
-        android:layout_marginVertical="15dip"
-        android:textAlignment="center"
+    android:background="@color/backgroundcolor"
+    android:gravity="center">
 
-        android:textSize="35sp" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"/>
     <EditText
         android:id="@+id/otp_otp"
         android:layout_width="match_parent"
@@ -52,24 +20,39 @@
         android:textColorHint="@color/black"
         android:layout_marginHorizontal="50dip"
         android:textColor="@color/black"
-        android:background="@drawable/rounded"
+        android:background="@drawable/textbox"
         />
     <View
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"/>
-
     <EditText
         android:id="@+id/otp_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
-        android:hint="Password"
+        android:hint="Password (Atleast 8 characters)"
         android:textColorHint="@color/black"
         android:layout_marginHorizontal="50dip"
         android:textColor="@color/black"
-        android:background="@drawable/rounded"
+        android:background="@drawable/textbox"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"/>
+    <EditText
+        android:id="@+id/otp_confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="Confirm Password"
+        android:textColorHint="@color/black"
+        android:layout_marginHorizontal="50dip"
+        android:textColor="@color/black"
+        android:background="@drawable/textbox"
         />
     <View
         android:layout_width="match_parent"
@@ -81,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="LOG IN"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:layout_marginHorizontal="90dip"
         android:background="@drawable/high_priority_button"/>
 

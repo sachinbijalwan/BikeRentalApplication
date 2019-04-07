@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="text"
+        android:inputType="textEmailAddress"
         android:hint="Email or Username"
         android:textColorHint="@color/black"
         android:layout_marginHorizontal="50dip"

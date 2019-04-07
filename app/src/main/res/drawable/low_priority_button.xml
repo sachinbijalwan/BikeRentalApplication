@@ -4,19 +4,21 @@
     >
 
 
-
+    <stroke
+        android:color="@color/colorPrimary"
+        android:width="2dip"/>
     // The desired corner radius. reduce it to keep it less rounded
-    <corners android:radius="300dp" />
+    <corners android:radius="10dp" />
 
     // the inside color
     <solid
-        android:color="@color/textbox_foreground"
+        android:color="@color/white"
         />
     // Add your desired padding
-    <padding
+  <!--  <padding
         android:left="20dp"
         android:top="10dp"
         android:right="20dp"
         android:bottom="10dp"    >
-    </padding>
+    </padding> -->
 </shape>

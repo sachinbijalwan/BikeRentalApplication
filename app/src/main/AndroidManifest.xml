@@ -44,8 +44,10 @@
         <activity android:name=".admin.AdminCycle">
 
         </activity>
+
         <activity android:name=".admin.AdminTransfer" />
         <activity android:name=".admin.AdminComplaint"></activity>
+
     </application>
 
 </manifest>
