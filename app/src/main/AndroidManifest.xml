@@ -24,12 +24,12 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
-        <activity android:name=".login.LoginActivity" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".login.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".login.Signup"
             android:parentActivityName=".login.LoginActivity"/>
@@ -43,7 +43,6 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".admin.AdminCycle"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-
         </activity>
 
         <activity android:name=".admin.AdminTransfer"
@@ -51,9 +50,8 @@
         </activity>
 
         <activity android:name=".admin.AdminComplaint"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
 
-        </activity>
+            android:theme="@style/ActionBarAnti"/>
 
     </application>
 

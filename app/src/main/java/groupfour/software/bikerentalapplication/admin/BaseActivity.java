@@ -1,6 +1,9 @@
 package groupfour.software.bikerentalapplication.admin;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,9 +16,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -39,17 +44,46 @@ public class BaseActivity extends AppCompatActivity
 
 
     }
+    private ImageButton getNavButtonView(Toolbar toolbar) {
+        try {
+            Class<?> toolbarClass = Toolbar.class;
+            Field navButtonField = toolbarClass.getDeclaredField("mNavButtonView");
+            navButtonField.setAccessible(true);
+            ImageButton navButtonView = (ImageButton) navButtonField.get(toolbar);
+
+            return navButtonView;
+        }
+        catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
     protected void onCreateDrawer(){
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.app_name);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                //ImageButton img=getNavButtonView(toolbar);
+
+                float slideX = drawerView.getWidth() * slideOffset;
+                getNavButtonView(toolbar).setZ(20);
+                getNavButtonView(toolbar).setTranslationX(slideX);
+            }
+        };
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        Drawable icon= getDrawable(R.drawable.ic_motorcycle_black_24dp);
+        getNavButtonView(toolbar).setImageDrawable(icon);
+        getNavButtonView(toolbar).setColorFilter(R.color.white);
     }
     @Override
     public void onBackPressed() {
