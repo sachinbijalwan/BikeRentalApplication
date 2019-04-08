@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -88,6 +89,7 @@ public class AdminTransfer extends BaseActivity {
                 try {
                     if (ActivityCompat.checkSelfPermission(AdminTransfer.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                         cameraSource.start(surfaceView.getHolder());
+                        Toast.makeText(getApplicationContext(),"Camera started",Toast.LENGTH_LONG).show();
                     } else {
                         ActivityCompat.requestPermissions(AdminTransfer.this, new
                                 String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
@@ -95,6 +97,7 @@ public class AdminTransfer extends BaseActivity {
 
                 } catch (IOException e) {
                     e.printStackTrace();
+
                 }
 
 
@@ -114,7 +117,7 @@ public class AdminTransfer extends BaseActivity {
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-           //     Toast.makeText(getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
             }
 
             @Override

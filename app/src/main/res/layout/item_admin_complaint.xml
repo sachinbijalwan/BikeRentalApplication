@@ -1,62 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dip"
-    android:weightSum="5"
+    android:layout_height="70dip"
     android:orientation="vertical"
+    android:weightSum="5"
+    android:layout_marginVertical="20dip"
 >
     <TextView
         android:layout_width="match_parent"
+        android:layout_marginHorizontal="15dip"
         android:layout_height="0dip"
-        android:layout_weight="1"
-        android:text="Username:"
+        android:layout_weight="3"
         android:id="@+id/admin_complaint_username"
-        android:textColor="@color/black"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="25sp"/>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="0dip"
-    android:layout_weight="2"
-    android:weightSum="4">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:textSize="25sp"
-        android:textColor="@color/black"
-        android:text="Complaint"
-        android:layout_marginVertical="20dp"/>
 
     <TextView
         android:id="@+id/admin_complaint"
-        android:layout_weight="4"
-        android:layout_width="0dp"
-        android:textSize="25sp"
-        android:layout_height="match_parent"
-        android:textColor="@color/black"
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:text="Complaint"
+        android:layout_weight="2"
+        android:textSize="15sp"
+        android:layout_marginHorizontal="10dip"
+        android:layout_height="0dip"
+        android:layout_width="match_parent"
+        android:textColor="@color/colorPrimary"
+        android:text="Complaints"
         />
-</LinearLayout>
-    <EditText
-        android:id="@+id/admin_complaint_resolve"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:hint="Resolve Complaint Here"
-        android:layout_marginHorizontal="10dip"/>
-    <Button
-        android:id="@+id/admin_complaint_submit"
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
-        android:textColor="@color/black"
-        android:background="@drawable/high_priority_button"
-        android:layout_marginHorizontal="40dip"
-        android:text="SUBMIT"/>
+        android:layout_height="1dp"
+        android:background="@color/colorPrimaryDark"/>
 
 </LinearLayout>
