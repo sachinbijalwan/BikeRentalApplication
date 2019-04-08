@@ -2,6 +2,8 @@ package groupfour.software.bikerentalapplication.admin;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -68,6 +70,7 @@ public class BaseActivity extends AppCompatActivity
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
                 //ImageButton img=getNavButtonView(toolbar);
+
                 float slideX = drawerView.getWidth() * slideOffset;
                 getNavButtonView(toolbar).setZ(20);
                 getNavButtonView(toolbar).setTranslationX(slideX);
@@ -78,6 +81,9 @@ public class BaseActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        Drawable icon= getDrawable(R.drawable.ic_motorcycle_black_24dp);
+        getNavButtonView(toolbar).setImageDrawable(icon);
+        getNavButtonView(toolbar).setColorFilter(R.color.white);
     }
     @Override
     public void onBackPressed() {
