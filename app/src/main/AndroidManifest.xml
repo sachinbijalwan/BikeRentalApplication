@@ -24,32 +24,36 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
-        <activity android:name=".login.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".login.LoginActivity" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
+        <activity android:name=".login.Signup"
+            android:parentActivityName=".login.LoginActivity"/>
+        <activity android:name=".login.OTP"
+            android:parentActivityName=".login.LoginActivity"/>
+        <activity android:name=".login.ForgotPass"
+            android:parentActivityName=".login.LoginActivity"/>
         <activity
             android:name=".admin.BaseActivity"
             android:label="@string/title_activity_admin_main"
             android:theme="@style/AppTheme" />
-        <activity android:name=".admin.AdminCycle">
+        <activity android:name=".admin.AdminCycle"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
 
         </activity>
 
-        <activity android:name=".login.Signup"
+        <activity android:name=".admin.AdminTransfer"
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
-        <activity android:name=".login.OTP"
+
+        <activity android:name=".admin.AdminComplaint"
             android:theme="@style/Theme.AppCompat.NoActionBar">
+
         </activity>
-
-        <activity android:name=".login.ForgotPass"></activity>
-
-        <activity android:name=".admin.AdminTransfer" />
-        <activity android:name=".admin.AdminComplaint"></activity>
 
     </application>
 
