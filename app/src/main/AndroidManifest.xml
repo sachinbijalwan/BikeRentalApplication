@@ -69,7 +69,8 @@
             android:theme="@style/Theme.AppCompat.NoActionBar">
 
         </activity>
-        <activity android:name=".user.Feedback" />
+        <activity android:name=".user.Feedback"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:name=".user.BaseActivity"
             android:label="@string/title_activity_user_main"
