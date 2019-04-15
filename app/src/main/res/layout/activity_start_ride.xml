@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:weightSum="9"
+    android:orientation="vertical"
+    android:background="@color/foreground"
+    android:layout_gravity="center">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/heading"
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+    <TextView
+        android:id="@+id/rideTime"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:layout_margin="20dip"
+        android:textAlignment="center"
+        android:text="TIme duration 00:30:45 hrs"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/rideAmount"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:layout_margin="20dip"
+        android:textAlignment="center"
+        android:text="Total Amount : 15 Rs"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    />
+    <Button
+        android:id="@+id/btnRideEnd"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:text="END RIDE"
+        android:textColor="@color/white"
+        android:background="@drawable/high_priority_button"
+        android:layout_marginHorizontal="40dip"/>
+</LinearLayout>

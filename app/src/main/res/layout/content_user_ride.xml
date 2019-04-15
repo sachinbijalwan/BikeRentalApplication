@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:weightSum="9"
+    android:orientation="vertical"
+    android:background="@color/foreground"
+    android:layout_gravity="center">
+
+    <SurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="30dip"
+        android:layout_marginTop="30dp"
+        android:layout_weight="5"
+        android:paddingTop="0dp" />
+    <TextView
+        android:id="@+id/txtBarcodeValue"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:layout_margin="20dip"
+        android:textAlignment="center"
+        android:text="SCAN QR CODE"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+        />
+    <Button
+        android:id="@+id/btnRideNow"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:text="RIDE NOW"
+        android:textColor="@color/white"
+        android:background="@drawable/high_priority_button"
+        android:layout_marginHorizontal="40dip"/>
+</LinearLayout>

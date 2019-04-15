@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="groupfour.software.bikerentalapplication">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -29,7 +28,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".user.StartRide"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -45,19 +44,15 @@
         <activity
             android:name=".user.MapUser"
             android:label="@string/title_activity_map_user"
-            android:theme="@style/Theme.AppCompat.NoActionBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".user.Logout"
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
         <activity
-            android:name=".user.StopRent"
+            android:name=".user.Logout"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".user.StopRent"
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
+
+        </activity>
         <activity
             android:name=".user.RentCycle"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
@@ -67,7 +62,11 @@
         <activity
             android:name=".user.RideCycle"
             android:theme="@style/Theme.AppCompat.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".user.Feedback" />
         <activity
@@ -79,7 +78,7 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
-        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".login.LoginActivity"></activity>
         <activity
             android:name=".login.Signup"
             android:parentActivityName=".login.LoginActivity" />
