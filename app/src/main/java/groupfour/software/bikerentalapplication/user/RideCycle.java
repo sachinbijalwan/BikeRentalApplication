@@ -39,7 +39,7 @@ public class RideCycle extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride_cycle);
-        //onCreateDrawer();
+        onCreateDrawer();
         initViews();
     }
 

@@ -83,7 +83,7 @@ public class BaseActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         Drawable icon= getDrawable(R.drawable.ic_motorcycle_black_24dp);
         getNavButtonView(toolbar).setImageDrawable(icon);
-        getNavButtonView(toolbar).setColorFilter(R.color.white);
+        getNavButtonView(toolbar).setColorFilter(getResources().getColor(R.color.white));
     }
     @Override
     public void onBackPressed() {
