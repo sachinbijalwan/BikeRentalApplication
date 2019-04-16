@@ -12,6 +12,7 @@ import android.widget.ZoomButtonsController;
 
 import groupfour.software.bikerentalapplication.R;
 import groupfour.software.bikerentalapplication.admin.AdminCycle;
+import groupfour.software.bikerentalapplication.user.MapUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -51,8 +52,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
                 if (isDetailsCorrect(username.getText().toString(), password.getText().toString())){
-                    Intent intent = new Intent(getApplicationContext(), AdminCycle.class);
-                    startActivity(intent);
+                    if (username.getText().toString().equals("admin")){
+                        Intent intent = new Intent(getApplicationContext(), AdminCycle.class);
+                        startActivity(intent);
+                    }
+                    else {
+                        Intent intent = new Intent (getApplicationContext(), MapUser.class);
+                        startActivity(intent);
+                    }
                 }
                 else {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
@@ -79,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     //TODO
     public boolean isDetailsCorrect(String username, String password){
-        if (username.equals("username")){
+        if (username.length() > 4){
             return true ;
         }
         else {

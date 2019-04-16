@@ -14,6 +14,9 @@
             android:id="@+id/nav_transfer"
             android:title="Transfer Cycle" />
         <item
+            android:id="@+id/nav_add_location"
+            android:title="Add Location" />
+        <item
             android:id="@+id/nav_complaint"
             android:title="Complaints" />
     </group>
