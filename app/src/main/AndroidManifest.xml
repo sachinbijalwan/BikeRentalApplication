@@ -28,7 +28,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".user.StartRide"></activity>
+        <activity android:name=".admin.AdminLocation"
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+        <activity android:name=".user.StartRide" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -44,15 +46,13 @@
         <activity
             android:name=".user.MapUser"
             android:label="@string/title_activity_map_user"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".user.Logout"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".user.StopRent"
-            android:theme="@style/Theme.AppCompat.NoActionBar" >
-
-        </activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
         <activity
             android:name=".user.RentCycle"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
@@ -62,24 +62,23 @@
         <activity
             android:name=".user.RideCycle"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".user.Feedback"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity
+            android:name=".user.Feedback"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".user.BaseActivity"
             android:label="@string/title_activity_user_main"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
 
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
-        <activity android:name=".login.LoginActivity"></activity>
+        <activity android:name=".login.LoginActivity" >
+
+        </activity>
         <activity
             android:name=".login.Signup"
             android:parentActivityName=".login.LoginActivity" />
@@ -95,7 +94,13 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".admin.AdminCycle"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".admin.AdminTransfer"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
