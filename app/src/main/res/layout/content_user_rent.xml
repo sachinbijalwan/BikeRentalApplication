@@ -8,35 +8,35 @@
     android:background="@color/foreground"
     android:layout_gravity="center">
 
-    <SurfaceView
-        android:id="@+id/surfaceView"
+    <ImageView
+        android:id="@+id/imgqrcode"
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_margin="30dip"
+        android:layout_marginHorizontal="30dip"
         android:layout_marginTop="30dp"
-        android:layout_weight="5"
+        android:layout_weight="6"
         android:paddingTop="0dp" />
     <TextView
-        android:id="@+id/txtBarcodeValue"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
         android:layout_margin="20dip"
         android:textAlignment="center"
-        android:text="SCAN QR CODE"
+        android:text="QR CODE"
         android:textColor="@color/black"
         android:textSize="20sp" />
 
     />
     <Button
-        android:id="@+id/btnRideNow"
+        android:id="@+id/btngeneratenewqr"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
-        android:text="STOP RENT"
+        android:text="GENERATE NEW QR CODE"
         android:textColor="@color/white"
         android:background="@drawable/high_priority_button"
-        android:layout_marginHorizontal="40dip"/>
+        android:layout_marginHorizontal="40dip"
+        android:onClick="onClick"/>
 </LinearLayout>

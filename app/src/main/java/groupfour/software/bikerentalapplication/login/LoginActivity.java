@@ -2,6 +2,7 @@ package groupfour.software.bikerentalapplication.login;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button login ;
     private Button forgotPassword ;
     private Button createAccount ;
+    private String PREFS_NAME="USER";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +54,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
                 if (isDetailsCorrect(username.getText().toString(), password.getText().toString())){
+                    SharedPreferences settings = getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("USERID", username.getText().toString());
+                    editor.apply();
+
                     if (username.getText().toString().equals("admin")){
                         Intent intent = new Intent(getApplicationContext(), AdminCycle.class);
                         startActivity(intent);
@@ -86,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     //TODO
     public boolean isDetailsCorrect(String username, String password){
-        if (username.length() > 4){
+        if (username.length() > 4 && !Character.isDigit(username.charAt(username.length()-1))){
             return true ;
         }
         else {

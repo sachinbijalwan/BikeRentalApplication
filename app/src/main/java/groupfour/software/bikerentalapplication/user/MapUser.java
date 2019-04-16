@@ -54,7 +54,7 @@ public class MapUser extends FragmentActivity implements OnMapReadyCallback,Navi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_user);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-
+        onCreateDrawer();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -141,7 +141,7 @@ public class MapUser extends FragmentActivity implements OnMapReadyCallback,Navi
 
         //b.onCreateDrawer();
 
-        onCreateDrawer();
+
   //      BaseActivity b = new BaseActivity();
        // b.onCreate(savedInstanceState);
 //        b.onCreateDrawer();
