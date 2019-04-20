@@ -1,6 +1,6 @@
 package groupfour.software.bikerentalapplication.Models;
 
-public class Location {
+public class LocationModel {
     private int id ;
     private String name ;
     private double latitude ;

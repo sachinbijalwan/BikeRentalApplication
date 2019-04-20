@@ -212,9 +212,9 @@ public class MapUser extends FragmentActivity implements OnMapReadyCallback,Navi
 //            return;
 //        }
 //        fusedLocationClient.getLastLocation()
-//                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+//                .addOnSuccessListener(this, new OnSuccessListener<LocationModel>() {
 //                    @Override
-//                    public void onSuccess(Location location) {
+//                    public void onSuccess(LocationModel location) {
 //                        // Got last known location. In some rare situations this can be null.
 //                        if (location != null) {
 //                            double latitude = location.getLatitude();
