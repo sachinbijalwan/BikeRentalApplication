@@ -1,7 +1,9 @@
 package groupfour.software.bikerentalapplication.user;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 
 import android.os.Bundle;
@@ -170,6 +172,8 @@ public class BaseActivity extends AppCompatActivity
                 Intent i=new Intent(getApplicationContext(), LoginActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
+                SharedPreferences settings = getApplication().getSharedPreferences("USER", 0);
+                settings.edit().clear().commit();
             }
         }else if (id == R.id.user_map) {
             if(activity!=6){

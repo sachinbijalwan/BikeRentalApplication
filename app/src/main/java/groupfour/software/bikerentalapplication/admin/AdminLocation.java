@@ -106,9 +106,6 @@ public class AdminLocation extends BaseActivity {
             }
         });
 
-
-
-
     }
 
     public String getJsonStrLocation() {

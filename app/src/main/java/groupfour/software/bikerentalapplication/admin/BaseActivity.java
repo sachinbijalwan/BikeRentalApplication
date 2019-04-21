@@ -2,6 +2,7 @@ package groupfour.software.bikerentalapplication.admin;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import groupfour.software.bikerentalapplication.R;
+import groupfour.software.bikerentalapplication.login.LoginActivity;
 
 public class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -83,7 +85,7 @@ public class BaseActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         Drawable icon= getDrawable(R.drawable.ic_motorcycle_black_24dp);
         getNavButtonView(toolbar).setImageDrawable(icon);
-        getNavButtonView(toolbar).setColorFilter(R.color.white);
+        getNavButtonView(toolbar).setColorFilter(getResources().getColor(R.color.white));
     }
     @Override
     public void onBackPressed() {
@@ -163,6 +165,16 @@ public class BaseActivity extends AppCompatActivity
                 Intent i=new Intent(getApplicationContext(),AdminLocation.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
+            }
+        }
+        else if(id == R.id.nav_logout){
+            if(activity!=5){
+                activity=5;
+                Intent i=new Intent(getApplicationContext(), LoginActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+                SharedPreferences settings = getApplication().getSharedPreferences("USER", 0);
+                settings.edit().clear().commit();
             }
         }
 
