@@ -1,11 +1,13 @@
 package groupfour.software.bikerentalapplication.admin;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -26,8 +29,13 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import groupfour.software.bikerentalapplication.Models.LocationModel;
 import groupfour.software.bikerentalapplication.R;
@@ -42,6 +50,7 @@ public class AdminLocation extends BaseActivity {
     private String name, lat, longi;
     private FusedLocationProviderClient fusedLocationClient;
 
+    private String accessToken = "9ae0a5ac-62d8-469b-be88" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,13 +149,28 @@ public class AdminLocation extends BaseActivity {
 
     public void sendRequest(final String requestBody){
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String url = "http://" + Constants.IPSERVER + "/" + Constants.LOCATION;
+        String url =     Constants.IPSERVER + "/" + Constants.LOCATION;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        System.out.print(response);
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(AdminLocation.this);
+                        builder1.setTitle("Location has been added");
+
+                        builder1.setCancelable(true);
+
+                        builder1.setPositiveButton(
+                                "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+
+                        AlertDialog alert11 = builder1.create();
+                        alert11.show();
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -163,6 +187,7 @@ public class AdminLocation extends BaseActivity {
             public byte[] getBody() throws AuthFailureError {
                 try {
                     return requestBody == null ? null : requestBody.getBytes("utf-8");
+
                 } catch (UnsupportedEncodingException uee) {
                     VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
                     return null;
@@ -171,12 +196,27 @@ public class AdminLocation extends BaseActivity {
 
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                String responseString = "";
-                if (response != null) {
-                    responseString = String.valueOf(response.statusCode);
-                    // can get more details such as response.headers
+                try {
+                    String jsonString = new String(response.data,
+                            HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                    JSONObject jsonResponse = new JSONObject(jsonString);
+                    //jsonResponse.put("headers", new JSONObject(response.headers));
+                    return Response.success(jsonResponse.toString(),
+                            HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                } catch (JSONException je) {
+                    return Response.error(new ParseError(je));
                 }
-                return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Access_Token", accessToken);
+                params.put("Content-Type", "application/json");
+
+                return params;
             }
         };
 

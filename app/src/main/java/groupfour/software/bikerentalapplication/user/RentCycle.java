@@ -3,30 +3,60 @@ package groupfour.software.bikerentalapplication.user;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
+
+import groupfour.software.bikerentalapplication.Models.CycleInfo;
+
 import groupfour.software.bikerentalapplication.R;
+import groupfour.software.bikerentalapplication.Utility.Constants;
+
 public class RentCycle extends BaseActivity {
     private String PREFS_NAME="USER";
     String text=""; // Whatever you need to encode in the QR code
+    private String cycleBrand = "Atlas" ;
+    private int locationId = 1 ;
+    private int ownerId = 1 ;
+    private String accessToken = "47420131-3f37-4bd0-b811" ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rent_cycle);
         onCreateDrawer();
-        text=getText();
+
         if(text.isEmpty()){
-            changeString();
+            sendJsonString();
         }
-        writeqrcode();
+
 
 
     }
@@ -42,59 +72,108 @@ public class RentCycle extends BaseActivity {
             e.printStackTrace();
         }
     }
-    public void changeString(){
-        if(text.isEmpty()) {
-            SharedPreferences settings = getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
-            text = settings.getString("USERID", "0");
-            text+=String.valueOf(0);
-        }
-        else {
-            int trail = getTrailingInteger(text);
-            trail++;
-            SharedPreferences settings = getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
-            text = settings.getString("USERID", "0");
-            text += String.valueOf(trail);
+    public void sendJsonString(){
+        CycleInfo cycleInfo = new CycleInfo();
+        cycleInfo.setBrand(cycleBrand);
+        cycleInfo.setLocationId(locationId);
+        cycleInfo.setOwnerId(ownerId);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+
+            // get Oraganisation object as a json string
+            String jsonStr = objectMapper.writeValueAsString(cycleInfo);
+
+            // Displaying JSON String
+            System.out.println(jsonStr);
+            sendRequest(jsonStr);
 
         }
-        writeText();
+
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
-    int getTrailingInteger(String str)
-    {
-        int positionOfLastDigit = getPositionOfLastDigit(str);
-        if (positionOfLastDigit == str.length())
-        {
-            // string does not end in digits
-            return -1;
-        }
-        return Integer.parseInt(str.substring(positionOfLastDigit));
-    }
 
-    int getPositionOfLastDigit(String str)
-    {
-        int pos;
-        for (pos=str.length()-1; pos>=0; --pos)
-        {
-            char c = str.charAt(pos);
-            if (!Character.isDigit(c)) break;
-        }
-        return pos + 1;
-    }
-    public void writeText(){
-        SharedPreferences settings = getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString("TEXT", text);
-        editor.apply();
-    }
-    public String getText(){
-        SharedPreferences settings = getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
-        text = settings.getString("TEXT", "");
-        return text;
-    }
     public void onClick(View view){
-        changeString();
-        writeText();
-        writeqrcode();
+        sendJsonString();
         Toast.makeText(getApplicationContext(),"QR CODE CHANGED SUCCESSFULLY",Toast.LENGTH_LONG).show();
+    }
+
+    public void sendRequest(final String requestBody){
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        String url = Constants.IPSERVER + "/" + Constants.CYCLE;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        try {
+
+                            // get Oraganisation object as a json string
+                            CycleInfo cycleInfo = objectMapper.readValue(response, CycleInfo.class);
+                            text = Integer.toString(cycleInfo.getId()) ;
+                            writeqrcode();
+
+                        }
+
+                        catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("VOLLEY", error.toString());
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return requestBody == null ? null : requestBody.getBytes("utf-8");
+
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                    return null;
+                }
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Access_Token", accessToken);
+                params.put("Content-Type", "application/json");
+
+                return params;
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String jsonString = new String(response.data,
+                            HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                    JSONObject jsonResponse = new JSONObject(jsonString);
+                    //jsonResponse.put("headers", new JSONObject(response.headers));
+                    return Response.success(jsonResponse.toString(),
+                            HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                } catch (JSONException je) {
+                    return Response.error(new ParseError(je));
+                }
+            }
+        };
+
+// Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
+
     }
 }

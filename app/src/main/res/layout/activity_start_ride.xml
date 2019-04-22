@@ -30,10 +30,19 @@
         android:layout_weight="1"
         android:layout_margin="20dip"
         android:textAlignment="center"
-        android:text="TIme duration 00:30:45 hrs"
+        android:text= "Start time :"
         android:textColor="@color/black"
         android:textSize="20sp" />
-
+    <TextView
+        android:id="@+id/rideEndtime"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:layout_margin="20dip"
+        android:textAlignment="center"
+        android:text="Ride End : "
+        android:textColor="@color/black"
+        android:textSize="20sp" />
     <TextView
         android:id="@+id/rideAmount"
         android:layout_width="match_parent"
@@ -41,7 +50,7 @@
         android:layout_weight="1"
         android:layout_margin="20dip"
         android:textAlignment="center"
-        android:text="Total Amount : 15 Rs"
+        android:text="Total Amount :"
         android:textColor="@color/black"
         android:textSize="20sp" />
 
