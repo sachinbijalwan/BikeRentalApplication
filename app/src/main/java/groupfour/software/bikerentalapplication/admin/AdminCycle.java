@@ -25,31 +25,32 @@ public class AdminCycle extends BaseActivity {
             cycles.add(new Cycle("LocationModel "+i,"Cycle "+i));
         }
     }
-    private void setCycles(){
-        //code for binding array list with cycle adapter
-        //for more info see https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
-        ArrayList<Cycle> cycles=new ArrayList<Cycle>();
-        addcycles(cycles);
-        CycleAdapter adapter=new CycleAdapter(this,cycles);
-        ListView lview=findViewById(R.id.admin_lv);
-        lview.setAdapter(adapter);
-    }
-    private void setLocations(){
-        //to be changed
-        //make separate LocationModel class or find some workaround
-        ArrayList<Cycle> cycles=new ArrayList<Cycle>();
-        addLocations(cycles);
-        CycleAdapter adapter=new CycleAdapter(this,cycles);
-        ListView lview=findViewById(R.id.admin_lv);
-        lview.setAdapter(adapter);
-    }
+//    private void setCycles(){
+//        //code for binding array list with cycle adapter
+//        //for more info see https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
+//        ArrayList<Cycle> cycles=new ArrayList<Cycle>();
+//        addcycles(cycles);
+//        System.out.println("Cycle size" + cycles.size());
+//        CycleAdapter adapter=new CycleAdapter(this,cycles);
+//        ListView lview=findViewById(R.id.admin_lv);
+//        lview.setAdapter(adapter);
+//    }
+//    private void setLocations(){
+//        //to be changed
+//        //make separate LocationModel class or find some workaround
+//        ArrayList<Cycle> cycles=new ArrayList<Cycle>();
+//        addLocations(cycles);
+//        CycleAdapter adapter=new CycleAdapter(this,cycles);
+//        ListView lview=findViewById(R.id.admin_lv);
+//        lview.setAdapter(adapter);
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_main);
         onCreateDrawer();
-        setCycles();
+        //setCycles();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String c=extras.getString("cycle");
@@ -61,11 +62,11 @@ public class AdminCycle extends BaseActivity {
          //   Log.d("AFD","This is cycle "+(c=="1")+" dk "+c);
         }
 
-        if(cycle){
-            setCycles();
-        }
-        else{
-            setLocations();
-        }
+//        if(cycle){
+//            setCycles();
+//        }
+//        else{
+//            setLocations();
+//        }
     }
 }

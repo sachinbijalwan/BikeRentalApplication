@@ -50,7 +50,7 @@ public class AdminLocation extends BaseActivity {
     private String name, lat, longi;
     private FusedLocationProviderClient fusedLocationClient;
 
-    private String accessToken = "9ae0a5ac-62d8-469b-be88" ;
+    private String accessToken = "e1a841f4-46b6-4402-bda3" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
