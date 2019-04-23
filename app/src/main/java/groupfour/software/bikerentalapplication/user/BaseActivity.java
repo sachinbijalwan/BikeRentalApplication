@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -27,6 +28,7 @@ import java.lang.reflect.Field;
 
 import groupfour.software.bikerentalapplication.R;
 
+import groupfour.software.bikerentalapplication.Utility.Constants;
 import groupfour.software.bikerentalapplication.login.LoginActivity;
 
 public class BaseActivity extends AppCompatActivity
@@ -170,10 +172,18 @@ public class BaseActivity extends AppCompatActivity
         }else if (id == R.id.logout) {
             if(activity!=5){
                 activity=5;
+                SharedPreferences preferences =getSharedPreferences(Constants.PREFERENCES,Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.clear();
+                editor.commit();
+
+                Log.d("Loginjkl","moving from here");
+                //editor.commit();PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().clear().apply();
+                //PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString(Constants.STORED_ACCESS_TOKEN,"").apply();
+
                 Intent i=new Intent(getApplicationContext(), LoginActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
-                PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().clear().commit();
             }
         }else if (id == R.id.user_map) {
             if(activity!=6){

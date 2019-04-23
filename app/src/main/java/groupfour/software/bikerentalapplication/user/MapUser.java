@@ -2,6 +2,7 @@ package groupfour.software.bikerentalapplication.user;
 
 
 import android.Manifest;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -20,6 +21,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -37,6 +39,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.lang.reflect.Field;
 
 import groupfour.software.bikerentalapplication.R;
+import groupfour.software.bikerentalapplication.Utility.Constants;
 import groupfour.software.bikerentalapplication.login.LoginActivity;
 
 public class MapUser extends FragmentActivity implements OnMapReadyCallback,NavigationView.OnNavigationItemSelectedListener {
@@ -280,6 +283,13 @@ public class MapUser extends FragmentActivity implements OnMapReadyCallback,Navi
         }else if (id == R.id.logout) {
             if(activity!=5){
                 activity=5;
+                SharedPreferences preferences =getSharedPreferences(Constants.PREFERENCES,Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.clear();
+                editor.commit();
+                Log.d("Loginjkl","moving from here");
+                //editor.remove(Constants.STORED_ACCESS_TOKEN);
+
                 Intent i=new Intent(getApplicationContext(), LoginActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);

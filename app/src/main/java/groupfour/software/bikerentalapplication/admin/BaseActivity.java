@@ -1,6 +1,7 @@
 package groupfour.software.bikerentalapplication.admin;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import groupfour.software.bikerentalapplication.R;
+import groupfour.software.bikerentalapplication.Utility.Constants;
 import groupfour.software.bikerentalapplication.login.LoginActivity;
 
 public class BaseActivity extends AppCompatActivity
@@ -165,6 +167,11 @@ public class BaseActivity extends AppCompatActivity
         } else if (id == R.id.nav_logout) {
             if (activity != 5) {
                 activity = 5;
+                SharedPreferences preferences =getSharedPreferences(Constants.PREFERENCES,Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.clear();
+                editor.commit();
+
                 Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);

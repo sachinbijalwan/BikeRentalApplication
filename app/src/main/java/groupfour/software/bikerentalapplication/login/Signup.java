@@ -1,5 +1,6 @@
 package groupfour.software.bikerentalapplication.login;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.preference.PreferenceManager;
@@ -194,7 +195,7 @@ public class Signup extends AppCompatActivity {
                             String url=Constants.USER;
                             jsonStr=null;
                             userModel.setPersonId(personModel_1.getId());
-                            PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().putInt(Constants.STORED_ID,personModel_1.getId()).apply();
+                            getSharedPreferences(Constants.PREFERENCES,Context.MODE_PRIVATE).edit().putInt(Constants.STORED_ID,personModel_1.getId()).apply();
                             //   PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().putString(Constants.ACCESS_TOKEN,).apply();
                             //PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().putString("ID",userModel.getPersonId()).apply();
                             Log.e("Volley","running 2");
