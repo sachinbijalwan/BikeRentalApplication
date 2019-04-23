@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="groupfour.software.bikerentalapplication">
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -28,8 +29,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".admin.AdminLocation"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+        <activity
+            android:name=".admin.AdminLocation"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".user.StartRide" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -52,7 +54,7 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".user.StopRent"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".user.RentCycle"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
@@ -61,14 +63,10 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".user.RideCycle"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-
-        </activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
         <activity
             android:name=".user.Feedback"
-            android:theme="@style/Theme.AppCompat.NoActionBar" >
-
-        </activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
         <activity
             android:name=".user.BaseActivity"
             android:label="@string/title_activity_user_main"
@@ -78,7 +76,7 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
-        <activity android:name=".login.LoginActivity" >
+        <activity android:name=".login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -100,15 +98,15 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".admin.AdminCycle"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-
-        </activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
         <activity
             android:name=".admin.AdminTransfer"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".admin.AdminComplaint"
             android:theme="@style/ActionBarAnti" />
+        <activity android:name=".admin.AdminResolveComplaint"
+            android:parentActivityName=".admin.AdminComplaint"></activity>
     </application>
 
 </manifest>

@@ -148,7 +148,7 @@ public class LoginActivity extends AppCompatActivity {
                             SharedPreferences.Editor editor = settings.edit();
                             editor.putString("USERID", username.getText().toString());
                             editor.apply();
-                            if (username.getText().toString().equals("admin")) {
+                            if (username.getText().toString().equals("adminadmin")) {
                                 Intent intent = new Intent(getApplicationContext(), AdminCycle.class);
                                 startActivity(intent);
                             } else {
