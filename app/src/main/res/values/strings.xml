@@ -10,4 +10,15 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_map_user">Map</string>
+    <string-array name="cycle_problem">
+        <item>Tire puncture</item>
+        <item>Brakes failed</item>
+        <item>Chain problem</item>
+        <item>Seat problem</item>
+        <item>Stand problem</item>
+        <item>Tire air problem</item>
+        <item>Brakes problem</item>
+
+        </string-array>
+    <string name="problem">SELECT YOUR PROBLEM HERE</string>
 </resources>

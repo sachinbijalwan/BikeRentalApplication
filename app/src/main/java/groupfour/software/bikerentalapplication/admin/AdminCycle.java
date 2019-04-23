@@ -16,13 +16,13 @@ public class AdminCycle extends BaseActivity {
     private void addcycles(ArrayList<Cycle> cycles){
         cycles.clear();
         for(int i=0;i<10;i++){
-            cycles.add(new Cycle("Cycle"+i,"Location"+i));
+            cycles.add(new Cycle("Cycle"+i,"LocationModel"+i));
         }
     }
     private void addLocations(ArrayList<Cycle> cycles){
         cycles.clear();
         for(int i=0;i<10;i++){
-            cycles.add(new Cycle("Location "+i,"Cycle "+i));
+            cycles.add(new Cycle("LocationModel "+i,"Cycle "+i));
         }
     }
     private void setCycles(){
@@ -36,7 +36,7 @@ public class AdminCycle extends BaseActivity {
     }
     private void setLocations(){
         //to be changed
-        //make separate Location class or find some workaround
+        //make separate LocationModel class or find some workaround
         ArrayList<Cycle> cycles=new ArrayList<Cycle>();
         addLocations(cycles);
         CycleAdapter adapter=new CycleAdapter(this,cycles);

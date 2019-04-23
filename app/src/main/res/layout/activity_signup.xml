@@ -69,6 +69,42 @@
 
 
     <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" />
+
+    <EditText
+        android:id="@+id/otp_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dip"
+        android:background="@drawable/textbox"
+        android:ems="10"
+        android:hint="Password (Atleast 8 characters)"
+        android:inputType="textPassword"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" />
+
+    <EditText
+        android:id="@+id/otp_confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dip"
+        android:background="@drawable/textbox"
+        android:ems="10"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
+
+    <View
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="2"/>
