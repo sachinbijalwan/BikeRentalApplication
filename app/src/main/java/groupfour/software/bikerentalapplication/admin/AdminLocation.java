@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -44,13 +45,13 @@ import groupfour.software.bikerentalapplication.Utility.Constants;
 
 public class AdminLocation extends BaseActivity {
 
-    private static final int REQUEST_LOCATION_PERMISSION = 1 ;
+    private static final int REQUEST_LOCATION_PERMISSION = 1;
     private EditText locationName, latitude, longitude;
     private Button submit;
     private String name, lat, longi;
     private FusedLocationProviderClient fusedLocationClient;
 
-    private String accessToken = "e1a841f4-46b6-4402-bda3" ;
+    private String accessToken  ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,8 @@ public class AdminLocation extends BaseActivity {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         onCreateDrawer();
+        accessToken =PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ACCESS_TOKEN,"null");
+
         locationName = findViewById(R.id.locationName);
         latitude = findViewById(R.id.latitude);
         longitude = findViewById(R.id.longitude);
@@ -71,19 +74,17 @@ public class AdminLocation extends BaseActivity {
                 postAdminLocation();
 
 
-
             }
         });
 
-
     }
 
-    public void postAdminLocation(){
-        String jsonStr = null ;
+    public void postAdminLocation() {
+        String jsonStr = null;
         final LocationModel locationModel = new LocationModel();
 
         locationModel.setName(locationName.getText().toString());
-        if (!longitude.getText().toString().isEmpty() && !latitude.getText().toString().isEmpty()){
+        if (!longitude.getText().toString().isEmpty() && !latitude.getText().toString().isEmpty()) {
             locationModel.setLongitude(Double.parseDouble(longitude.getText().toString()));
             locationModel.setLatitude(Double.parseDouble(latitude.getText().toString()));
 
@@ -95,16 +96,13 @@ public class AdminLocation extends BaseActivity {
                 sendRequest(jsonStr);
                 // Displaying JSON String
                 System.out.println(jsonStr);
-            }
-
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        else {
+        } else {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(AdminLocation.this, new
-                        String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION }, REQUEST_LOCATION_PERMISSION);
+                        String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION_PERMISSION);
             }
             fusedLocationClient.getLastLocation()
                     .addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -126,15 +124,12 @@ public class AdminLocation extends BaseActivity {
                                     System.out.println(jsonStr);
                                     sendRequest(jsonStr);
 
-                                }
-
-                                catch (IOException e) {
+                                } catch (IOException e) {
                                     e.printStackTrace();
                                 }
 
 
-                            }
-                            else {
+                            } else {
                                 System.out.println("Location is Null ");
                             }
                         }
@@ -143,11 +138,9 @@ public class AdminLocation extends BaseActivity {
         }
 
 
-
-
     }
 
-    public void sendRequest(final String requestBody){
+    public void sendRequest(final String requestBody) {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         String url =     Constants.IPSERVER + "/" + Constants.LOCATION;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,

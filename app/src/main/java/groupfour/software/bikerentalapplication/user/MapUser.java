@@ -2,6 +2,7 @@ package groupfour.software.bikerentalapplication.user;
 
 
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -282,6 +283,9 @@ public class MapUser extends FragmentActivity implements OnMapReadyCallback,Navi
                 Intent i=new Intent(getApplicationContext(), LoginActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
+                SharedPreferences settings = getApplication().getSharedPreferences("USER", 0);
+                settings.edit().clear().commit();
+
             }
         }else if (id == R.id.user_map) {
             if(activity!=6){

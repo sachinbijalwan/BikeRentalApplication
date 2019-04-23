@@ -43,6 +43,7 @@
         android:textColor="@color/black"
         android:textSize="20sp" />
     <EditText
+        android:id="@+id/destinationId"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -53,6 +54,7 @@
         android:textColorHint="@color/black"
         />
     <Button
+        android:id="@+id/submit"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"

@@ -3,9 +3,10 @@ package groupfour.software.bikerentalapplication.user;
 
 import android.Manifest;
 import android.content.DialogInterface;
-import android.content.Intent;
+
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -24,7 +25,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
+
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -56,7 +57,7 @@ public class StopRent extends BaseActivity {
     String intentData = "";
     boolean isEmail = false;
 
-    private String accessToken = "47420131-3f37-4bd0-b811";
+    private String accessToken ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class StopRent extends BaseActivity {
         txtBarcodeValue = findViewById(R.id.txtBarcodeValue);
         surfaceView = findViewById(R.id.surfaceView);
         btnAction = findViewById(R.id.btnRideNow);
+        accessToken =PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ACCESS_TOKEN,"null");
 
 
         btnAction.setOnClickListener(new View.OnClickListener() {

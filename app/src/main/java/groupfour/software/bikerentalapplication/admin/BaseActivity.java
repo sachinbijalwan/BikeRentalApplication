@@ -2,6 +2,7 @@ package groupfour.software.bikerentalapplication.admin;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
@@ -25,11 +26,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import groupfour.software.bikerentalapplication.R;
+import groupfour.software.bikerentalapplication.login.LoginActivity;
 
 public class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private int activity=0;
+    private int activity = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +39,8 @@ public class BaseActivity extends AppCompatActivity
         //setContentView(R.layout.activity_admin_main);
 
 
-
-
-
-
-
-
     }
+
     private ImageButton getNavButtonView(Toolbar toolbar) {
         try {
             Class<?> toolbarClass = Toolbar.class;
@@ -52,20 +49,20 @@ public class BaseActivity extends AppCompatActivity
             ImageButton navButtonView = (ImageButton) navButtonField.get(toolbar);
 
             return navButtonView;
-        }
-        catch (NoSuchFieldException | IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
 
         return null;
     }
-    protected void onCreateDrawer(){
+
+    protected void onCreateDrawer() {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.app_name);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
@@ -81,10 +78,11 @@ public class BaseActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        Drawable icon= getDrawable(R.drawable.ic_motorcycle_black_24dp);
+        Drawable icon = getDrawable(R.drawable.ic_motorcycle_black_24dp);
         getNavButtonView(toolbar).setImageDrawable(icon);
-        getNavButtonView(toolbar).setColorFilter(R.color.white);
+        getNavButtonView(toolbar).setColorFilter(getResources().getColor(R.color.white));
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -112,7 +110,7 @@ public class BaseActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         //if (id == R.id.action_settings) {
         //    return true;
-       // }
+        // }
 
         return super.onOptionsItemSelected(item);
     }
@@ -123,46 +121,56 @@ public class BaseActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_cycle) {
-            if(true){
-                Intent i=new Intent(getApplicationContext(),AdminCycle.class);
-                i.putExtra("cycle","1");
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(i);
-            }
-            activity=0;
-
-            // Handle the camera action
-        } else if (id == R.id.nav_location) {
-            if(activity!=1){
-                Intent i=new Intent(getApplicationContext(),AdminCycle.class);
-                i.putExtra("cycle","0");
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(i);
-            }
-            activity=1;
-
-        } else if (id == R.id.nav_transfer) {
-            if(activity!=2){
-                activity=2;
-                Intent i=new Intent(getApplicationContext(),AdminTransfer.class);
+//        if (id == R.id.nav_cycle) {
+//            if (true) {
+//                Intent i = new Intent(getApplicationContext(), AdminCycle.class);
+//                i.putExtra("cycle", "1");
+//                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(i);
+//            }
+//            activity = 0;
+//
+//            // Handle the camera action
+//        } else if (id == R.id.nav_location) {
+//            if (activity != 1) {
+//                Intent i = new Intent(getApplicationContext(), AdminCycle.class);
+//                i.putExtra("cycle", "0");
+//                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(i);
+//            }
+//            activity = 1;
+//
+//        } else
+            if (id == R.id.nav_transfer) {
+            if (activity != 2) {
+                activity = 2;
+                Intent i = new Intent(getApplicationContext(), AdminTransfer.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             }
 
         } else if (id == R.id.nav_complaint) {
-            if(activity!=3){
-                activity=3;
-                Intent i=new Intent(getApplicationContext(),AdminComplaint.class);
+            if (activity != 3) {
+                activity = 3;
+                Intent i = new Intent(getApplicationContext(), AdminComplaint.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             }
-        }else if (id == R.id.nav_add_location) {
-            if(activity!=4){
-                activity=4;
-                Intent i=new Intent(getApplicationContext(),AdminLocation.class);
+        } else if (id == R.id.nav_add_location) {
+            if (activity != 4) {
+                activity = 4;
+                Intent i = new Intent(getApplicationContext(), AdminLocation.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
+            }
+        } else if (id == R.id.nav_logout) {
+            if (activity != 5) {
+                activity = 5;
+                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+                SharedPreferences settings = getApplication().getSharedPreferences("USER", 0);
+                settings.edit().clear().commit();
             }
         }
 

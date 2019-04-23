@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:weightSum="10"
+
+    android:orientation="vertical"
+    android:background="@color/foreground"
+    android:layout_gravity="center">
+
+    <View android:layout_height="0dip"
+        android:layout_width="0dip"
+        android:layout_weight="1"/>
+    <SurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="30dp"
+        android:layout_weight="5"
+        android:paddingTop="0dp" />
+    <TextView
+        android:id="@+id/txtBarcodeValue"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:layout_margin="10dip"
+        android:textAlignment="center"
+        android:text="SCAN QR CODE"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+        />
+
+    <AutoCompleteTextView
+        android:layout_margin="20dip"
+        android:id="@+id/autoCompleteTextView"
+        android:layout_width="match_parent"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:dropDownHeight="250dp"
+
+
+         />
+    <Button
+        android:id="@+id/btnsubmitcomplaint"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:text="SUBMIT COMPLAINT"
+        android:textColor="@color/white"
+        android:background="@drawable/high_priority_button"
+        android:layout_marginHorizontal="40dip"
+        android:onClick="onClick"/>
+
+</LinearLayout>

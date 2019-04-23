@@ -4,12 +4,7 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_cycle"
-            android:title="Cycle Info" />
-        <item
-            android:id="@+id/nav_location"
-            android:title="Location Info" />
+
         <item
             android:id="@+id/nav_transfer"
             android:title="Transfer Cycle" />
@@ -19,6 +14,9 @@
         <item
             android:id="@+id/nav_complaint"
             android:title="Complaints" />
+        <item
+            android:id="@+id/nav_logout"
+            android:title="Logout" />
     </group>
 
 

@@ -3,6 +3,7 @@ package groupfour.software.bikerentalapplication.user;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -44,7 +45,7 @@ public class RentCycle extends BaseActivity {
     String text=""; // Whatever you need to encode in the QR code
     private String cycleBrand = "Atlas" ;
     private int locationId = 1 ;
-    private int ownerId = 1 ;
+    private int ownerId = 1;
     private String accessToken = "47420131-3f37-4bd0-b811" ;
 
     @Override
@@ -52,7 +53,8 @@ public class RentCycle extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rent_cycle);
         onCreateDrawer();
-
+        //ownerId = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ID,"-1"));
+        accessToken =PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ACCESS_TOKEN,"null");
         if(text.isEmpty()){
             sendJsonString();
         }

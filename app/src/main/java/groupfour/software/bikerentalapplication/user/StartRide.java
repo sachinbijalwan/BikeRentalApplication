@@ -2,6 +2,7 @@ package groupfour.software.bikerentalapplication.user;
 
 import android.content.Intent;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,7 +52,7 @@ public class StartRide extends AppCompatActivity {
 
     RideCycle rideCycle ;
 
-    private String accessToken = "47420131-3f37-4bd0-b811" ;
+    private String accessToken  ;
 
 
 
@@ -66,6 +67,8 @@ public class StartRide extends AppCompatActivity {
         rideEndTime = findViewById(R.id.rideEndtime);
         Intent intent = getIntent();
         cycleId = intent.getStringExtra("cycleId");
+        //personID = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ID,"null");
+        accessToken =PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ACCESS_TOKEN,"null");
 
         getStartTimeRequest(accessToken, cycleId, personID);
         rideEnd.setOnClickListener(new View.OnClickListener() {
