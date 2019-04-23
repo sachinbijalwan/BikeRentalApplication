@@ -139,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
                             getSharedPreferences(Constants.PREFERENCES,Context.MODE_PRIVATE).edit().putString(Constants.STORED_ACCESS_TOKEN,session.getAccessToken()).apply();
 
                             //TODO: change it
-                            getSharedPreferences(Constants.PREFERENCES,Context.MODE_PRIVATE).edit().putInt(Constants.STORED_ID,1).apply();
+                            //getSharedPreferences(Constants.PREFERENCES,Context.MODE_PRIVATE).edit().putInt(Constants.STORED_ID,1).apply();
                             Log.d("Login",session.getIdentity());
                             getSharedPreferences(Constants.PREFERENCES,Context.MODE_PRIVATE).edit().putString(Constants.STORED_ROLE,UserModel.UserRole.NORMAL_USER.toString()).apply();
                             //   PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().putString(Constants.ACCESS_TOKEN,).apply();
@@ -150,6 +150,8 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("USERID", username.getText().toString());
                             editor.apply();
                             if (username.getText().toString().equals("adminadmin")) {
+                                getSharedPreferences(Constants.PREFERENCES,Context.MODE_PRIVATE).edit().putString(Constants.STORED_ROLE,UserModel.UserRole.ADMIN.toString()).apply();
+
                                 Intent intent = new Intent(getApplicationContext(), AdminCycle.class);
                                 startActivity(intent);
                             } else {

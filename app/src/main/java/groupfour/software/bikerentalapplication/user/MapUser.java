@@ -285,7 +285,7 @@ public class MapUser extends FragmentActivity implements OnMapReadyCallback,Navi
                 activity=5;
                 SharedPreferences preferences =getSharedPreferences(Constants.PREFERENCES,Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.clear();
+                editor.remove(Constants.STORED_ACCESS_TOKEN);
                 editor.commit();
                 Log.d("Loginjkl","moving from here");
                 //editor.remove(Constants.STORED_ACCESS_TOKEN);

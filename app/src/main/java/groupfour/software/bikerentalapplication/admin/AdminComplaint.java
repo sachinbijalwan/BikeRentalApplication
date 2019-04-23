@@ -1,6 +1,8 @@
 package groupfour.software.bikerentalapplication.admin;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +29,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -53,19 +56,21 @@ public class AdminComplaint extends BaseActivity {
         //for more info see https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
         ArrayList<Complaint> complaints=new ArrayList<Complaint>();
         addcomplaint(complaints);
-        ComplaintAdapter adapter=new ComplaintAdapter(this,complaints);
+      //  ComplaintAdapter adapter=new ComplaintAdapter(getBaseContext(),complaints);
         ListView lview=findViewById(R.id.admin_lv);
-        lview.setAdapter(adapter);
+       // lview.setAdapter(adapter);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_complaint);
-        accessToken = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ACCESS_TOKEN,"null");
+        SharedPreferences preferences =getSharedPreferences(Constants.PREFERENCES,Context.MODE_PRIVATE);
+
+        accessToken = preferences.getString(Constants.STORED_ACCESS_TOKEN,"null");
         sendRequest();
         //resolveComplaint("2");
         onCreateDrawer();
-        setComplaint();
+        //setComplaint();
     }
 
     public void sendRequest() {
@@ -76,12 +81,15 @@ public class AdminComplaint extends BaseActivity {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        System.out.print("Response : " + response);
+                        //System.out.print("Response : " + response);
+                        Log.e("VOLLEY","RESPONSE "+response);
                         ObjectMapper objectMapper = new ObjectMapper();
                         try {
                             ComplaintModel[] complaintModels = objectMapper.readValue(response, ComplaintModel[].class);
                             List<ComplaintModel> complaintList = Arrays.asList(complaintModels);
-
+                            ComplaintAdapter adapter=new ComplaintAdapter(getBaseContext(),complaintList);
+                            ListView lview=findViewById(R.id.admin_lv);
+                            lview.setAdapter(adapter);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -113,6 +121,7 @@ public class AdminComplaint extends BaseActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String>  params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
+                Log.e("VOLLEY",accessToken);
 
 
                 return params;

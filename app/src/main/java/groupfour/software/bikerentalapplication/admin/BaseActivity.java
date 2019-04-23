@@ -177,7 +177,8 @@ public class BaseActivity extends AppCompatActivity
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
                 SharedPreferences settings = getApplication().getSharedPreferences("USER", 0);
-                settings.edit().clear().commit();
+                settings.edit().remove(Constants.STORED_ACCESS_TOKEN);
+                settings.edit().commit();
             }
         }
 
