@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                Intent intent = new Intent(getApplicationContext(), ForgotPass.class);
+                Intent intent = new Intent(getApplicationContext(), Signup.class);
                 startActivity(intent);
             }
         });
@@ -75,19 +75,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
                 if (isDetailsCorrect(username.getText().toString(), password.getText().toString())) {
-                    SharedPreferences settings = getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
-                    SharedPreferences.Editor editor = settings.edit();
-                    editor.putString("USERID", username.getText().toString());
-                    editor.apply();
+
 
                     sendRequest();
-                    if (username.getText().toString().equals("admin")) {
-                        Intent intent = new Intent(getApplicationContext(), AdminCycle.class);
-                        startActivity(intent);
-                    } else {
-                        Intent intent = new Intent(getApplicationContext(), MapUser.class);
-                        startActivity(intent);
-                    }
+
                 } else {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
                     builder1.setTitle("Failed to Log In");
@@ -135,8 +126,17 @@ public class LoginActivity extends AppCompatActivity {
                             //   PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().putString(Constants.ACCESS_TOKEN,).apply();
                             //PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().putString("ID",userModel.getPersonId()).apply();
                             Log.e("Volley","running 2");
-
-
+                            SharedPreferences settings = getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
+                            SharedPreferences.Editor editor = settings.edit();
+                            editor.putString("USERID", username.getText().toString());
+                            editor.apply();
+                            if (username.getText().toString().equals("admin")) {
+                                Intent intent = new Intent(getApplicationContext(), AdminCycle.class);
+                                startActivity(intent);
+                            } else {
+                                Intent intent = new Intent(getApplicationContext(), MapUser.class);
+                                startActivity(intent);
+                            }
 
                         }
 

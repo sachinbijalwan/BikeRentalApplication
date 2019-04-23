@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.text.InputType;
 import android.util.Log;
@@ -87,8 +88,10 @@ public class Feedback extends BaseActivity {
                 ComplaintModel complaint=new ComplaintModel();
                 complaint.setDetails(text);
                 complaint.setCycleId(Integer.parseInt(qrcode));
+                int id;
+                PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getInt(Constants.STORED_ID,id)
                 //TODO: change it
-                complaint.setPersonId(1);
+                complaint.setPersonId(id);
                 String url=Constants.COMPLAINTS;
                 ObjectMapper objectMapper = new ObjectMapper();
                 String jsonStr = null;
@@ -128,7 +131,7 @@ public class Feedback extends BaseActivity {
         });*/
     }
     public void sendRequest(final String requestBody,String url2){
-        String url= "http://" + Constants.IPSERVER + "/" +url2;
+        String url= Constants.IPSERVER + "/" +url2;
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {

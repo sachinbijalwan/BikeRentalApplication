@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 
 import android.os.Bundle;
 
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -172,8 +173,7 @@ public class BaseActivity extends AppCompatActivity
                 Intent i=new Intent(getApplicationContext(), LoginActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
-                SharedPreferences settings = getApplication().getSharedPreferences("USER", 0);
-                settings.edit().clear().commit();
+                PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().clear().commit();
             }
         }else if (id == R.id.user_map) {
             if(activity!=6){
