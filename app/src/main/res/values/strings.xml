@@ -19,6 +19,6 @@
         <item>Tire air problem</item>
         <item>Brakes problem</item>
 
-        </string-array>
+    </string-array>
     <string name="problem">SELECT YOUR PROBLEM HERE</string>
 </resources>

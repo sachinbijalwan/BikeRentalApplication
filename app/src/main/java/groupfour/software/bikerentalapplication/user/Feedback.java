@@ -2,7 +2,9 @@ package groupfour.software.bikerentalapplication.user;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -44,6 +46,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import groupfour.software.bikerentalapplication.Models.ComplaintModel;
 import groupfour.software.bikerentalapplication.Models.PersonModel;
@@ -70,41 +76,53 @@ public class Feedback extends BaseActivity {
         setContentView(R.layout.activity_feedback);
         onCreateDrawer();
         // Get a reference to the AutoCompleteTextView in the layout
-//        textView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
-//// Get the string array
-//        String[] problems = getResources().getStringArray(R.array.cycle_problem);
-//// Create the adapter and set it to the AutoCompleteTextView
-//        ArrayAdapter<String> adapter =
-//                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, problems);
-//        textView.setAdapter(adapter);
-//        initViews();
-//        //textView.setInputType(InputType.TYPE_NULL);
-//        Button button = findViewById(R.id.btnsubmitcomplaint);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                // Code here executes on main thread after user presses button
-//                String text=textView.getText().toString();
-//                String qrcode=txtBarcodeValue.getText().toString();
-//                ComplaintModel complaint=new ComplaintModel();
-//                complaint.setDetails(text);
-//                complaint.setCycleId(Integer.parseInt(qrcode));
-//                int id = 1;
-//                PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getInt(Constants.STORED_ID,id);
-//                //TODO: change it
-//                complaint.setPersonId(id);
-//                String url=Constants.COMPLAINTS;
-//                ObjectMapper objectMapper = new ObjectMapper();
-//                String jsonStr = null;
-//                try {
-//                    jsonStr = objectMapper.writeValueAsString(complaint);
-//                } catch (JsonProcessingException e) {
-//                    e.printStackTrace();
-//                }
-//                sendRequest(jsonStr,url);
-//                Log.d("JSONSTR",jsonStr);
-//
-//            }
-//        });
+
+        textView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
+// Get the string array
+        String[] problems = getResources().getStringArray(R.array.cycle_problem);
+// Create the adapter and set it to the AutoCompleteTextView
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, problems);
+        textView.setAdapter(adapter);
+        initViews();
+        //textView.setInputType(InputType.TYPE_NULL);
+        Button button = findViewById(R.id.btnsubmitcomplaint);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                String text=textView.getText().toString();
+                Log.d("Loginjkl","text "+text);
+                String qrcode=txtBarcodeValue.getText().toString();
+                if(qrcode.equals("SCAN QR CODE")){
+                    Toast.makeText(getBaseContext(),"SCAN CYCLE FIRST",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                ComplaintModel complaint=new ComplaintModel();
+                complaint.setDetails(text);
+                try {
+                    complaint.setCycleId(Integer.parseInt(qrcode));
+                }
+                catch (NumberFormatException e){
+                    ;//complaint.setCycleId(1);
+                }
+                int id;
+                id=PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getInt(Constants.STORED_ID,-1);
+                //TODO: change it
+                complaint.setPersonId(id);
+                complaint.setDetails(textView.getText().toString());
+                String url=Constants.COMPLAINTS;
+                ObjectMapper objectMapper = new ObjectMapper();
+                String jsonStr = null;
+                try {
+                    jsonStr = objectMapper.writeValueAsString(complaint);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+                sendRequest(jsonStr,url);
+                Log.d("JSONSTR",jsonStr);
+
+            }
+        });
 
     }
 
@@ -138,7 +156,8 @@ public class Feedback extends BaseActivity {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-
+                        Log.d("Loginjkl",response);
+                        Toast.makeText(getBaseContext(),"Complaint Recorded",Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -159,6 +178,14 @@ public class Feedback extends BaseActivity {
                     VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
                     return null;
                 }
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String,String>();
+                SharedPreferences preferences =getSharedPreferences(Constants.PREFERENCES,Context.MODE_PRIVATE);
+                params.put("Access_Token",preferences.getString(Constants.STORED_ACCESS_TOKEN,""));
+                return params;
             }
 
             @Override

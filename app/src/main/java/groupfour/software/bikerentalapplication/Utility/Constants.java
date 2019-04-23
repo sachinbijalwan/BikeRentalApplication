@@ -17,4 +17,6 @@ public class Constants {
     public static final String STORED_USERNAME="USERNAME";
     public static final String STORED_EMAIL="EMAIL";
     public static final String STORED_ACCESS_TOKEN="ACCESS_TOKEN";
+    public static final String STORED_ROLE="ROLE";
+    public static final String PREFERENCES="shared";
 }

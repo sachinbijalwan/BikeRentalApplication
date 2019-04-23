@@ -1,5 +1,6 @@
 package groupfour.software.bikerentalapplication.login;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,6 +31,7 @@ import java.util.Map;
 
 import groupfour.software.bikerentalapplication.Models.PersonModel;
 import groupfour.software.bikerentalapplication.Models.Session;
+import groupfour.software.bikerentalapplication.Models.UserModel;
 import groupfour.software.bikerentalapplication.R;
 import groupfour.software.bikerentalapplication.Utility.Constants;
 import groupfour.software.bikerentalapplication.admin.AdminCycle;
@@ -49,6 +51,19 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        if(!getSharedPreferences(Constants.PREFERENCES,Context.MODE_PRIVATE).getString(Constants.STORED_ACCESS_TOKEN,"").isEmpty()){
+            Log.d("Loginjkl",getSharedPreferences(Constants.PREFERENCES,Context.MODE_PRIVATE).getString(Constants.STORED_ACCESS_TOKEN,""));
+            if(getSharedPreferences(Constants.PREFERENCES,Context.MODE_PRIVATE).getString(Constants.STORED_ROLE,"USER_NAME").equals("ADMIN")){
+                Intent intent = new Intent(getApplicationContext(), AdminCycle.class);
+                startActivity(intent);
+                finish();
+            }
+            else{
+                Intent intent = new Intent(getApplicationContext(), MapUser.class);
+                startActivity(intent);
+                finish();
+            }
+        }
 
         username = findViewById(R.id.login_username);
         password = findViewById(R.id.login_password);
@@ -121,9 +136,12 @@ public class LoginActivity extends AppCompatActivity {
                             session = objectMapper.readValue(response, Session.class);
                             Log.e("Volley","running");
                             //userModel.setPersonId(personModel_1.getId());
-                            PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().putString(Constants.STORED_ACCESS_TOKEN,session.getAccessToken()).apply();
+                            getSharedPreferences(Constants.PREFERENCES,Context.MODE_PRIVATE).edit().putString(Constants.STORED_ACCESS_TOKEN,session.getAccessToken()).apply();
 
-                            PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().putString(Constants.STORED_ID,session.getIdentity()).apply();
+                            //TODO: change it
+                            getSharedPreferences(Constants.PREFERENCES,Context.MODE_PRIVATE).edit().putInt(Constants.STORED_ID,1).apply();
+                            Log.d("Login",session.getIdentity());
+                            getSharedPreferences(Constants.PREFERENCES,Context.MODE_PRIVATE).edit().putString(Constants.STORED_ROLE,UserModel.UserRole.NORMAL_USER.toString()).apply();
                             //   PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().putString(Constants.ACCESS_TOKEN,).apply();
                             //PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().putString("ID",userModel.getPersonId()).apply();
                             Log.e("Volley","running 2");
@@ -131,8 +149,8 @@ public class LoginActivity extends AppCompatActivity {
                             SharedPreferences.Editor editor = settings.edit();
                             editor.putString("USERID", username.getText().toString());
                             editor.apply();
-                            if (username.getText().toString().equals("admin")) {
-                                Intent intent = new Intent(getApplicationContext(), AdminLocation.class);
+                            if (username.getText().toString().equals("adminadmin")) {
+                                Intent intent = new Intent(getApplicationContext(), AdminCycle.class);
                                 startActivity(intent);
                             } else {
                                 Intent intent = new Intent(getApplicationContext(), MapUser.class);
