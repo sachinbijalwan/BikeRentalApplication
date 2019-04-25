@@ -2,7 +2,6 @@ package groupfour.software.bikerentalapplication.admin;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,11 +28,6 @@ import java.util.Map;
 
 import groupfour.software.bikerentalapplication.R;
 import groupfour.software.bikerentalapplication.models.ComplaintModel;
-import groupfour.software.bikerentalapplication.models.PersonModel;
-import groupfour.software.bikerentalapplication.models.Session;
-import groupfour.software.bikerentalapplication.models.UserInformationModel;
-import groupfour.software.bikerentalapplication.models.UserModel;
-import groupfour.software.bikerentalapplication.user.MapUser;
 import groupfour.software.bikerentalapplication.utility.Constants;
 
 public class ComplaintAdapter extends ArrayAdapter<ComplaintModel> {
@@ -89,10 +83,11 @@ public class ComplaintAdapter extends ArrayAdapter<ComplaintModel> {
         return convertView;
     }
 
-    public void createResolveComplaintRequest() {
+    private void createResolveComplaintRequest() {
         String url = Constants.IPSERVER + Constants.COMPLAINTS;
         RequestQueue queue = Volley.newRequestQueue(context);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 ObjectMapper objectMapper = new ObjectMapper();
@@ -111,6 +106,7 @@ public class ComplaintAdapter extends ArrayAdapter<ComplaintModel> {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("ADG", error.toString());
                 Toast
                         .makeText(context, "Complaint not resolved " + error.toString(), Toast.LENGTH_SHORT)
                         .show();
@@ -119,18 +115,18 @@ public class ComplaintAdapter extends ArrayAdapter<ComplaintModel> {
         }) {
             @Override
             public Map<String, String> getHeaders() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> headers = new HashMap<>();
                 String accessToken = context
                         .getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
                         .getString(Constants.STORED_ACCESS_TOKEN, "");
-                params.put("Access_Token", accessToken);
-                params.put("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
-                return params;
+                headers.put("Access_Token", accessToken);
+                headers.put("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+                return headers;
             }
 
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("complaintId", String.valueOf(complaint.getId()));
                 return params;
             }

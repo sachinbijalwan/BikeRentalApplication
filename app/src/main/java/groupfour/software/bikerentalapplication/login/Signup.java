@@ -135,10 +135,6 @@ public class Signup extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Intent intent = new Intent(getApplicationContext(), OTP.class);
-        intent.putExtra("username", username.getText().toString());
-        startActivity(intent);
-
     }
 
     private void sendPersonDetails(final String requestBody) {
@@ -163,6 +159,10 @@ public class Signup extends AppCompatActivity {
                     Toast
                             .makeText(getApplicationContext(), "Personal Details Created", Toast.LENGTH_SHORT)
                             .show();
+
+                    Intent intent = new Intent(getApplicationContext(), OTP.class);
+                    intent.putExtra("username", username.getText().toString());
+                    startActivity(intent);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
