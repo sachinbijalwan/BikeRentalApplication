@@ -13,11 +13,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -33,16 +33,20 @@ import java.util.Map;
 import java.util.Objects;
 
 import groupfour.software.bikerentalapplication.R;
+import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.login.ChangePasswordActivity;
 import groupfour.software.bikerentalapplication.login.LoginActivity;
-import groupfour.software.bikerentalapplication.utility.Constants;
 
 public class UserBaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    DrawerLayout drawer;
+    private DrawerLayout drawer;
+    private TextView navTitle, navSubtitle ;
+    private String username, email ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
     }
 
@@ -59,9 +63,14 @@ public class UserBaseActivity extends AppCompatActivity implements NavigationVie
     }
 
     protected void onCreateDrawer() {
+        onCreateDrawer(R.id.drawer_layout_user, R.id.nav_view_user);
+    }
+
+    protected void onCreateDrawer(int drawerLayout, int NavLayout) {
+
         final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
-        drawer = findViewById(R.id.drawer_layout_user);
+        drawer = findViewById(drawerLayout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
 
             @Override
@@ -78,7 +87,20 @@ public class UserBaseActivity extends AppCompatActivity implements NavigationVie
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view_user);
+        NavigationView navigationView = findViewById(NavLayout);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = headerView.findViewById(R.id.nav_header_title);
+        TextView navEmail = headerView.findViewById(R.id.nav_header_subtitle);
+        String username = Objects.requireNonNull(getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.STORED_USERNAME, "batman"));
+        String email = Objects.requireNonNull(getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.STORED_EMAIL, "batman@iitrpr.ac.in"));
+        navUsername.setText(username);
+        System.out.println("email " + email);
+        navEmail.setText(email);
+
+
+
         navigationView.setNavigationItemSelectedListener(this);
         Drawable icon = getDrawable(R.drawable.ic_motorcycle_black_24dp);
         ImageButton navButton = Objects.requireNonNull(getNavButtonView(toolbar));
@@ -108,9 +130,6 @@ public class UserBaseActivity extends AppCompatActivity implements NavigationVie
         switch (id) {
             case R.id.ride_cycle:
                 intent = new Intent(getApplicationContext(), RideCycle.class);
-                break;
-            case R.id.past_trips:
-                intent = new Intent(getApplicationContext(), PastTrips.class);
                 break;
             case R.id.feedback:
                 intent = new Intent(getApplicationContext(), Feedback.class);

@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical"
-    android:weightSum="13"
+    android:weightSum="15"
     tools:context=".login.ChangePasswordActivity">
 
     <EditText
@@ -52,7 +52,7 @@
         android:background="@drawable/textbox"
         android:ems="10"
         android:hint="OTP"
-        android:inputType="textPassword"
+        android:inputType="number"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
 
@@ -79,17 +79,25 @@
 
     <TextView
         android:id="@+id/forgot_pass_got_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_margin="20dip"
+        android:layout_weight="1"
         android:text="@string/forgot_pass_username_waiting"
-        android:textSize="20dp" />
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/forgot_pass_got_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_margin="20dip"
+        android:layout_weight="1"
         android:text="@string/forgot_pass_password_waiting"
-        android:textSize="20dp" />
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
 
 </LinearLayout>

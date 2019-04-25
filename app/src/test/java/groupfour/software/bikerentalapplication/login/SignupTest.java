@@ -13,7 +13,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SignupTest {
-    Signup testObject = new Signup();
+    private final Signup testObject = new Signup();
 
     @Test
     public void validateEmailWrongCase(){

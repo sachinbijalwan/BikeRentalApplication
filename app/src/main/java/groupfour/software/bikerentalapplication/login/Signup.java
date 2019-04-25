@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -82,7 +83,7 @@ public class Signup extends AppCompatActivity {
         });
     }
 
-    public String validationResult() {
+    private String validationResult() {
         String emailText = email.getText().toString();
         String phoneNo = phone.getText().toString();
 
@@ -115,7 +116,7 @@ public class Signup extends AppCompatActivity {
         return mobile.matches("\\d{10}");
     }
 
-    public void startOTP() {
+    private void startOTP() {
         String jsonStr;
         PersonModel personModel = new PersonModel();
         personModel.setEmail(email.getText().toString());
@@ -140,7 +141,7 @@ public class Signup extends AppCompatActivity {
 
     }
 
-    public void sendPersonDetails(final String requestBody) {
+    private void sendPersonDetails(final String requestBody) {
         String url = Constants.IPSERVER + Constants.PERSON;
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -156,6 +157,7 @@ public class Signup extends AppCompatActivity {
                             .putInt(Constants.STORED_ID, personModel.getId())
                             .apply();
                     jsonStr = objectMapper.writeValueAsString(userModel);
+                    Log.d("ADG",jsonStr);
 
                     sendUserDetails(jsonStr);
                     Toast
@@ -189,7 +191,7 @@ public class Signup extends AppCompatActivity {
 
     }
 
-    public void sendUserDetails(final String requestBody) {
+    private void sendUserDetails(final String requestBody) {
         String url = Constants.IPSERVER + Constants.USER;
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -218,16 +220,12 @@ public class Signup extends AppCompatActivity {
             }
 
 
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return super.getHeaders();
-            }
         };
 
         queue.add(stringRequest);
     }
 
-    public String validateSignup(String errorMessage) {
+    private String validateSignup(String errorMessage) {
         String passwordText = password.getText().toString();
         String confirmPasswordText = confirmPassword.getText().toString();
 

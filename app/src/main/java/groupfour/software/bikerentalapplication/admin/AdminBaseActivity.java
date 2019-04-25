@@ -16,8 +16,12 @@ public class AdminBaseActivity extends UserBaseActivity implements NavigationVie
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.admin_main, menu);
+        getMenuInflater().inflate(R.menu.activity_admin_main_drawer, menu);
         return true;
+    }
+
+    protected void onCreateDrawer() {
+        onCreateDrawer(R.id.drawer_layout, R.id.nav_view);
     }
 
     @Override
@@ -37,6 +41,7 @@ public class AdminBaseActivity extends UserBaseActivity implements NavigationVie
             case R.id.logout:
                 logout();
                 break;
+
         }
 
         if (intent != null) {
@@ -44,7 +49,7 @@ public class AdminBaseActivity extends UserBaseActivity implements NavigationVie
             startActivity(intent);
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout_user);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

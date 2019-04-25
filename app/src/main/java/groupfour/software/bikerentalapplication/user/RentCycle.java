@@ -42,6 +42,7 @@ import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.models.CycleInfo;
 
 public class RentCycle extends UserBaseActivity {
+
     String text = ""; // Whatever you need to encode in the QR code
     private String PREFS_NAME  = "USER";
     private String cycleBrand  = "Atlas";
@@ -49,11 +50,13 @@ public class RentCycle extends UserBaseActivity {
     private String    ownerId   ;
     private String accessToken ;
     private TextView cycleId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rent_cycle);
         onCreateDrawer();
+
         //ownerId = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ID,"-1"));
         accessToken = Objects.requireNonNull(getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
                 .getString(Constants.STORED_ACCESS_TOKEN, ""));
@@ -67,7 +70,7 @@ public class RentCycle extends UserBaseActivity {
 
     }
 
-    public void writeqrcode() {
+    private void writeqrcode() {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         ImageView imageView = findViewById(R.id.imgqrcode);
         try {
@@ -80,7 +83,7 @@ public class RentCycle extends UserBaseActivity {
         }
     }
 
-    public void sendJsonString() {
+    private void sendJsonString() {
         CycleInfo cycleInfo = new CycleInfo();
         cycleInfo.setBrand(cycleBrand);
         cycleInfo.setLocationId(locationId);
@@ -109,7 +112,7 @@ public class RentCycle extends UserBaseActivity {
                 .show();
     }
 
-    public void sendRequest(final String requestBody) {
+    private void sendRequest(final String requestBody) {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         String url = Constants.IPSERVER + Constants.CYCLE;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -141,13 +144,13 @@ public class RentCycle extends UserBaseActivity {
             }
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 return requestBody == null ? null : requestBody.getBytes(StandardCharsets.UTF_8);
 
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
                 params.put("Content-Type", "application/json");

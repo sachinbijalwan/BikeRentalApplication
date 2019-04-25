@@ -2,6 +2,7 @@ package groupfour.software.bikerentalapplication.user;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -22,25 +23,28 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import groupfour.software.bikerentalapplication.R;
+import groupfour.software.bikerentalapplication.utility.Constants;
 
 public class RideCycle extends UserBaseActivity {
 
-    private static final int REQUEST_CAMERA_PERMISSION = 201;
-    SurfaceView surfaceView;
-    TextView    txtBarcodeValue;
-    Button      btnAction;
-    String      intentData = "";
-    boolean     isEmail    = false;
-    private BarcodeDetector barcodeDetector;
-    private CameraSource    cameraSource;
+    private static final int             REQUEST_CAMERA_PERMISSION = 201;
+    private              SurfaceView     surfaceView;
+    private              TextView        txtBarcodeValue;
+    private              Button          btnAction;
+    private              String          intentData                = "";
+    private              boolean         isEmail                   = false;
+    private              BarcodeDetector barcodeDetector;
+    private              CameraSource    cameraSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride_cycle);
         onCreateDrawer();
+
         initViews();
     }
 

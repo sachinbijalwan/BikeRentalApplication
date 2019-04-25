@@ -50,6 +50,7 @@ public class StartRide extends AppCompatActivity {
     private String accessToken;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +69,7 @@ public class StartRide extends AppCompatActivity {
         getStartTimeRequest(accessToken, cycleId, personID);
         rideEnd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                getEndTimeRequest(Integer.toString(rideCycle.getId()), "1");
+                getEndTimeRequest(Integer.toString(rideCycle.getId()));
 
             }
         });
@@ -120,7 +121,7 @@ public class StartRide extends AppCompatActivity {
             }
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("startLocationId", "1");
                 params.put("cycleId", cycleId);
@@ -143,7 +144,7 @@ public class StartRide extends AppCompatActivity {
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
                 params.put("Content-Type", "application/x-www-form-urlencoded");
@@ -157,7 +158,7 @@ public class StartRide extends AppCompatActivity {
         queue.add(jsonObjRequest);
     }
 
-    private void getEndTimeRequest(final String rideId, final String endLocationId) {
+    private void getEndTimeRequest(final String rideId) {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
         String url = Constants.IPSERVER + Constants.RIDE + Constants.RIDE_END;
@@ -208,9 +209,9 @@ public class StartRide extends AppCompatActivity {
             }
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("endLocationId", endLocationId);
+                params.put("endLocationId", "1");
                 params.put("rideId", rideId);
 
                 return params;
@@ -231,7 +232,7 @@ public class StartRide extends AppCompatActivity {
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
                 params.put("Content-Type", "application/x-www-form-urlencoded");

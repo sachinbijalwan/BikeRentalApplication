@@ -55,19 +55,20 @@ public class Feedback extends UserBaseActivity {
 
     private static final int REQUEST_CAMERA_PERMISSION = 201;
 
-    SurfaceView          surfaceView;
-    TextView             txtBarcodeValue;
-    String               intentData;
-    AutoCompleteTextView textView;
+    private SurfaceView surfaceView;
+    private TextView txtBarcodeValue;
+    private String intentData;
+    private AutoCompleteTextView textView;
 
-    private BarcodeDetector barcodeDetector;
-    private CameraSource    cameraSource;
-    private String personID ;
-    private String accessToken ;
+    private CameraSource cameraSource;
+    private String personID;
+    private String accessToken;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
+
         onCreateDrawer();
         textView = findViewById(R.id.autoCompleteTextView);
         accessToken = Objects.requireNonNull(getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
@@ -91,9 +92,9 @@ public class Feedback extends UserBaseActivity {
                 ComplaintModel complaint = new ComplaintModel();
                 complaint.setDetails(text);
                 try {
-                    complaint.setCycleId(Integer.parseInt(qrCode));
+                    complaint.setCycleId(Integer.parseInt(intentData));
                 } catch (NumberFormatException e) {
-                    Toast.makeText(getApplicationContext(), "QR Code Value invalid: " + qrCode, Toast.LENGTH_SHORT);
+                    Toast.makeText(getApplicationContext(), "QR Code Value invalid: " + intentData, Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -118,8 +119,8 @@ public class Feedback extends UserBaseActivity {
         surfaceView = findViewById(R.id.surfaceView);
     }
 
-    public void sendRequest(final String requestBody, String url2) {
-        String url = Constants.IPSERVER  + url2;
+    private void sendRequest(final String requestBody, String url2) {
+        String url = Constants.IPSERVER + url2;
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -139,13 +140,14 @@ public class Feedback extends UserBaseActivity {
             }
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 return requestBody == null ? null : requestBody.getBytes(StandardCharsets.UTF_8);
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
+
                 params.put("Access_Token", accessToken);
                 return params;
             }
@@ -170,7 +172,7 @@ public class Feedback extends UserBaseActivity {
     }
 
     private void initialiseDetectorsAndSources() {
-        barcodeDetector = new BarcodeDetector.Builder(this)
+        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE)
                 .build();
 

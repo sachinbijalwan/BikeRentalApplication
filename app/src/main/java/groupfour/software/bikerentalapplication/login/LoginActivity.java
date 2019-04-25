@@ -27,6 +27,7 @@ import java.util.Objects;
 import javax.net.ssl.HttpsURLConnection;
 
 import groupfour.software.bikerentalapplication.R;
+import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.admin.AdminCycle;
 import groupfour.software.bikerentalapplication.models.PersonModel;
 import groupfour.software.bikerentalapplication.models.Session;
@@ -87,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void createSessionRequest() {
+    private void createSessionRequest() {
         String url = Constants.IPSERVER + Constants.SESSION;
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -108,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString(Constants.STORED_ACCESS_TOKEN, session.getAccessToken());
                     editor.putString(Constants.STORED_ROLE, user.getRole().toString());
                     editor.putString(Constants.STORED_PERSON_ID, String.valueOf(person.getId()));
+                    editor.putString(Constants.STORED_EMAIL, person.getEmail());
 
                     editor.apply();
 
