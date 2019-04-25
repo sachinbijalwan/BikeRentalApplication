@@ -124,7 +124,7 @@ public class ComplaintAdapter extends ArrayAdapter<ComplaintModel> {
                         .getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
                         .getString(Constants.STORED_ACCESS_TOKEN, "");
                 params.put("Access_Token", accessToken);
-                params.put("Content-Type", "application/json");
+                params.put("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
                 return params;
             }
 

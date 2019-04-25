@@ -1,6 +1,7 @@
 package groupfour.software.bikerentalapplication.admin;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -51,9 +52,8 @@ public class AdminTransfer extends AdminBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_transfer);
-        accessToken = PreferenceManager
-                .getDefaultSharedPreferences(getBaseContext())
-                .getString(Constants.STORED_ACCESS_TOKEN, "null");
+        accessToken = getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.STORED_ACCESS_TOKEN, "");
         destinationID = findViewById(R.id.destinationId);
         submit = findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
