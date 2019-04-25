@@ -1,71 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="groupfour.software.bikerentalapplication.login.Signup"
+    android:background="@color/backgroundcolor"
+    android:gravity="center"
     android:orientation="vertical"
     android:weightSum="15"
-    android:background="@color/backgroundcolor"
-    android:gravity="center">
+    tools:context="groupfour.software.bikerentalapplication.login.Signup">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/textbox_foreground"
-        android:text="Please enter the following details"
         android:layout_marginHorizontal="50dip"
-        android:textSize="18dip"/>
+        android:text="Please enter the following details"
+        android:textColor="@color/textbox_foreground"
+        android:textSize="18dip" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <EditText
         android:id="@+id/sign_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Username(Atleast 8 characters)"
-        android:textColorHint="@color/black"
         android:layout_marginHorizontal="50dip"
-        android:textColor="@color/black"
         android:background="@drawable/textbox"
-        />
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
+
+    <EditText
+        android:id="@+id/sign_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dip"
+        android:background="@drawable/textbox"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" />
+
     <EditText
         android:id="@+id/sign_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:hint="Email address of IIT Ropar"
-        android:textColorHint="@color/black"
         android:layout_marginHorizontal="50dip"
-        android:textColor="@color/black"
         android:background="@drawable/textbox"
-        />
+        android:ems="10"
+        android:hint="Email address of IIT Ropar"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
+
     <EditText
         android:id="@+id/sign_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        android:hint="Mobile Number"
-        android:textColorHint="@color/black"
         android:layout_marginHorizontal="50dip"
-        android:textColor="@color/black"
         android:background="@drawable/textbox"
-        />
+        android:ems="10"
+        android:hint="Mobile Number"
+        android:inputType="number"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
 
     <View
@@ -81,7 +99,7 @@
         android:layout_marginHorizontal="50dip"
         android:background="@drawable/textbox"
         android:ems="10"
-        android:hint="Password (Atleast 8 characters)"
+        android:hint="Password"
         android:inputType="textPassword"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -107,15 +125,15 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="2"/>
+        android:layout_weight="2" />
 
     <Button
-        android:id="@+id/sign_sign"
+        android:id="@+id/sign_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SIGN IN"
-        android:textColor="@color/white"
         android:layout_marginHorizontal="90dip"
-        android:background="@drawable/high_priority_button"/>
+        android:background="@drawable/high_priority_button"
+        android:text="SIGN UP"
+        android:textColor="@color/white" />
 
 </LinearLayout>

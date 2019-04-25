@@ -3,50 +3,46 @@ package groupfour.software.bikerentalapplication.login;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AlertDialog.Builder;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import groupfour.software.bikerentalapplication.Models.PersonModel;
-import groupfour.software.bikerentalapplication.Models.UserModel;
 import groupfour.software.bikerentalapplication.R;
 import groupfour.software.bikerentalapplication.Utility.Constants;
+import groupfour.software.bikerentalapplication.models.PersonModel;
+import groupfour.software.bikerentalapplication.models.UserModel;
 
 public class Signup extends AppCompatActivity {
 
-    private EditText username , email , phone,password,confirm_password;
-    private Button signIn ;
-    private PersonModel personModel_1;
-    private UserModel userModel;
-    private static final String PROTOCOL_CHARSET = "utf-8";
+    private EditText username;
+    private EditText name;
+    private EditText email;
+    private EditText phone;
+    private EditText password;
+    private EditText confirmPassword;
+
+    private PersonModel personModel;
+    private UserModel   userModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,170 +50,127 @@ public class Signup extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         username = findViewById(R.id.sign_username);
+        name = findViewById(R.id.sign_name);
         email = findViewById(R.id.sign_email);
-
-        signIn = findViewById(R.id.sign_sign);
         phone = findViewById(R.id.sign_phone);
-        password=findViewById(R.id.otp_password);
-        confirm_password=findViewById(R.id.otp_confirm_password);
-        confirm_password=findViewById(R.id.otp_confirm_password);
-        signIn.setOnClickListener(new View.OnClickListener() {
+        password = findViewById(R.id.otp_password);
+        confirmPassword = findViewById(R.id.otp_confirm_password);
+
+        Button signUp = findViewById(R.id.sign_up);
+
+        signUp.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                String errorMessage = validation() ;
-                if (errorMessage.equals("ok")){
-                    startotp();
+                String errorMessage = validationResult();
+                if (errorMessage.equals("ok")) {
+                    startOTP();
+                } else {
+                    Builder builder = new Builder(Signup.this);
+                    builder.setTitle("Invalid Details");
+                    builder.setMessage(errorMessage);
+                    builder.setCancelable(true);
 
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
                 }
-                else {
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(Signup.this);
-                    builder1.setTitle("Invalid Details");
-                    builder1.setMessage(errorMessage);
-                    builder1.setCancelable(true);
-
-                    builder1.setPositiveButton(
-                            "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-
-
-                    AlertDialog alert11 = builder1.create();
-                    alert11.show();
-                }
-
             }
         });
-
-
     }
 
-    public String validation(){
-        String usernameText = username.getText().toString();
+    public String validationResult() {
         String emailText = email.getText().toString();
+        String phoneNo = phone.getText().toString();
 
-        String phoneNo = phone.getText().toString() ;
-        String errorMessage = "ok" ;
+        String errorMessage = "ok";
 
-        if (!validateUsername(usernameText)){
-            errorMessage = "Username length at least 8 " ;
-        }
-        else if (!validateEmail(emailText)){
-            errorMessage = "Invalid Email" ;
-        }
-
-
-        else if (!validatePhone(phoneNo)){
+        if (!validateEmail(emailText)) {
+            errorMessage = "Invalid Email";
+        } else if (!validatePhone(phoneNo)) {
             errorMessage = "Invalid Phone number";
         }
-        errorMessage=validationlogin(errorMessage);
-        return errorMessage ;
-
+        errorMessage = validateSignup(errorMessage);
+        return errorMessage;
 
     }
 
-    public boolean validateEmail(String email){
+    public boolean validateEmail(String email) {
         String regex = "^(.+)@(.+)$";
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
-        if (matcher.matches()){
-            String domain = "iitrpr.ac.in" ;
-            return email.endsWith(domain) ;
+        if (matcher.matches()) {
+            String domain = "iitrpr.ac.in";
+            return email.endsWith(domain);
         }
-        return false ;
-
-    }
-
-    public boolean validateUsername(String username){
-         return (username.length() > 7) ;
-
+        return false;
     }
 
 
-    public boolean validatePhone(String mobile){
-        return mobile.matches("\\d{10}") ;
+    public boolean validatePhone(String mobile) {
+        return mobile.matches("\\d{10}");
     }
 
-    public void startotp(){
+    public void startOTP() {
         String jsonStr;
-        PersonModel personModel=new PersonModel();
+        PersonModel personModel = new PersonModel();
         personModel.setEmail(email.getText().toString());
         personModel.setContactNumber(Long.parseLong(phone.getText().toString()));
-        personModel.setName(username.getText().toString());
+        personModel.setName(name.getText().toString());
         ObjectMapper objectMapper = new ObjectMapper();
 
-
-        userModel=new UserModel();
+        userModel = new UserModel();
         userModel.setUsername(username.getText().toString());
         userModel.setRole(UserModel.UserRole.NORMAL_USER);
         userModel.setPassword(password.getText().toString());
         try {
-
-            String url = Constants.PERSON;
-            // get Oraganisation object as a json string
             jsonStr = objectMapper.writeValueAsString(personModel);
-            sendRequest(jsonStr,url);
-
-
-        }
-
-        catch (IOException e) {
+            sendPersonDetails(jsonStr);
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         Intent intent = new Intent(getApplicationContext(), OTP.class);
-        intent.putExtra("name",username.getText().toString());
-        intent.putExtra("email",email.getText().toString());
-        intent.putExtra("username",username.getText().toString());
-        intent.putExtra("phone",phone.getText().toString());
+        intent.putExtra("username", username.getText().toString());
         startActivity(intent);
 
     }
-    public void sendRequest(final String requestBody,String url2){
-        String url=  Constants.IPSERVER + "/" +url2;
+
+    public void sendPersonDetails(final String requestBody) {
+        String url = Constants.IPSERVER + Constants.PERSON;
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        ObjectMapper objectMapper = new ObjectMapper();
-                        try {
-                            Log.e("Volley",response+" 1");
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                try {
+                    personModel = objectMapper.readValue(response, PersonModel.class);
+                    String jsonStr;
+                    userModel.setPersonId(personModel.getId());
+                    getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+                            .edit()
+                            .putInt(Constants.STORED_ID, personModel.getId())
+                            .apply();
+                    jsonStr = objectMapper.writeValueAsString(userModel);
 
-                            // get Organisation object as a json string
-                            personModel_1 = objectMapper.readValue(response, PersonModel.class);
-                            Log.e("Volley","running");
-                            String jsonStr;
-                            String url=Constants.USER;
-                            jsonStr=null;
-                            userModel.setPersonId(personModel_1.getId());
-                            getSharedPreferences(Constants.PREFERENCES,Context.MODE_PRIVATE).edit().putInt(Constants.STORED_ID,personModel_1.getId()).apply();
-                            //   PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().putString(Constants.ACCESS_TOKEN,).apply();
-                            //PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().putString("ID",userModel.getPersonId()).apply();
-                            Log.e("Volley","running 2");
-
-                            jsonStr=objectMapper.writeValueAsString(userModel);
-                            Log.e("Volley","running 3");
-
-                            sendRequest2(jsonStr,url);
-                            Log.e("Volley","running 4");
-
-                        }
-
-                        catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        // System.out.print(response);
-                        //Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
-                    }
-                }, new Response.ErrorListener() {
+                    sendUserDetails(jsonStr);
+                    Toast
+                            .makeText(getApplicationContext(), "Personal Details Created", Toast.LENGTH_SHORT)
+                            .show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("VOLLEY", error.toString());
+                Toast
+                        .makeText(getApplicationContext(), "Unable to create Personal Details", Toast.LENGTH_SHORT)
+                        .show();
             }
         }) {
             @Override
@@ -227,39 +180,31 @@ public class Signup extends AppCompatActivity {
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                try {
-                    return requestBody == null ? null : requestBody.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                    return null;
-                }
+                return requestBody == null ? null : requestBody.getBytes(StandardCharsets.UTF_8);
             }
-
 
         };
 
-// Add the request to the RequestQueue.
         queue.add(stringRequest);
-        //Log.e("Volley","queue "+stringRequest.toString());
 
     }
 
-    public void sendRequest2(final String requestBody,String url2){
-        String url= Constants.IPSERVER + "/" +url2;
+    public void sendUserDetails(final String requestBody) {
+        String url = Constants.IPSERVER + Constants.USER;
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        Log.e("Volley",response+" 2");
-                        // System.out.print(response);
-                        //Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
-                    }
-                }, new Response.ErrorListener() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast
+                        .makeText(getApplicationContext(), "Login Credentials Sent Successfully.", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("VOLLEY", error.toString());
+                Toast
+                        .makeText(getApplicationContext(), "Unable to Send Login Credentials", Toast.LENGTH_SHORT)
+                        .show();
             }
         }) {
             @Override
@@ -268,49 +213,28 @@ public class Signup extends AppCompatActivity {
             }
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
-                try {
-                    return requestBody == null ? null : requestBody.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                    return null;
-                }
+            public byte[] getBody() {
+                return requestBody == null ? null : requestBody.getBytes(StandardCharsets.UTF_8);
             }
 
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String>  params = new HashMap<String, String>();
-
                 return super.getHeaders();
             }
         };
 
-// Add the request to the RequestQueue.
         queue.add(stringRequest);
-        //Log.e("Volley","queue "+stringRequest.toString());
-
     }
-    public String validationlogin(String errorMessage){
 
-
+    public String validateSignup(String errorMessage) {
         String passwordText = password.getText().toString();
+        String confirmPasswordText = confirmPassword.getText().toString();
 
-        String confirmPasswordText = confirm_password.getText().toString();
-
-        if (!validatePassword(passwordText)){
-            errorMessage = "Invalid Password" ;
+        if (!(passwordText.equals(confirmPasswordText))) {
+            errorMessage = "Password doesn't match";
         }
-        else if (!(passwordText.equals(confirmPasswordText))){
-            errorMessage = "Password doesn't match" ;
-        }
-        return errorMessage ;
-
+        return errorMessage;
     }
 
-
-    public boolean validatePassword(String password){
-        return (password.length() > 7) ;
-
-    }
 }
