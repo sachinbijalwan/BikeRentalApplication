@@ -24,7 +24,7 @@ import java.io.IOException;
 
 import groupfour.software.bikerentalapplication.R;
 
-public class RideCycle extends BaseActivity {
+public class RideCycle extends UserBaseActivity {
 
     private static final int REQUEST_CAMERA_PERMISSION = 201;
     SurfaceView surfaceView;

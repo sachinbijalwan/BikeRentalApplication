@@ -24,8 +24,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import groupfour.software.bikerentalapplication.R;
-import groupfour.software.bikerentalapplication.Utility.Constants;
 import groupfour.software.bikerentalapplication.admin.AdminCycle;
 import groupfour.software.bikerentalapplication.models.PersonModel;
 import groupfour.software.bikerentalapplication.models.Session;
@@ -33,6 +34,7 @@ import groupfour.software.bikerentalapplication.models.UserInformationModel;
 import groupfour.software.bikerentalapplication.models.UserModel;
 import groupfour.software.bikerentalapplication.models.UserModel.UserRole;
 import groupfour.software.bikerentalapplication.user.MapUser;
+import groupfour.software.bikerentalapplication.utility.Constants;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -65,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
 
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Signup.class);
+                Intent intent = new Intent(getApplicationContext(), ForgotPasswordActivity.class);
                 startActivity(intent);
             }
         });
@@ -104,7 +106,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     editor.putString(Constants.STORED_USERNAME, session.getIdentity());
                     editor.putString(Constants.STORED_ACCESS_TOKEN, session.getAccessToken());
-                    editor.putString(Constants.STORED_ROLE, UserRole.NORMAL_USER.toString());
+                    editor.putString(Constants.STORED_ROLE, user.getRole().toString());
+                    editor.putString(Constants.STORED_PERSON_ID, String.valueOf(person.getId()));
 
                     editor.apply();
 
@@ -130,7 +133,15 @@ public class LoginActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show();
+                if (error.networkResponse.statusCode == HttpsURLConnection.HTTP_UNAUTHORIZED) {
+                    Toast
+                            .makeText(getApplicationContext(), "Invalid Credentials", Toast.LENGTH_LONG)
+                            .show();
+                } else {
+                    Toast
+                            .makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_LONG)
+                            .show();
+                }
             }
         }) {
             @Override

@@ -45,10 +45,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import groupfour.software.bikerentalapplication.R;
-import groupfour.software.bikerentalapplication.Utility.Constants;
+import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.models.ComplaintModel;
 
-public class Feedback extends BaseActivity {
+public class Feedback extends UserBaseActivity {
 
     private static final String PROTOCOL_CHARSET = "utf-8";
 

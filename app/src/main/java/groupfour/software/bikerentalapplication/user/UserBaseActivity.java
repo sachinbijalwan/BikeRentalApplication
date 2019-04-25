@@ -13,19 +13,31 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import groupfour.software.bikerentalapplication.R;
-import groupfour.software.bikerentalapplication.Utility.Constants;
+import groupfour.software.bikerentalapplication.login.ChangePasswordActivity;
 import groupfour.software.bikerentalapplication.login.LoginActivity;
+import groupfour.software.bikerentalapplication.utility.Constants;
 
-public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class UserBaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawer;
 
@@ -71,13 +83,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         Drawable icon = getDrawable(R.drawable.ic_motorcycle_black_24dp);
         ImageButton navButton = Objects.requireNonNull(getNavButtonView(toolbar));
         navButton.setImageDrawable(icon);
-        navButton.setColorFilter(getResources().getColor(R.color.white, null));
+        navButton.setColorFilter(getResources().getColor(R.color.white));
     }
 
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.END);
+            drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -85,7 +97,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.admin_main, menu);
+        getMenuInflater().inflate(R.menu.activity_user_main_drawer, menu);
         return true;
     }
 
@@ -109,17 +121,11 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             case R.id.stop_rent:
                 intent = new Intent(getApplicationContext(), StopRent.class);
                 break;
+            case R.id.nav_change_pass:
+                intent = new Intent(getApplicationContext(), ChangePasswordActivity.class);
+                break;
             case R.id.logout:
-                SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.remove(Constants.STORED_ACCESS_TOKEN);
-                editor.remove(Constants.STORED_USERNAME);
-                editor.remove(Constants.STORED_EMAIL);
-                editor.remove(Constants.STORED_ID);
-                editor.remove(Constants.STORED_ROLE);
-                editor.apply();
-                drawer.closeDrawer(GravityCompat.START);
-                intent = new Intent(getApplicationContext(), LoginActivity.class);
+                logout();
                 break;
             case R.id.user_map:
                 intent = new Intent(getApplicationContext(), MapUser.class);
@@ -135,6 +141,49 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = findViewById(R.id.drawer_layout_user);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    protected void logout() {
+        String url = Constants.IPSERVER + Constants.SESSION;
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getApplicationContext(), "Logged out", Toast.LENGTH_SHORT).show();
+                logoutPreferences();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast
+                        .makeText(getApplicationContext(), "Unable to logout", Toast.LENGTH_SHORT)
+                        .show();
+            }
+
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Access_Token", Objects.requireNonNull(getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+                        .getString(Constants.STORED_ACCESS_TOKEN, "")));
+                return headers;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    protected void logoutPreferences() {
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove(Constants.STORED_ACCESS_TOKEN);
+        editor.remove(Constants.STORED_USERNAME);
+        editor.remove(Constants.STORED_EMAIL);
+        editor.remove(Constants.STORED_ID);
+        editor.remove(Constants.STORED_ROLE);
+        editor.apply();
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
 

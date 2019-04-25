@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Username or email"
+        android:hint="Username"
         android:textColorHint="@color/black"
         android:layout_marginHorizontal="50dip"
         android:textColor="@color/black"
