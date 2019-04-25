@@ -1,8 +1,8 @@
 package groupfour.software.bikerentalapplication.admin;
 
-public class Cycle {
-    private String cycleid;
-    private String locationid;
+class Cycle {
+    private final String cycleid;
+    private final String locationid;
 
     Cycle(String cid, String lid) {
         cycleid = cid;

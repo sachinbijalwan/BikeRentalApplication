@@ -31,5 +31,6 @@ public class Constants {
     public static final String STORED_PERSON_ID    = "PERSON_ID";
 
     /* App Permissions */
-    public static final int REQUEST_MAP_PERMISSIONS = 1;
+    public static final  int REQUEST_MAP_PERMISSIONS   = 1;
+    private static final int REQUEST_CAMERA_PERMISSION = 2;
 }

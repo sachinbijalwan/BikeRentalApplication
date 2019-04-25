@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void createSessionRequest() {
+    private void createSessionRequest() {
         String url = Constants.IPSERVER + Constants.SESSION;
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

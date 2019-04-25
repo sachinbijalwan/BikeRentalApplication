@@ -39,9 +39,4 @@ public class PastTrips extends UserBaseActivity {
         queue.add(myReq);
     }
 
-    //TODO: Complete this
-    public void attachresponsetolist(String response) {
-
-    }
-
 }

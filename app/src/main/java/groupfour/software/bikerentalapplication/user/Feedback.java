@@ -43,6 +43,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import groupfour.software.bikerentalapplication.R;
 import groupfour.software.bikerentalapplication.utility.Constants;
@@ -54,12 +55,11 @@ public class Feedback extends UserBaseActivity {
 
     private static final int REQUEST_CAMERA_PERMISSION = 201;
 
-    SurfaceView          surfaceView;
-    TextView             txtBarcodeValue;
-    String               intentData;
-    AutoCompleteTextView textView;
+    private SurfaceView          surfaceView;
+    private TextView             txtBarcodeValue;
+    private String               intentData;
+    private AutoCompleteTextView textView;
 
-    private BarcodeDetector barcodeDetector;
     private CameraSource    cameraSource;
 
     @Override
@@ -113,7 +113,7 @@ public class Feedback extends UserBaseActivity {
         surfaceView = findViewById(R.id.surfaceView);
     }
 
-    public void sendRequest(final String requestBody, String url2) {
+    private void sendRequest(final String requestBody, String url2) {
         String url = Constants.IPSERVER  + url2;
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -134,15 +134,15 @@ public class Feedback extends UserBaseActivity {
             }
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 return requestBody == null ? null : requestBody.getBytes(StandardCharsets.UTF_8);
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
-                params.put("Access_Token", preferences.getString(Constants.STORED_ACCESS_TOKEN, ""));
+                params.put("Access_Token", Objects.requireNonNull(preferences.getString(Constants.STORED_ACCESS_TOKEN, "")));
                 return params;
             }
 
@@ -166,7 +166,7 @@ public class Feedback extends UserBaseActivity {
     }
 
     private void initialiseDetectorsAndSources() {
-        barcodeDetector = new BarcodeDetector.Builder(this)
+        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE)
                 .build();
 

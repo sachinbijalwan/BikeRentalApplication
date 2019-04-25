@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.lang.reflect.Field;
+import java.util.Objects;
 
 import groupfour.software.bikerentalapplication.R;
 import groupfour.software.bikerentalapplication.utility.Constants;
@@ -33,8 +34,6 @@ import groupfour.software.bikerentalapplication.utility.Constants;
 public class MapUser extends UserBaseActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
 
     private GoogleMap                   mMap;
-    private LocationManager             locationManager;
-    private FusedLocationProviderClient fusedLocationClient;
     private boolean                     addMarker = false;
 
     @Override
@@ -43,9 +42,9 @@ public class MapUser extends UserBaseActivity implements OnMapReadyCallback, Nav
         setContentView(R.layout.activity_map_user);
         onCreateDrawer();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        Objects.requireNonNull(mapFragment).getMapAsync(this);
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat
                 .checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, Constants.REQUEST_MAP_PERMISSIONS);
@@ -129,8 +128,8 @@ public class MapUser extends UserBaseActivity implements OnMapReadyCallback, Nav
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
                 float slideX = drawerView.getWidth() * slideOffset;
-                getNavButtonView(toolbar).setZ(20);
-                getNavButtonView(toolbar).setTranslationX(slideX);
+                Objects.requireNonNull(getNavButtonView(toolbar)).setZ(20);
+                Objects.requireNonNull(getNavButtonView(toolbar)).setTranslationX(slideX);
             }
         };
         drawer.addDrawerListener(toggle);
@@ -139,8 +138,8 @@ public class MapUser extends UserBaseActivity implements OnMapReadyCallback, Nav
         NavigationView navigationView = findViewById(R.id.nav_view_user);
         navigationView.setNavigationItemSelectedListener(this);
         Drawable icon = getDrawable(R.drawable.ic_motorcycle_black_24dp);
-        getNavButtonView(toolbar).setImageDrawable(icon);
-        getNavButtonView(toolbar).setColorFilter(getResources().getColor(android.R.color.white));
+        Objects.requireNonNull(getNavButtonView(toolbar)).setImageDrawable(icon);
+        Objects.requireNonNull(getNavButtonView(toolbar)).setColorFilter(getResources().getColor(android.R.color.white));
 
     }
 
@@ -149,9 +148,8 @@ public class MapUser extends UserBaseActivity implements OnMapReadyCallback, Nav
             Class<?> toolbarClass = Toolbar.class;
             Field navButtonField = toolbarClass.getDeclaredField("mNavButtonView");
             navButtonField.setAccessible(true);
-            ImageButton navButtonView = (ImageButton) navButtonField.get(toolbar);
 
-            return navButtonView;
+            return (ImageButton) navButtonField.get(toolbar);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }

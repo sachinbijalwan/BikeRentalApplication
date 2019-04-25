@@ -44,15 +44,14 @@ import groupfour.software.bikerentalapplication.utility.Constants;
 
 public class StopRent extends UserBaseActivity {
 
-    private static final int REQUEST_CAMERA_PERMISSION = 201;
-    SurfaceView surfaceView;
-    TextView    txtBarcodeValue;
-    Button      btnAction;
-    String      intentData = "";
-    boolean     isEmail    = false;
-    private BarcodeDetector barcodeDetector;
-    private CameraSource    cameraSource;
-    private String          accessToken;
+    private static final int             REQUEST_CAMERA_PERMISSION = 201;
+    private              SurfaceView     surfaceView;
+    private              TextView        txtBarcodeValue;
+    private              Button          btnAction;
+    private              String          intentData                = "";
+    private              boolean         isEmail                   = false;
+    private              CameraSource    cameraSource;
+    private              String          accessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +83,7 @@ public class StopRent extends UserBaseActivity {
 
         // Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
 
-        barcodeDetector = new BarcodeDetector.Builder(this)
+        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE)
                 .build();
 
@@ -178,7 +177,7 @@ public class StopRent extends UserBaseActivity {
         initialiseDetectorsAndSources();
     }
 
-    public void sendRequest(int cycleId) {
+    private void sendRequest(int cycleId) {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         String url = Constants.IPSERVER + Constants.CYCLE + "/" + cycleId;
         StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
@@ -224,7 +223,7 @@ public class StopRent extends UserBaseActivity {
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
                 params.put("Content-Type", "application/json");

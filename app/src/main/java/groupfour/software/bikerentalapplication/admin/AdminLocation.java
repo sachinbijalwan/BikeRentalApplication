@@ -46,7 +46,6 @@ public class AdminLocation extends AdminBaseActivity {
 
     private static final int      REQUEST_LOCATION_PERMISSION = 1;
     private              EditText locationName, latitude, longitude;
-    private Button submit;
     private String name, lat, longi;
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -65,7 +64,7 @@ public class AdminLocation extends AdminBaseActivity {
         latitude = findViewById(R.id.latitude);
         longitude = findViewById(R.id.longitude);
 
-        submit = findViewById(R.id.submit);
+        Button submit = findViewById(R.id.submit);
 
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -78,8 +77,8 @@ public class AdminLocation extends AdminBaseActivity {
 
     }
 
-    public void postAdminLocation() {
-        String              jsonStr       = null;
+    private void postAdminLocation() {
+        String              jsonStr;
         final LocationModel locationModel = new LocationModel();
 
         locationModel.setName(locationName.getText().toString());
@@ -139,7 +138,7 @@ public class AdminLocation extends AdminBaseActivity {
 
     }
 
-    public void sendRequest(final String requestBody) {
+    private void sendRequest(final String requestBody) {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         String       url   = Constants.IPSERVER +  Constants.LOCATION;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -176,7 +175,7 @@ public class AdminLocation extends AdminBaseActivity {
             }
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 return requestBody == null ? null : requestBody.getBytes(StandardCharsets.UTF_8);
 
             }
@@ -198,7 +197,7 @@ public class AdminLocation extends AdminBaseActivity {
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
                 params.put("Content-Type", "application/json");

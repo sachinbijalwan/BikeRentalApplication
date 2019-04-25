@@ -69,7 +69,7 @@ public class AdminComplaint extends AdminBaseActivity {
         //setComplaint();
     }
 
-    public void sendRequest() {
+    private void sendRequest() {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         String url = Constants.IPSERVER + Constants.COMPLAINTS;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -111,7 +111,7 @@ public class AdminComplaint extends AdminBaseActivity {
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
                 Log.e("VOLLEY", accessToken);
@@ -168,7 +168,7 @@ public class AdminComplaint extends AdminBaseActivity {
             }
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("complaintId", complaintId);
 
@@ -190,7 +190,7 @@ public class AdminComplaint extends AdminBaseActivity {
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
                 params.put("Content-Type", "application/x-www-form-urlencoded");

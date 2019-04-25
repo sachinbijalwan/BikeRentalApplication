@@ -11,15 +11,13 @@ import org.mockito.Mock;
 import org.junit.Test;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static com.google.common.truth.Truth.assertThat;
-
 
 @RunWith(MockitoJUnitRunner.class)
 
 public class OTPTest {
 
-    private OTP testObject = new OTP();
-    @Mock  EditText password, otp, confirmPassword ;
+    private final OTP      testObject = new OTP();
+    @Mock         EditText password, otp, confirmPassword ;
     @Mock  Editable pswdText, otpText, confirmPasswordEditText ;
 
     @Test
