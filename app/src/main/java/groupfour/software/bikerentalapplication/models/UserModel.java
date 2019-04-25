@@ -1,15 +1,10 @@
-package groupfour.software.bikerentalapplication.Models;
+package groupfour.software.bikerentalapplication.models;
 
 public class UserModel {
-    public  enum UserRole {
-        ADMIN,
-        NORMAL_USER
-    }
-
-    String username;
-    String password;
-    UserRole role;
-    int personId;
+    private String   username;
+    private String   password;
+    private UserRole role;
+    private int      personId;
 
     public String getUsername() {
         return username;
@@ -41,5 +36,9 @@ public class UserModel {
 
     public void setPersonId(int personId) {
         this.personId = personId;
+    }
+
+    public enum UserRole {
+        ADMIN, NORMAL_USER
     }
 }

@@ -1,11 +1,12 @@
-package groupfour.software.bikerentalapplication.Models;
+package groupfour.software.bikerentalapplication.models;
 
 import java.util.Date;
 
 public class Session {
-    String accessToken;
-    String identity;
-    Date created;
+
+    private String accessToken;
+    private String identity;
+    private Date   created;
 
     public String getAccessToken() {
         return accessToken;

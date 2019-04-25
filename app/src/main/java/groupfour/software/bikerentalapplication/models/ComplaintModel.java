@@ -1,20 +1,16 @@
-package groupfour.software.bikerentalapplication.Models;
+package groupfour.software.bikerentalapplication.models;
 
 import java.util.Date;
 
 public class ComplaintModel {
 
-    public enum ComplaintStatus {
-        RESOLVED,
-        UNRESOLVED
-    }
-    String details;
-    int cycleId;
-    int personId;
-    int id;
+    private String          details;
+    private int             cycleId;
+    private int             personId;
+    private int             id;
     private ComplaintStatus status;
-    private Date startTime;
-    private Date endTime;
+    private Date            startTime;
+    private Date            endTime;
 
     public int getId() {
         return id;
@@ -70,5 +66,9 @@ public class ComplaintModel {
 
     public void setPersonId(int personId) {
         this.personId = personId;
+    }
+
+    public enum ComplaintStatus {
+        RESOLVED, UNRESOLVED
     }
 }

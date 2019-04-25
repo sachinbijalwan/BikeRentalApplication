@@ -1,10 +1,11 @@
-package groupfour.software.bikerentalapplication.Models;
+package groupfour.software.bikerentalapplication.models;
 
 public class LocationModel {
-    private int id ;
-    private String name ;
-    private double latitude ;
-    private double longitude ;
+
+    private int    id;
+    private String name;
+    private double latitude;
+    private double longitude;
 
     public int getId() {
         return id;

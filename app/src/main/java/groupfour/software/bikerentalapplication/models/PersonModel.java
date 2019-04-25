@@ -1,12 +1,11 @@
-package groupfour.software.bikerentalapplication.Models;
+package groupfour.software.bikerentalapplication.models;
 
 public class PersonModel {
-    int id;
 
-    public String name;
-    public long contactNumber;
-    String email;
-
+    private String name;
+    private long   contactNumber;
+    private int    id;
+    private String email;
 
     public String getName() {
         return name;

@@ -1,11 +1,12 @@
-package groupfour.software.bikerentalapplication.Models;
+package groupfour.software.bikerentalapplication.models;
 
 public class CycleInfo {
-    private int id ;
-    private String brand ;
-    private int locationId;
-    private int ownerId;
-    private int status ;
+
+    private int    id;
+    private String brand;
+    private int    locationId;
+    private int    ownerId;
+    private int    status;
 
     public int getStatus() {
         return status;
