@@ -1,11 +1,13 @@
 package groupfour.software.bikerentalapplication.user;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -33,6 +35,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import groupfour.software.bikerentalapplication.R;
 import groupfour.software.bikerentalapplication.utility.Constants;
@@ -43,18 +46,20 @@ public class RentCycle extends UserBaseActivity {
     private String PREFS_NAME  = "USER";
     private String cycleBrand  = "Atlas";
     private int    locationId  = 1;
-    private int    ownerId     = 1;
-    private String accessToken = "47420131-3f37-4bd0-b811";
-
+    private String    ownerId   ;
+    private String accessToken ;
+    private TextView cycleId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rent_cycle);
         onCreateDrawer();
         //ownerId = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ID,"-1"));
-        accessToken = PreferenceManager
-                .getDefaultSharedPreferences(getBaseContext())
-                .getString(Constants.STORED_ACCESS_TOKEN, "null");
+        accessToken = Objects.requireNonNull(getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.STORED_ACCESS_TOKEN, ""));
+        ownerId = Objects.requireNonNull(getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.STORED_PERSON_ID, ""));
+        cycleId = findViewById(R.id.cycleID);
         if (text.isEmpty()) {
             sendJsonString();
         }
@@ -79,7 +84,7 @@ public class RentCycle extends UserBaseActivity {
         CycleInfo cycleInfo = new CycleInfo();
         cycleInfo.setBrand(cycleBrand);
         cycleInfo.setLocationId(locationId);
-        cycleInfo.setOwnerId(ownerId);
+        cycleInfo.setOwnerId(Integer.parseInt(ownerId));
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -117,6 +122,7 @@ public class RentCycle extends UserBaseActivity {
                     // get Oraganisation object as a json string
                     CycleInfo cycleInfo = objectMapper.readValue(response, CycleInfo.class);
                     text = Integer.toString(cycleInfo.getId());
+                    cycleId.setText("Cycle id " + text);
                     writeqrcode();
 
                 } catch (IOException e) {

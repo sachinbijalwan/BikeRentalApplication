@@ -43,6 +43,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import groupfour.software.bikerentalapplication.R;
 import groupfour.software.bikerentalapplication.utility.Constants;
@@ -61,13 +62,18 @@ public class Feedback extends UserBaseActivity {
 
     private BarcodeDetector barcodeDetector;
     private CameraSource    cameraSource;
-
+    private String personID ;
+    private String accessToken ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
         onCreateDrawer();
         textView = findViewById(R.id.autoCompleteTextView);
+        accessToken = Objects.requireNonNull(getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.STORED_ACCESS_TOKEN, ""));
+        personID = Objects.requireNonNull(getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.STORED_PERSON_ID, ""));
         String[] problems = getResources().getStringArray(R.array.cycle_problem);
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, problems);
@@ -89,10 +95,9 @@ public class Feedback extends UserBaseActivity {
                 } catch (NumberFormatException e) {
                     Toast.makeText(getApplicationContext(), "QR Code Value invalid: " + qrCode, Toast.LENGTH_SHORT);
                 }
-                int id;
-                id = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getInt(Constants.STORED_ID, -1);
 
-                complaint.setPersonId(id);
+
+                complaint.setPersonId(Integer.parseInt(personID));
                 complaint.setDetails(textView.getText().toString());
                 String url = Constants.COMPLAINTS;
                 ObjectMapper objectMapper = new ObjectMapper();
@@ -141,8 +146,7 @@ public class Feedback extends UserBaseActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
-                params.put("Access_Token", preferences.getString(Constants.STORED_ACCESS_TOKEN, ""));
+                params.put("Access_Token", accessToken);
                 return params;
             }
 

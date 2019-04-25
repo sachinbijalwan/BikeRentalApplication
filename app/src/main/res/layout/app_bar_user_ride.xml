@@ -22,8 +22,49 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_user_ride" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        android:weightSum="9"
+        android:orientation="vertical"
+        android:background="@color/foreground"
+        android:layout_gravity="center">
+
+        <SurfaceView
+            android:id="@+id/surfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="30dip"
+            android:layout_marginTop="60dp"
+
+            android:layout_weight="5"
+            android:paddingTop="30dp" />
+        <TextView
+            android:id="@+id/txtBarcodeValue"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:layout_margin="20dip"
+            android:textAlignment="center"
+            android:text="SCAN QR CODE"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        />
+        <Button
+            android:id="@+id/btnRideNow"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:text="RIDE NOW"
+            android:textColor="@color/white"
+            android:background="@drawable/high_priority_button"
+            android:layout_marginHorizontal="40dip"/>
+    </LinearLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>

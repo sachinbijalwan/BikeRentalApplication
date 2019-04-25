@@ -1,5 +1,6 @@
 package groupfour.software.bikerentalapplication.user;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -33,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import groupfour.software.bikerentalapplication.R;
 import groupfour.software.bikerentalapplication.utility.Constants;
@@ -44,7 +46,7 @@ public class StartRide extends AppCompatActivity {
     private TextView rideTime, rideAmount, rideEndTime;
     private Button rideEnd;
     private String cycleId;
-    private String personID = "2";
+    private String personID ;
     private String accessToken;
 
 
@@ -59,10 +61,10 @@ public class StartRide extends AppCompatActivity {
         Intent intent = getIntent();
         cycleId = intent.getStringExtra("cycleId");
         //personID = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ID,"null");
-        accessToken = PreferenceManager
-                .getDefaultSharedPreferences(getBaseContext())
-                .getString(Constants.STORED_ACCESS_TOKEN, "null");
-
+        accessToken = Objects.requireNonNull(getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+                        .getString(Constants.STORED_ACCESS_TOKEN, ""));
+        personID = Objects.requireNonNull(getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.STORED_PERSON_ID, ""));
         getStartTimeRequest(accessToken, cycleId, personID);
         rideEnd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

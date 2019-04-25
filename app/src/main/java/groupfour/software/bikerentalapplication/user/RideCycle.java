@@ -1,6 +1,7 @@
 package groupfour.software.bikerentalapplication.user;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -102,7 +103,7 @@ public class RideCycle extends UserBaseActivity {
                         cameraSource.start(surfaceView.getHolder());
                         Toast.makeText(getApplicationContext(), "Camera started", Toast.LENGTH_LONG).show();
                     } else {
-                        ActivityCompat.requestPermissions(getParent(), new
+                        ActivityCompat.requestPermissions(RideCycle.this, new
                                 String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
                     }
 
