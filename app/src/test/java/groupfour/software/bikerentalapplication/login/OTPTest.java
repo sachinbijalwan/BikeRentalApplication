@@ -49,7 +49,7 @@ public class OTPTest {
 //        when(confirmPasswordEditText.toString()).thenReturn(cnfmtext);
 //
 //
-//        assertThat(testObject.validation()).isEqualTo("Password doesn't match" );
+//        assertThat(testObject.validationResult()).isEqualTo("Password doesn't match" );
 //
 //    }
 

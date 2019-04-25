@@ -1,10 +1,6 @@
 package groupfour.software.bikerentalapplication.admin;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -12,17 +8,19 @@ import groupfour.software.bikerentalapplication.R;
 
 public class AdminCycle extends BaseActivity {
 
-    private boolean cycle=true;
-    private void addcycles(ArrayList<Cycle> cycles){
+    private boolean cycle = true;
+
+    private void addcycles(ArrayList<Cycle> cycles) {
         cycles.clear();
-        for(int i=0;i<10;i++){
-            cycles.add(new Cycle("Cycle"+i,"LocationModel"+i));
+        for (int i = 0; i < 10; i++) {
+            cycles.add(new Cycle("Cycle" + i, "LocationModel" + i));
         }
     }
-    private void addLocations(ArrayList<Cycle> cycles){
+
+    private void addLocations(ArrayList<Cycle> cycles) {
         cycles.clear();
-        for(int i=0;i<10;i++){
-            cycles.add(new Cycle("LocationModel "+i,"Cycle "+i));
+        for (int i = 0; i < 10; i++) {
+            cycles.add(new Cycle("LocationModel " + i, "Cycle " + i));
         }
     }
 //    private void setCycles(){
@@ -53,13 +51,10 @@ public class AdminCycle extends BaseActivity {
         //setCycles();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String c=extras.getString("cycle");
-            if(c.equals("1"))
-                cycle = true;
-            else
-                cycle=false;
+            String c = extras.getString("cycle");
+            cycle = c.equals("1");
             //The key argument here must match that used in the other activity
-         //   Log.d("AFD","This is cycle "+(c=="1")+" dk "+c);
+            //   Log.d("AFD","This is cycle "+(c=="1")+" dk "+c);
         }
 
 //        if(cycle){

@@ -1,9 +1,7 @@
-
 package groupfour.software.bikerentalapplication.user;
 
 import android.Manifest;
 import android.content.DialogInterface;
-
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -25,11 +23,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -48,16 +44,15 @@ import groupfour.software.bikerentalapplication.Utility.Constants;
 
 public class StopRent extends BaseActivity {
 
-    SurfaceView surfaceView;
-    TextView txtBarcodeValue;
-    private BarcodeDetector barcodeDetector;
-    private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
-    Button btnAction;
-    String intentData = "";
-    boolean isEmail = false;
-
-    private String accessToken ;
+    SurfaceView surfaceView;
+    TextView    txtBarcodeValue;
+    Button      btnAction;
+    String      intentData = "";
+    boolean     isEmail    = false;
+    private BarcodeDetector barcodeDetector;
+    private CameraSource    cameraSource;
+    private String          accessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,14 +66,16 @@ public class StopRent extends BaseActivity {
         txtBarcodeValue = findViewById(R.id.txtBarcodeValue);
         surfaceView = findViewById(R.id.surfaceView);
         btnAction = findViewById(R.id.btnRideNow);
-        accessToken =PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ACCESS_TOKEN,"null");
+        accessToken = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext())
+                .getString(Constants.STORED_ACCESS_TOKEN, "null");
 
 
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                sendRequest(Integer.parseInt(intentData)) ;
+                sendRequest(Integer.parseInt(intentData));
             }
         });
     }
@@ -102,10 +99,11 @@ public class StopRent extends BaseActivity {
                 try {
                     if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                         cameraSource.start(surfaceView.getHolder());
-                        Toast.makeText(getApplicationContext(), "Camera started", Toast.LENGTH_LONG).show();
+                        Toast
+                                .makeText(getApplicationContext(), "Camera started", Toast.LENGTH_LONG)
+                                .show();
                     } else {
-                        ActivityCompat.requestPermissions(getParent(), new
-                                String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+                        ActivityCompat.requestPermissions(getParent(), new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
                     }
 
                 } catch (IOException e) {
@@ -130,7 +128,9 @@ public class StopRent extends BaseActivity {
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-                Toast.makeText(getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
+                Toast
+                        .makeText(getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT)
+                        .show();
             }
 
             @Override
@@ -152,7 +152,7 @@ public class StopRent extends BaseActivity {
                                 //      btnAction.setText("ADD CONTENT TO THE MAIL");
                             } else {
                                 isEmail = false;
-//                                btnAction.setText("LAUNCH URL");
+                                //                                btnAction.setText("LAUNCH URL");
                                 intentData = barcodes.valueAt(0).displayValue;
                                 txtBarcodeValue.setText("Cycle id: " + intentData);
 
@@ -180,32 +180,29 @@ public class StopRent extends BaseActivity {
 
     public void sendRequest(int cycleId) {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String url = Constants.IPSERVER + "/" + Constants.CYCLE + "/" + cycleId;
-        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+        String url = Constants.IPSERVER + Constants.CYCLE + "/" + cycleId;
+        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-                        AlertDialog.Builder builder1 = new AlertDialog.Builder(StopRent.this);
-                        builder1.setTitle("Cycle is deleted");
-                        builder1.setMessage("To add cycle go to Rent App");
-                        builder1.setCancelable(true);
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(StopRent.this);
+                builder1.setTitle("Cycle is deleted");
+                builder1.setMessage("To add cycle go to Rent App");
+                builder1.setCancelable(true);
 
-                        builder1.setPositiveButton(
-                                "OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-
-                        AlertDialog alert11 = builder1.create();
-                        alert11.show();
-
-
+                builder1.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
                     }
-                }, new Response.ErrorListener() {
+                });
+
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+
+
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("VOLLEY", error.toString());
@@ -215,12 +212,10 @@ public class StopRent extends BaseActivity {
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 try {
-                    String jsonString = new String(response.data,
-                            HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                    String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
                     JSONObject jsonResponse = new JSONObject(jsonString);
                     //jsonResponse.put("headers", new JSONObject(response.headers));
-                    return Response.success(jsonResponse.toString(),
-                            HttpHeaderParser.parseCacheHeaders(response));
+                    return Response.success(jsonResponse.toString(), HttpHeaderParser.parseCacheHeaders(response));
                 } catch (UnsupportedEncodingException e) {
                     return Response.error(new ParseError(e));
                 } catch (JSONException je) {

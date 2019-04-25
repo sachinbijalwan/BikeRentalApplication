@@ -21,31 +21,26 @@ public class PastTrips extends BaseActivity {
         onCreateDrawer();
     }
 
-    public void sendRequest(String id){
+    public void sendRequest(String id) {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String uri = String.format("http://"+Constants.IPSERVER+"/"+"ride"+"?personId=%1$s",
-                id);
+        String uri = String.format(Constants.IPSERVER + Constants.RIDE + "?personId=%1$s", id);
 
-        StringRequest myReq = new StringRequest(Request.Method.GET,
-                uri,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+        StringRequest myReq = new StringRequest(Request.Method.GET, uri, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                attachresponsetolist(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-                        attachresponsetolist(response);
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
+            }
+        });
         queue.add(myReq);
     }
+
     //TODO: Complete this
-    public void attachresponsetolist(String response){
+    public void attachresponsetolist(String response) {
 
     }
 

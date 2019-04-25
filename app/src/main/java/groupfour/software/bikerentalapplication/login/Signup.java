@@ -179,7 +179,7 @@ public class Signup extends AppCompatActivity {
             }
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 return requestBody == null ? null : requestBody.getBytes(StandardCharsets.UTF_8);
             }
 

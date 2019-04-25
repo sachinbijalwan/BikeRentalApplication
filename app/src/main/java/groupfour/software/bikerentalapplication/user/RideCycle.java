@@ -21,19 +21,19 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+
 import groupfour.software.bikerentalapplication.R;
 
 public class RideCycle extends BaseActivity {
 
-    SurfaceView surfaceView;
-    TextView txtBarcodeValue;
-    private BarcodeDetector barcodeDetector;
-    private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
-    Button btnAction;
-    String intentData = "";
-    boolean isEmail = false;
-
+    SurfaceView surfaceView;
+    TextView    txtBarcodeValue;
+    Button      btnAction;
+    String      intentData = "";
+    boolean     isEmail    = false;
+    private BarcodeDetector barcodeDetector;
+    private CameraSource    cameraSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +57,7 @@ public class RideCycle extends BaseActivity {
                     Intent intent = new Intent(getApplicationContext(), StartRide.class);
                     intent.putExtra("cycleId", intentData);
                     startActivity(intent);
-                }
-                else {
+                } else {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(RideCycle.this);
                     builder1.setTitle("Invalid CycleId");
                     builder1.setMessage("Please scan QR code one more time");
@@ -101,7 +100,7 @@ public class RideCycle extends BaseActivity {
                 try {
                     if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                         cameraSource.start(surfaceView.getHolder());
-                        Toast.makeText(getApplicationContext(),"Camera started",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Camera started", Toast.LENGTH_LONG).show();
                     } else {
                         ActivityCompat.requestPermissions(getParent(), new
                                 String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
@@ -153,7 +152,7 @@ public class RideCycle extends BaseActivity {
                                 isEmail = false;
 //                                btnAction.setText("LAUNCH URL");
                                 intentData = barcodes.valueAt(0).displayValue;
-                                txtBarcodeValue.setText("Cycle id: "+intentData);
+                                txtBarcodeValue.setText("Cycle id: " + intentData);
 
                             }
                         }

@@ -9,33 +9,31 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import groupfour.software.bikerentalapplication.Models.ComplaintModel;
 import groupfour.software.bikerentalapplication.R;
+import groupfour.software.bikerentalapplication.models.ComplaintModel;
 
 public class ComplaintAdapter extends ArrayAdapter<ComplaintModel> {
     public ComplaintAdapter(Context context, List<ComplaintModel> resource) {
-        super(context, 0,resource);
+        super(context, 0, resource);
     }
 
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ComplaintModel complaint=getItem(position);
+        ComplaintModel complaint = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_admin_complaint, parent, false);
         }
-        TextView usern=convertView.findViewById(R.id.admin_complaint_username);
-        TextView comp=convertView.findViewById(R.id.admin_complaint);
-        String us=String.valueOf(complaint.getPersonId());
-        usern.setText("USER "+us);
-        comp.setText("COMPLAINT "+complaint.getDetails());
-        if(complaint.getStatus()==ComplaintModel.ComplaintStatus.UNRESOLVED){
-            usern.setTypeface(null,Typeface.BOLD);
-            comp.setTypeface(null,Typeface.BOLD);
+        TextView usern = convertView.findViewById(R.id.admin_complaint_username);
+        TextView comp  = convertView.findViewById(R.id.admin_complaint);
+        String   us    = String.valueOf(complaint.getPersonId());
+        usern.setText("USER " + us);
+        comp.setText("COMPLAINT " + complaint.getDetails());
+        if (complaint.getStatus() == ComplaintModel.ComplaintStatus.UNRESOLVED) {
+            usern.setTypeface(null, Typeface.BOLD);
+            comp.setTypeface(null, Typeface.BOLD);
 
         }
         usern.setOnClickListener(new View.OnClickListener() {

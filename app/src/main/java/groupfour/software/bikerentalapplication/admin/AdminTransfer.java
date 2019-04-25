@@ -1,17 +1,12 @@
-
 package groupfour.software.bikerentalapplication.admin;
 
 import android.Manifest;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -32,7 +27,6 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -43,64 +37,57 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import groupfour.software.bikerentalapplication.Models.CycleInfo;
-import groupfour.software.bikerentalapplication.Models.RideCycle;
 import groupfour.software.bikerentalapplication.R;
 import groupfour.software.bikerentalapplication.Utility.Constants;
-import groupfour.software.bikerentalapplication.admin.BaseActivity;
-import groupfour.software.bikerentalapplication.login.LoginActivity;
-import groupfour.software.bikerentalapplication.login.Signup;
 
 public class AdminTransfer extends BaseActivity {
 
-    SurfaceView surfaceView;
-    TextView txtBarcodeValue;
-    EditText destinationID ;
-    Button submit ;
-    private BarcodeDetector barcodeDetector;
-    private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
-    Button btnAction;
-    String intentData = "";
-    boolean isEmail = false;
-    private String accessToken ;
+    SurfaceView surfaceView;
+    TextView    txtBarcodeValue;
+    EditText    destinationID;
+    Button      submit;
+    Button      btnAction;
+    String      intentData = "";
+    boolean     isEmail    = false;
+    private BarcodeDetector barcodeDetector;
+    private CameraSource    cameraSource;
+    private String          accessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_transfer);
-        accessToken = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ACCESS_TOKEN,"null");
+        accessToken = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext())
+                .getString(Constants.STORED_ACCESS_TOKEN, "null");
         destinationID = findViewById(R.id.destinationId);
         submit = findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                if (intentData.equals("")){
+                if (intentData.equals("")) {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(AdminTransfer.this);
                     builder1.setTitle("Invalid CycleId");
                     builder1.setMessage("Please scan QR code once more");
                     builder1.setCancelable(true);
 
-                    builder1.setPositiveButton(
-                            "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
+                    builder1.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
 
 
                     AlertDialog alert11 = builder1.create();
                     alert11.show();
-                }
-                else {
-                    getStartTimeRequest(intentData.substring(0, intentData.length()-1), destinationID.getText().toString());
+                } else {
+                    getStartTimeRequest(intentData.substring(0, intentData.length() - 1), destinationID
+                            .getText()
+                            .toString());
 
                 }
             }
@@ -112,7 +99,7 @@ public class AdminTransfer extends BaseActivity {
     private void initViews() {
         txtBarcodeValue = findViewById(R.id.txtBarcodeValue);
         surfaceView = findViewById(R.id.surfaceView);
-       // btnAction = findViewById(R.id.btnAction);
+        // btnAction = findViewById(R.id.btnAction);
 
 
         /*btnAction.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +121,7 @@ public class AdminTransfer extends BaseActivity {
 
     private void initialiseDetectorsAndSources() {
 
-       // Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
+        // Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
 
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE)
@@ -151,10 +138,11 @@ public class AdminTransfer extends BaseActivity {
                 try {
                     if (ActivityCompat.checkSelfPermission(AdminTransfer.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                         cameraSource.start(surfaceView.getHolder());
-                        Toast.makeText(getApplicationContext(),"Camera started",Toast.LENGTH_LONG).show();
+                        Toast
+                                .makeText(getApplicationContext(), "Camera started", Toast.LENGTH_LONG)
+                                .show();
                     } else {
-                        ActivityCompat.requestPermissions(AdminTransfer.this, new
-                                String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+                        ActivityCompat.requestPermissions(AdminTransfer.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
                     }
 
                 } catch (IOException e) {
@@ -179,7 +167,9 @@ public class AdminTransfer extends BaseActivity {
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-                Toast.makeText(getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
+                Toast
+                        .makeText(getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT)
+                        .show();
             }
 
             @Override
@@ -198,12 +188,12 @@ public class AdminTransfer extends BaseActivity {
                                 intentData = barcodes.valueAt(0).email.address;
                                 txtBarcodeValue.setText(intentData);
                                 isEmail = true;
-                          //      btnAction.setText("ADD CONTENT TO THE MAIL");
+                                //      btnAction.setText("ADD CONTENT TO THE MAIL");
                             } else {
                                 isEmail = false;
-//                                btnAction.setText("LAUNCH URL");
+                                //                                btnAction.setText("LAUNCH URL");
                                 intentData = barcodes.valueAt(0).displayValue;
-                                txtBarcodeValue.setText("Cycle id: "+intentData);
+                                txtBarcodeValue.setText("Cycle id: " + intentData);
 
                             }
                         }
@@ -228,61 +218,58 @@ public class AdminTransfer extends BaseActivity {
     }
 
 
-    private void getStartTimeRequest( final String cycleId, final String newLocation){
+    private void getStartTimeRequest(final String cycleId, final String newLocation) {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
-        String url = Constants.IPSERVER + "/" + Constants.CYCLE + "/" + Constants.CHANGE_LOCATION;
+        String url = Constants.IPSERVER + Constants.CYCLE + Constants.CHANGE_LOCATION;
         StringRequest jsonObjRequest = new StringRequest(
 
-                Request.Method.POST,
-                url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+                Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-                        VolleyLog.d("Volley", "Response: " + response);
-                        AlertDialog.Builder builder1 = new AlertDialog.Builder(AdminTransfer.this);
-                        builder1.setTitle("Location Changed");
+                VolleyLog.d("Volley", "Response: " + response);
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(AdminTransfer.this);
+                builder1.setTitle("Location Changed");
 
-                        builder1.setCancelable(true);
+                builder1.setCancelable(true);
 
-                        builder1.setPositiveButton(
-                                "OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-
-                        AlertDialog alert11 = builder1.create();
-                        alert11.show();
-
-
+                builder1.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
                     }
-                },
-                new Response.ErrorListener() {
+                });
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        VolleyLog.d("Volley", "Error: " + error.getMessage());
-                        error.printStackTrace();
 
-                    }
-                }) {
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("Volley", "Error: " + error.getMessage());
+                error.printStackTrace();
+
+            }
+        }) {
 
             @Override
             public String getBodyContentType() {
                 return "application/x-www-form-urlencoded; charset=UTF-8";
             }
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String>  params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
                 params.put("Content-Type", "application/x-www-form-urlencoded");
 
                 return params;
             }
+
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -290,22 +277,20 @@ public class AdminTransfer extends BaseActivity {
                 params.put("newLocation", "2");
                 return params;
             }
+
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 try {
-                    String jsonString = new String(response.data,
-                            HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                    String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
                     JSONObject jsonResponse = new JSONObject(jsonString);
                     //jsonResponse.put("headers", new JSONObject(response.headers));
-                    return Response.success(jsonResponse.toString(),
-                            HttpHeaderParser.parseCacheHeaders(response));
+                    return Response.success(jsonResponse.toString(), HttpHeaderParser.parseCacheHeaders(response));
                 } catch (UnsupportedEncodingException e) {
                     return Response.error(new ParseError(e));
                 } catch (JSONException je) {
                     return Response.error(new ParseError(je));
                 }
             }
-
 
 
         };

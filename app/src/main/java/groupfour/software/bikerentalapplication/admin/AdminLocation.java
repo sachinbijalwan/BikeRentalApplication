@@ -3,7 +3,6 @@ package groupfour.software.bikerentalapplication.admin;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-
 import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -35,23 +34,24 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-import groupfour.software.bikerentalapplication.Models.LocationModel;
 import groupfour.software.bikerentalapplication.R;
 import groupfour.software.bikerentalapplication.Utility.Constants;
+import groupfour.software.bikerentalapplication.models.LocationModel;
 
 
 public class AdminLocation extends BaseActivity {
 
-    private static final int REQUEST_LOCATION_PERMISSION = 1;
-    private EditText locationName, latitude, longitude;
+    private static final int      REQUEST_LOCATION_PERMISSION = 1;
+    private              EditText locationName, latitude, longitude;
     private Button submit;
     private String name, lat, longi;
     private FusedLocationProviderClient fusedLocationClient;
 
-    private String accessToken  ;
+    private String accessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ public class AdminLocation extends BaseActivity {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         onCreateDrawer();
-        accessToken =PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ACCESS_TOKEN,"null");
+        accessToken = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ACCESS_TOKEN, "null");
 
         locationName = findViewById(R.id.locationName);
         latitude = findViewById(R.id.latitude);
@@ -80,7 +80,7 @@ public class AdminLocation extends BaseActivity {
     }
 
     public void postAdminLocation() {
-        String jsonStr = null;
+        String              jsonStr       = null;
         final LocationModel locationModel = new LocationModel();
 
         locationModel.setName(locationName.getText().toString());
@@ -142,7 +142,7 @@ public class AdminLocation extends BaseActivity {
 
     public void sendRequest(final String requestBody) {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String url =     Constants.IPSERVER + "/" + Constants.LOCATION;
+        String       url   = Constants.IPSERVER +  Constants.LOCATION;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -178,13 +178,8 @@ public class AdminLocation extends BaseActivity {
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                try {
-                    return requestBody == null ? null : requestBody.getBytes("utf-8");
+                return requestBody == null ? null : requestBody.getBytes(StandardCharsets.UTF_8);
 
-                } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                    return null;
-                }
             }
 
             @Override
@@ -205,7 +200,7 @@ public class AdminLocation extends BaseActivity {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String>  params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
                 params.put("Content-Type", "application/json");
 

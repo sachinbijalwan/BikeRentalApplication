@@ -1,11 +1,9 @@
 package groupfour.software.bikerentalapplication.user;
 
 import android.content.Intent;
-import android.os.SystemClock;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -36,25 +34,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import groupfour.software.bikerentalapplication.Models.RideCycle;
 import groupfour.software.bikerentalapplication.R;
 import groupfour.software.bikerentalapplication.Utility.Constants;
+import groupfour.software.bikerentalapplication.models.RideCycle;
 
 public class StartRide extends AppCompatActivity {
 
-    private TextView rideTime, rideAmount, rideEndTime ;
-    private Button rideEnd ;
-    private String cycleId ;
+    RideCycle rideCycle;
+    private TextView rideTime, rideAmount, rideEndTime;
+    private Button rideEnd;
+    private String cycleId;
     private String personID = "2";
-
-
-
-
-    RideCycle rideCycle ;
-
-    private String accessToken  ;
-
-
+    private String accessToken;
 
 
     @Override
@@ -68,12 +59,14 @@ public class StartRide extends AppCompatActivity {
         Intent intent = getIntent();
         cycleId = intent.getStringExtra("cycleId");
         //personID = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ID,"null");
-        accessToken =PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ACCESS_TOKEN,"null");
+        accessToken = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext())
+                .getString(Constants.STORED_ACCESS_TOKEN, "null");
 
         getStartTimeRequest(accessToken, cycleId, personID);
         rideEnd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-             getEndTimeRequest(Integer.toString(rideCycle.getId()), "1");
+                getEndTimeRequest(Integer.toString(rideCycle.getId()), "1");
 
             }
         });
@@ -82,47 +75,42 @@ public class StartRide extends AppCompatActivity {
     }
 
 
-    private void getStartTimeRequest(final String accessToken, final String cycleId, final String personId){
+    private void getStartTimeRequest(final String accessToken, final String cycleId, final String personId) {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
-        String url = Constants.IPSERVER + "/" + Constants.RIDE_START;
+        String url = Constants.IPSERVER + Constants.RIDE + Constants.RIDE_START;
         StringRequest jsonObjRequest = new StringRequest(
 
-                Request.Method.POST,
-                url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+                Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-                        VolleyLog.d("Volley", "Response: " + response);
-                        ObjectMapper objectMapper = new ObjectMapper();
-                        try {
+                VolleyLog.d("Volley", "Response: " + response);
+                ObjectMapper objectMapper = new ObjectMapper();
+                try {
 
-                            // get Oraganisation object as a json string
-                            rideCycle = objectMapper.readValue(response, RideCycle.class);
+                    // get Oraganisation object as a json string
+                    rideCycle = objectMapper.readValue(response, RideCycle.class);
 
-                            DateFormat simple = new SimpleDateFormat("HH:mm:ss");
-                            Date current = new Date(rideCycle.getStartTime());
-                            rideTime.setText("Start time : " + simple.format(current));
+                    DateFormat simple = new SimpleDateFormat("HH:mm:ss");
+                    Date current = new Date(rideCycle.getStartTime());
+                    rideTime.setText("Start time : " + simple.format(current));
 
 
-                        }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                        catch (IOException e) {
-                            e.printStackTrace();
-                        }
+            }
+        }, new Response.ErrorListener() {
 
-                    }
-                },
-                new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("Volley", "Error: " + error.getMessage());
+                error.printStackTrace();
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        VolleyLog.d("Volley", "Error: " + error.getMessage());
-                        error.printStackTrace();
-
-                    }
-                }) {
+            }
+        }) {
 
             @Override
             public String getBodyContentType() {
@@ -137,24 +125,24 @@ public class StartRide extends AppCompatActivity {
                 params.put("personId", personId);
                 return params;
             }
+
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 try {
-                    String jsonString = new String(response.data,
-                            HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                    String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
                     JSONObject jsonResponse = new JSONObject(jsonString);
                     //jsonResponse.put("headers", new JSONObject(response.headers));
-                    return Response.success(jsonResponse.toString(),
-                            HttpHeaderParser.parseCacheHeaders(response));
+                    return Response.success(jsonResponse.toString(), HttpHeaderParser.parseCacheHeaders(response));
                 } catch (UnsupportedEncodingException e) {
                     return Response.error(new ParseError(e));
                 } catch (JSONException je) {
                     return Response.error(new ParseError(je));
                 }
             }
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String>  params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
                 params.put("Content-Type", "application/x-www-form-urlencoded");
 
@@ -167,55 +155,50 @@ public class StartRide extends AppCompatActivity {
         queue.add(jsonObjRequest);
     }
 
-    private void getEndTimeRequest(final String rideId, final String endLocationId){
+    private void getEndTimeRequest(final String rideId, final String endLocationId) {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
-        String url = Constants.IPSERVER + "/" + Constants.RIDE_END;
+        String url = Constants.IPSERVER + Constants.RIDE + Constants.RIDE_END;
         StringRequest jsonObjRequest = new StringRequest(
 
-                Request.Method.POST,
-                url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+                Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-                        VolleyLog.d("Volley", "Response: " + response);
-                        ObjectMapper objectMapper = new ObjectMapper();
-                        try {
+                VolleyLog.d("Volley", "Response: " + response);
+                ObjectMapper objectMapper = new ObjectMapper();
+                try {
 
-                            // get Oraganisation object as a json string
-                            RideCycle rideCycle1 = objectMapper.readValue(response, RideCycle.class);
-                            rideCycle.setEndLocationId(rideCycle1.getEndLocationId());
-                            rideCycle.setEndTime(rideCycle1.getEndTime());
-                            rideCycle.setCost(rideCycle1.getCost());
+                    // get Oraganisation object as a json string
+                    RideCycle rideCycle1 = objectMapper.readValue(response, RideCycle.class);
+                    rideCycle.setEndLocationId(rideCycle1.getEndLocationId());
+                    rideCycle.setEndTime(rideCycle1.getEndTime());
+                    rideCycle.setCost(rideCycle1.getCost());
 
-                            DateFormat simple = new SimpleDateFormat("HH:mm:ss");
-                            Date current = new Date(rideCycle.getEndTime());
+                    DateFormat simple = new SimpleDateFormat("HH:mm:ss");
+                    Date current = new Date(rideCycle.getEndTime());
 
-                            NumberFormat formatter = new DecimalFormat("#0.00");
-                            String cost = formatter.format(rideCycle.getCost());
+                    NumberFormat formatter = new DecimalFormat("#0.00");
+                    String cost = formatter.format(rideCycle.getCost());
 
-                            rideEndTime.setText("Ride End time : " + simple.format(current));
-                            rideAmount.setText("Total Amount : " + cost + " Rs" );
+                    rideEndTime.setText("Ride End time : " + simple.format(current));
+                    rideAmount.setText("Total Amount : " + cost + " Rs");
 
 
-                        }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                        catch (IOException e) {
-                            e.printStackTrace();
-                        }
+            }
+        }, new Response.ErrorListener() {
 
-                    }
-                },
-                new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("Volley", "Error: " + error.getMessage());
+                error.printStackTrace();
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        VolleyLog.d("Volley", "Error: " + error.getMessage());
-                        error.printStackTrace();
-
-                    }
-                }) {
+            }
+        }) {
 
             @Override
             public String getBodyContentType() {
@@ -230,15 +213,14 @@ public class StartRide extends AppCompatActivity {
 
                 return params;
             }
+
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 try {
-                    String jsonString = new String(response.data,
-                            HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                    String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
                     JSONObject jsonResponse = new JSONObject(jsonString);
                     //jsonResponse.put("headers", new JSONObject(response.headers));
-                    return Response.success(jsonResponse.toString(),
-                            HttpHeaderParser.parseCacheHeaders(response));
+                    return Response.success(jsonResponse.toString(), HttpHeaderParser.parseCacheHeaders(response));
                 } catch (UnsupportedEncodingException e) {
                     return Response.error(new ParseError(e));
                 } catch (JSONException je) {
@@ -248,7 +230,7 @@ public class StartRide extends AppCompatActivity {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String>  params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
                 params.put("Content-Type", "application/x-www-form-urlencoded");
 

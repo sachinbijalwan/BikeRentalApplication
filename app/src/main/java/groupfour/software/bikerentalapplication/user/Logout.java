@@ -1,6 +1,5 @@
 package groupfour.software.bikerentalapplication.user;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import groupfour.software.bikerentalapplication.R;

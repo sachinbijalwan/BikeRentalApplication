@@ -1,6 +1,5 @@
 package groupfour.software.bikerentalapplication.user;
 
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -16,7 +15,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -32,21 +30,21 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-import groupfour.software.bikerentalapplication.Models.CycleInfo;
-
 import groupfour.software.bikerentalapplication.R;
 import groupfour.software.bikerentalapplication.Utility.Constants;
+import groupfour.software.bikerentalapplication.models.CycleInfo;
 
 public class RentCycle extends BaseActivity {
-    private String PREFS_NAME="USER";
-    String text=""; // Whatever you need to encode in the QR code
-    private String cycleBrand = "Atlas" ;
-    private int locationId = 1 ;
-    private int ownerId = 1;
-    private String accessToken = "47420131-3f37-4bd0-b811" ;
+    String text = ""; // Whatever you need to encode in the QR code
+    private String PREFS_NAME  = "USER";
+    private String cycleBrand  = "Atlas";
+    private int    locationId  = 1;
+    private int    ownerId     = 1;
+    private String accessToken = "47420131-3f37-4bd0-b811";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +52,21 @@ public class RentCycle extends BaseActivity {
         setContentView(R.layout.activity_rent_cycle);
         onCreateDrawer();
         //ownerId = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ID,"-1"));
-        accessToken =PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ACCESS_TOKEN,"null");
-        if(text.isEmpty()){
+        accessToken = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext())
+                .getString(Constants.STORED_ACCESS_TOKEN, "null");
+        if (text.isEmpty()) {
             sendJsonString();
         }
 
 
-
     }
-    public void writeqrcode(){
+
+    public void writeqrcode() {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-        ImageView imageView=findViewById(R.id.imgqrcode);
+        ImageView imageView = findViewById(R.id.imgqrcode);
         try {
-            BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.QR_CODE,200,200);
+            BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.QR_CODE, 200, 200);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
             imageView.setImageBitmap(bitmap);
@@ -74,7 +74,8 @@ public class RentCycle extends BaseActivity {
             e.printStackTrace();
         }
     }
-    public void sendJsonString(){
+
+    public void sendJsonString() {
         CycleInfo cycleInfo = new CycleInfo();
         cycleInfo.setBrand(cycleBrand);
         cycleInfo.setLocationId(locationId);
@@ -90,42 +91,39 @@ public class RentCycle extends BaseActivity {
             System.out.println(jsonStr);
             sendRequest(jsonStr);
 
-        }
-
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void onClick(View view){
+    public void onClick(View view) {
         sendJsonString();
-        Toast.makeText(getApplicationContext(),"QR CODE CHANGED SUCCESSFULLY",Toast.LENGTH_LONG).show();
+        Toast
+                .makeText(getApplicationContext(), "QR CODE CHANGED SUCCESSFULLY", Toast.LENGTH_LONG)
+                .show();
     }
 
-    public void sendRequest(final String requestBody){
+    public void sendRequest(final String requestBody) {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String url = Constants.IPSERVER + "/" + Constants.CYCLE;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        ObjectMapper objectMapper = new ObjectMapper();
-                        try {
+        String url = Constants.IPSERVER + Constants.CYCLE;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // Display the first 500 characters of the response string.
+                ObjectMapper objectMapper = new ObjectMapper();
+                try {
 
-                            // get Oraganisation object as a json string
-                            CycleInfo cycleInfo = objectMapper.readValue(response, CycleInfo.class);
-                            text = Integer.toString(cycleInfo.getId()) ;
-                            writeqrcode();
+                    // get Oraganisation object as a json string
+                    CycleInfo cycleInfo = objectMapper.readValue(response, CycleInfo.class);
+                    text = Integer.toString(cycleInfo.getId());
+                    writeqrcode();
 
-                        }
-
-                        catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("VOLLEY", error.toString());
@@ -138,18 +136,13 @@ public class RentCycle extends BaseActivity {
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                try {
-                    return requestBody == null ? null : requestBody.getBytes("utf-8");
+                return requestBody == null ? null : requestBody.getBytes(StandardCharsets.UTF_8);
 
-                } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                    return null;
-                }
             }
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String>  params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
                 params.put("Content-Type", "application/json");
 
@@ -159,12 +152,10 @@ public class RentCycle extends BaseActivity {
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 try {
-                    String jsonString = new String(response.data,
-                            HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                    String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
                     JSONObject jsonResponse = new JSONObject(jsonString);
                     //jsonResponse.put("headers", new JSONObject(response.headers));
-                    return Response.success(jsonResponse.toString(),
-                            HttpHeaderParser.parseCacheHeaders(response));
+                    return Response.success(jsonResponse.toString(), HttpHeaderParser.parseCacheHeaders(response));
                 } catch (UnsupportedEncodingException e) {
                     return Response.error(new ParseError(e));
                 } catch (JSONException je) {
@@ -173,7 +164,7 @@ public class RentCycle extends BaseActivity {
             }
         };
 
-// Add the request to the RequestQueue.
+        // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
 

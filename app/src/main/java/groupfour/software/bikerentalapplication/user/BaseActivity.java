@@ -27,6 +27,8 @@ import groupfour.software.bikerentalapplication.login.LoginActivity;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    DrawerLayout drawer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +49,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreateDrawer() {
         final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout_user);
+        drawer = findViewById(R.id.drawer_layout_user);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
 
             @Override
@@ -69,14 +71,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         Drawable icon = getDrawable(R.drawable.ic_motorcycle_black_24dp);
         ImageButton navButton = Objects.requireNonNull(getNavButtonView(toolbar));
         navButton.setImageDrawable(icon);
-        navButton.setColorFilter(getResources().getColor(R.color.white));
+        navButton.setColorFilter(getResources().getColor(R.color.white, null));
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout_user);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+            drawer.closeDrawer(GravityCompat.END);
         } else {
             super.onBackPressed();
         }
@@ -112,8 +113,12 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.remove(Constants.STORED_ACCESS_TOKEN);
+                editor.remove(Constants.STORED_USERNAME);
+                editor.remove(Constants.STORED_EMAIL);
+                editor.remove(Constants.STORED_ID);
+                editor.remove(Constants.STORED_ROLE);
                 editor.apply();
-
+                drawer.closeDrawer(GravityCompat.START);
                 intent = new Intent(getApplicationContext(), LoginActivity.class);
                 break;
             case R.id.user_map:
