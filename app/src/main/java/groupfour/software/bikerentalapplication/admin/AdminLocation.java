@@ -1,6 +1,7 @@
 package groupfour.software.bikerentalapplication.admin;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -36,6 +37,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import groupfour.software.bikerentalapplication.R;
 import groupfour.software.bikerentalapplication.utility.Constants;
@@ -59,10 +61,8 @@ public class AdminLocation extends AdminBaseActivity {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         onCreateDrawer();
-        accessToken = PreferenceManager
-                .getDefaultSharedPreferences(getBaseContext())
-                .getString(Constants.STORED_ACCESS_TOKEN, "null");
-
+        accessToken = Objects.requireNonNull(getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.STORED_ACCESS_TOKEN, ""));
         locationName = findViewById(R.id.locationName);
         latitude = findViewById(R.id.latitude);
         longitude = findViewById(R.id.longitude);
