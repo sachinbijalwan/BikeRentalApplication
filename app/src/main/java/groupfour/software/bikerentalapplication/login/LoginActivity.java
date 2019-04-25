@@ -109,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString(Constants.STORED_ACCESS_TOKEN, session.getAccessToken());
                     editor.putString(Constants.STORED_ROLE, user.getRole().toString());
                     editor.putString(Constants.STORED_PERSON_ID, String.valueOf(person.getId()));
+                    editor.putString(Constants.STORED_EMAIL, person.getEmail());
 
                     editor.apply();
 

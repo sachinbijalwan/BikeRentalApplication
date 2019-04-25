@@ -36,7 +36,7 @@ public class AdminBaseActivity extends UserBaseActivity implements NavigationVie
                 intent = new Intent(getApplicationContext(), AdminComplaint.class);
                 break;
             case R.id.nav_add_location:
-                intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent = new Intent(getApplicationContext(), AdminLocation.class);
                 break;
             case R.id.logout:
                 logout();

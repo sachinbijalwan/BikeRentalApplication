@@ -15,8 +15,9 @@
         android:layout_centerVertical="true"
         android:layout_margin="30dip"
         android:layout_marginTop="30dp"
+
         android:layout_weight="5"
-        android:paddingTop="0dp" />
+        android:paddingTop="30dp" />
     <TextView
         android:id="@+id/txtBarcodeValue"
         android:layout_width="match_parent"

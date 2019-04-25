@@ -18,6 +18,7 @@
         android:layout_weight="6"
         android:paddingTop="0dp" />
     <TextView
+        android:id="@+id/cycleID"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"

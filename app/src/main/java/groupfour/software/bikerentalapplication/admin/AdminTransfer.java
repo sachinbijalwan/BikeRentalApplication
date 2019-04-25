@@ -74,7 +74,7 @@ public class AdminTransfer extends AdminBaseActivity {
                     AlertDialog alert = builder.create();
                     alert.show();
                 } else {
-                    getStartTimeRequest(intentData.substring(0, intentData.length() - 1), destinationID
+                    sendRequest(intentData, destinationID
                             .getText()
                             .toString());
 
@@ -179,7 +179,7 @@ public class AdminTransfer extends AdminBaseActivity {
     }
 
 
-    private void getStartTimeRequest(final String cycleId, final String newLocation) {
+    private void sendRequest(final String cycleId, final String newLocation) {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
         String url = Constants.IPSERVER + Constants.CYCLE + Constants.CHANGE_LOCATION;
@@ -233,7 +233,7 @@ public class AdminTransfer extends AdminBaseActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("id", cycleId);
-                params.put("newLocation", "2");
+                params.put("newLocation", destinationID.getText().toString());
                 return params;
             }
 

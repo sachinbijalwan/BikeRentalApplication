@@ -11,9 +11,6 @@
             android:id="@+id/ride_cycle"
             android:title="Ride Cycle" />
         <item
-            android:id="@+id/past_trips"
-            android:title="Past Trips" />
-        <item
             android:id="@+id/feedback"
             android:title="Feedback" />
         <item

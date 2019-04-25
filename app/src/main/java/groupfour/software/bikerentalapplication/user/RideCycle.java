@@ -1,6 +1,8 @@
 package groupfour.software.bikerentalapplication.user;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,8 +23,10 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import groupfour.software.bikerentalapplication.R;
+import groupfour.software.bikerentalapplication.utility.Constants;
 
 public class RideCycle extends UserBaseActivity {
 
@@ -40,6 +44,7 @@ public class RideCycle extends UserBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride_cycle);
         onCreateDrawer();
+
         initViews();
     }
 
@@ -102,7 +107,7 @@ public class RideCycle extends UserBaseActivity {
                         cameraSource.start(surfaceView.getHolder());
                         Toast.makeText(getApplicationContext(), "Camera started", Toast.LENGTH_LONG).show();
                     } else {
-                        ActivityCompat.requestPermissions(getParent(), new
+                        ActivityCompat.requestPermissions(RideCycle.this, new
                                 String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
                     }
 

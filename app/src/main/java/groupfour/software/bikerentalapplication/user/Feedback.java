@@ -55,19 +55,26 @@ public class Feedback extends UserBaseActivity {
 
     private static final int REQUEST_CAMERA_PERMISSION = 201;
 
-    private SurfaceView          surfaceView;
-    private TextView             txtBarcodeValue;
-    private String               intentData;
+    private SurfaceView surfaceView;
+    private TextView txtBarcodeValue;
+    private String intentData;
     private AutoCompleteTextView textView;
 
-    private CameraSource    cameraSource;
+    private CameraSource cameraSource;
+    private String personID;
+    private String accessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
+
         onCreateDrawer();
         textView = findViewById(R.id.autoCompleteTextView);
+        accessToken = Objects.requireNonNull(getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.STORED_ACCESS_TOKEN, ""));
+        personID = Objects.requireNonNull(getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.STORED_PERSON_ID, ""));
         String[] problems = getResources().getStringArray(R.array.cycle_problem);
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, problems);
@@ -85,14 +92,13 @@ public class Feedback extends UserBaseActivity {
                 ComplaintModel complaint = new ComplaintModel();
                 complaint.setDetails(text);
                 try {
-                    complaint.setCycleId(Integer.parseInt(qrCode));
+                    complaint.setCycleId(Integer.parseInt(intentData));
                 } catch (NumberFormatException e) {
-                    Toast.makeText(getApplicationContext(), "QR Code Value invalid: " + qrCode, Toast.LENGTH_SHORT);
+                    Toast.makeText(getApplicationContext(), "QR Code Value invalid: " + intentData, Toast.LENGTH_SHORT).show();
                 }
-                int id;
-                id = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getInt(Constants.STORED_ID, -1);
 
-                complaint.setPersonId(id);
+
+                complaint.setPersonId(Integer.parseInt(personID));
                 complaint.setDetails(textView.getText().toString());
                 String url = Constants.COMPLAINTS;
                 ObjectMapper objectMapper = new ObjectMapper();
@@ -114,7 +120,7 @@ public class Feedback extends UserBaseActivity {
     }
 
     private void sendRequest(final String requestBody, String url2) {
-        String url = Constants.IPSERVER  + url2;
+        String url = Constants.IPSERVER + url2;
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -141,8 +147,8 @@ public class Feedback extends UserBaseActivity {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
-                SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
-                params.put("Access_Token", Objects.requireNonNull(preferences.getString(Constants.STORED_ACCESS_TOKEN, "")));
+
+                params.put("Access_Token", accessToken);
                 return params;
             }
 

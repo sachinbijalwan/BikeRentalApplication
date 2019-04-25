@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -39,9 +40,13 @@ import groupfour.software.bikerentalapplication.login.LoginActivity;
 public class UserBaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
+    private TextView navTitle, navSubtitle ;
+    private String username, email ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
     }
 
@@ -62,6 +67,7 @@ public class UserBaseActivity extends AppCompatActivity implements NavigationVie
     }
 
     protected void onCreateDrawer(int drawerLayout, int NavLayout) {
+
         final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
         drawer = findViewById(drawerLayout);
@@ -82,6 +88,19 @@ public class UserBaseActivity extends AppCompatActivity implements NavigationVie
         toggle.syncState();
 
         NavigationView navigationView = findViewById(NavLayout);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = headerView.findViewById(R.id.nav_header_title);
+        TextView navEmail = headerView.findViewById(R.id.nav_header_subtitle);
+        String username = Objects.requireNonNull(getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.STORED_USERNAME, "batman"));
+        String email = Objects.requireNonNull(getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.STORED_EMAIL, "batman@iitrpr.ac.in"));
+        navUsername.setText(username);
+        System.out.println("email " + email);
+        navEmail.setText(email);
+
+
+
         navigationView.setNavigationItemSelectedListener(this);
         Drawable icon = getDrawable(R.drawable.ic_motorcycle_black_24dp);
         ImageButton navButton = Objects.requireNonNull(getNavButtonView(toolbar));
@@ -111,9 +130,6 @@ public class UserBaseActivity extends AppCompatActivity implements NavigationVie
         switch (id) {
             case R.id.ride_cycle:
                 intent = new Intent(getApplicationContext(), RideCycle.class);
-                break;
-            case R.id.past_trips:
-                intent = new Intent(getApplicationContext(), PastTrips.class);
                 break;
             case R.id.feedback:
                 intent = new Intent(getApplicationContext(), Feedback.class);

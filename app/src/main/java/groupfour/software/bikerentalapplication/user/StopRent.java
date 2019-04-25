@@ -1,6 +1,7 @@
 package groupfour.software.bikerentalapplication.user;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import groupfour.software.bikerentalapplication.R;
 import groupfour.software.bikerentalapplication.utility.Constants;
@@ -58,7 +60,8 @@ public class StopRent extends UserBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stop_rent);
-        //onCreateDrawer();
+        onCreateDrawer();
+
         initViews();
     }
 
@@ -66,10 +69,9 @@ public class StopRent extends UserBaseActivity {
         txtBarcodeValue = findViewById(R.id.txtBarcodeValue);
         surfaceView = findViewById(R.id.surfaceView);
         btnAction = findViewById(R.id.btnRideNow);
-        accessToken = PreferenceManager
-                .getDefaultSharedPreferences(getBaseContext())
-                .getString(Constants.STORED_ACCESS_TOKEN, "null");
-
+        accessToken = Objects.requireNonNull(getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.STORED_ACCESS_TOKEN, ""));
+        System.out.println("accessToken "  + accessToken) ;
 
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +105,7 @@ public class StopRent extends UserBaseActivity {
                                 .makeText(getApplicationContext(), "Camera started", Toast.LENGTH_LONG)
                                 .show();
                     } else {
-                        ActivityCompat.requestPermissions(getParent(), new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+                        ActivityCompat.requestPermissions(StopRent.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
                     }
 
                 } catch (IOException e) {
