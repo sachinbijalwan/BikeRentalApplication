@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.ForgotPass"
-    android:orientation="vertical"
     android:background="@color/white"
-    android:weightSum="13"
     android:gravity="center"
-   >
+    android:orientation="vertical"
+    android:weightSum="13"
+    tools:context=".login.ChangePasswordActivity">
 
     <EditText
-        android:id="@+id/forgot_user"
+        android:id="@+id/forgot_pass_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:hint="Email or Username"
-        android:textColorHint="@color/black"
         android:layout_marginHorizontal="50dip"
-        android:textColor="@color/black"
         android:background="@drawable/rounded_button_border"
-        />
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <View
         android:id="@+id/view7"
@@ -30,32 +27,31 @@
         android:layout_height="0dip"
         android:layout_weight="1" />
 
-    <EditText
-        android:id="@+id/otp_password4"
+
+    <Button
+        android:id="@+id/btn_forgot_pass_request_otp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50dip"
-        android:background="@drawable/textbox"
-        android:ems="10"
-        android:hint="Password (Atleast 8 characters)"
-        android:inputType="textPassword"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black" />
+        android:layout_marginHorizontal="90dip"
+        android:autoSizeTextType="uniform"
+        android:background="@drawable/high_priority_button"
+        android:text="Request OTP"
+        android:textAllCaps="true"
+        android:textColor="@color/white" />
 
     <View
-        android:id="@+id/view8"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1" />
 
     <EditText
-        android:id="@+id/otp_confirm_password4"
+        android:id="@+id/forgot_pass_otp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="50dip"
         android:background="@drawable/textbox"
         android:ems="10"
-        android:hint="Confirm Password"
+        android:hint="OTP"
         android:inputType="textPassword"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -63,19 +59,37 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="2"/>
+        android:layout_weight="1" />
 
     <Button
-        android:id="@+id/forgot_otp"
+        android:id="@+id/btn_forgot_pass_send_otp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Get otp"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
         android:layout_marginHorizontal="90dip"
-        android:background="@drawable/high_priority_button"
         android:autoSizeTextType="uniform"
-        />
+        android:background="@drawable/high_priority_button"
+        android:text="Send OTP"
+        android:textAllCaps="true"
+        android:textColor="@color/white" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/forgot_pass_got_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/forgot_pass_username_waiting"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/forgot_pass_got_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/forgot_pass_password_waiting"
+        android:textSize="20dp" />
 
 
 </LinearLayout>

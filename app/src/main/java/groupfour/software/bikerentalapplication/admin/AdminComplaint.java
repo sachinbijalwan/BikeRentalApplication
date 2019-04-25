@@ -33,10 +33,10 @@ import java.util.List;
 import java.util.Map;
 
 import groupfour.software.bikerentalapplication.R;
-import groupfour.software.bikerentalapplication.Utility.Constants;
+import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.models.ComplaintModel;
 
-public class AdminComplaint extends BaseActivity {
+public class AdminComplaint extends AdminBaseActivity {
     private String accessToken;
 
     private void addcomplaint(ArrayList<Complaint> complaints) {

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import groupfour.software.bikerentalapplication.R;
 
-public class AdminCycle extends BaseActivity {
+public class AdminCycle extends AdminBaseActivity {
 
     private boolean cycle = true;
 

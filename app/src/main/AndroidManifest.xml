@@ -40,9 +40,6 @@
             android:label="@string/title_activity_map_user"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".user.Logout"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity
             android:name=".user.StopRent"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
@@ -58,7 +55,7 @@
             android:name=".user.Feedback"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".user.BaseActivity"
+            android:name=".user.UserBaseActivity"
             android:label="@string/title_activity_user_main"
             android:theme="@style/AppTheme" />
 
@@ -81,10 +78,10 @@
             android:name=".login.OTP"
             android:parentActivityName=".login.LoginActivity" />
         <activity
-            android:name=".login.ForgotPass"
+            android:name=".login.ChangePasswordActivity"
             android:parentActivityName=".login.LoginActivity" />
         <activity
-            android:name=".admin.BaseActivity"
+            android:name=".admin.AdminBaseActivity"
             android:label="@string/title_activity_admin_main"
             android:theme="@style/AppTheme" />
         <activity
@@ -99,6 +96,9 @@
         <activity
             android:name=".admin.AdminResolveComplaint"
             android:parentActivityName=".admin.AdminComplaint" />
+        <activity
+            android:name=".login.ForgotPasswordActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
 
 </manifest>

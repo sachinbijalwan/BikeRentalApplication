@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login.ChangePasswordActivity"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:weightSum="13"
+    android:gravity="center"
+   >
+
+    <EditText
+        android:id="@+id/change_pass_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="Username"
+        android:textColorHint="@color/black"
+        android:layout_marginHorizontal="50dip"
+        android:textColor="@color/black"
+        android:background="@drawable/rounded_button_border"
+        />
+
+    <View
+        android:id="@+id/view7"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" />
+
+    <EditText
+        android:id="@+id/change_pass_old_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dip"
+        android:background="@drawable/textbox"
+        android:ems="10"
+        android:hint="Old Password"
+        android:inputType="textPassword"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
+
+    <View
+        android:id="@+id/view8"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" />
+
+    <EditText
+        android:id="@+id/change_pass_new_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dip"
+        android:background="@drawable/textbox"
+        android:ems="10"
+        android:hint="New Password"
+        android:inputType="textPassword"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="2"/>
+
+    <Button
+        android:id="@+id/btn_change_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change Password"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:layout_marginHorizontal="90dip"
+        android:background="@drawable/high_priority_button"
+        android:autoSizeTextType="uniform"
+        />
+
+
+</LinearLayout>

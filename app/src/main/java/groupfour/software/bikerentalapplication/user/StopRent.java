@@ -40,9 +40,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import groupfour.software.bikerentalapplication.R;
-import groupfour.software.bikerentalapplication.Utility.Constants;
+import groupfour.software.bikerentalapplication.utility.Constants;
 
-public class StopRent extends BaseActivity {
+public class StopRent extends UserBaseActivity {
 
     private static final int REQUEST_CAMERA_PERMISSION = 201;
     SurfaceView surfaceView;

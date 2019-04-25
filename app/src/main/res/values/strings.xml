@@ -21,4 +21,6 @@
 
     </string-array>
     <string name="problem">SELECT YOUR PROBLEM HERE</string>
+    <string name="forgot_pass_username_waiting"><![CDATA[UserName: <waiting>]]></string>
+    <string name="forgot_pass_password_waiting"><![CDATA[Password: <waiting>]]></string>
 </resources>

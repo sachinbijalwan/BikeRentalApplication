@@ -28,7 +28,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import groupfour.software.bikerentalapplication.R;
-import groupfour.software.bikerentalapplication.Utility.Constants;
+import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.models.PersonModel;
 import groupfour.software.bikerentalapplication.models.UserModel;
 

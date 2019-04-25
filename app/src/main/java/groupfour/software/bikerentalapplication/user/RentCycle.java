@@ -35,10 +35,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import groupfour.software.bikerentalapplication.R;
-import groupfour.software.bikerentalapplication.Utility.Constants;
+import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.models.CycleInfo;
 
-public class RentCycle extends BaseActivity {
+public class RentCycle extends UserBaseActivity {
     String text = ""; // Whatever you need to encode in the QR code
     private String PREFS_NAME  = "USER";
     private String cycleBrand  = "Atlas";
