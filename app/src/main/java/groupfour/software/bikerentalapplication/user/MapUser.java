@@ -34,6 +34,8 @@ import groupfour.software.bikerentalapplication.utility.Constants;
 public class MapUser extends UserBaseActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
 
     private GoogleMap                   mMap;
+    private LocationManager             locationManager;
+    private FusedLocationProviderClient fusedLocationClient;
     private boolean                     addMarker = false;
 
     @Override
@@ -43,8 +45,8 @@ public class MapUser extends UserBaseActivity implements OnMapReadyCallback, Nav
         onCreateDrawer();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         Objects.requireNonNull(mapFragment).getMapAsync(this);
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat
                 .checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, Constants.REQUEST_MAP_PERMISSIONS);

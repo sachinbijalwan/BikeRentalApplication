@@ -46,6 +46,7 @@ public class AdminLocation extends AdminBaseActivity {
 
     private static final int      REQUEST_LOCATION_PERMISSION = 1;
     private              EditText locationName, latitude, longitude;
+    private Button submit;
     private String name, lat, longi;
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -64,7 +65,7 @@ public class AdminLocation extends AdminBaseActivity {
         latitude = findViewById(R.id.latitude);
         longitude = findViewById(R.id.longitude);
 
-        Button submit = findViewById(R.id.submit);
+        submit = findViewById(R.id.submit);
 
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

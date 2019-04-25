@@ -50,6 +50,7 @@ public class StopRent extends UserBaseActivity {
     private              Button          btnAction;
     private              String          intentData                = "";
     private              boolean         isEmail                   = false;
+    private              BarcodeDetector barcodeDetector;
     private              CameraSource    cameraSource;
     private              String          accessToken;
 
@@ -83,7 +84,7 @@ public class StopRent extends UserBaseActivity {
 
         // Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
 
-        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this)
+        barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE)
                 .build();
 

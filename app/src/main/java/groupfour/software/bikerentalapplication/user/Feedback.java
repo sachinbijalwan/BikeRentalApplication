@@ -60,6 +60,7 @@ public class Feedback extends UserBaseActivity {
     private String               intentData;
     private AutoCompleteTextView textView;
 
+    private BarcodeDetector barcodeDetector;
     private CameraSource    cameraSource;
 
     @Override
@@ -166,7 +167,7 @@ public class Feedback extends UserBaseActivity {
     }
 
     private void initialiseDetectorsAndSources() {
-        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this)
+        barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE)
                 .build();
 

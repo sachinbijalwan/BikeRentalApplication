@@ -8,16 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 import groupfour.software.bikerentalapplication.R;
 
 class CycleAdapter extends ArrayAdapter<Cycle> {
-    public CycleAdapter(Context context, ArrayList<Cycle> resource) {
-        super(context, 0, resource);
-    }
 
+    public CycleAdapter(@NonNull Context context, int resource) {
+        super(context, resource);
+    }
 
     @NonNull
     @Override

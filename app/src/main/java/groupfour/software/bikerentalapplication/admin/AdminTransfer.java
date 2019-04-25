@@ -42,7 +42,7 @@ public class AdminTransfer extends AdminBaseActivity {
     private EditText    destinationID;
     private Button      submit;
     private String      intentData = "";
-    private boolean     isEmail    = false;
+    private boolean     isEmail;
 
     private CameraSource cameraSource;
     private String       accessToken;
@@ -110,7 +110,7 @@ public class AdminTransfer extends AdminBaseActivity {
                                 .makeText(getApplicationContext(), "Camera started", Toast.LENGTH_LONG)
                                 .show();
                     } else {
-                        ActivityCompat.requestPermissions(AdminTransfer.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+                        ActivityCompat.requestPermissions(AdminTransfer.this, new String[]{Manifest.permission.CAMERA}, Constants.REQUEST_CAMERA_PERMISSION);
                     }
 
                 } catch (IOException e) {
@@ -222,7 +222,7 @@ public class AdminTransfer extends AdminBaseActivity {
 
             @Override
             public Map<String, String> getHeaders() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("Access_Token", accessToken);
                 params.put("Content-Type", "application/x-www-form-urlencoded");
 

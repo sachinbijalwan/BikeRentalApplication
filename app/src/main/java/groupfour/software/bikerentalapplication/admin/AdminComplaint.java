@@ -8,53 +8,27 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.ListView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import groupfour.software.bikerentalapplication.R;
-import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.models.ComplaintModel;
+import groupfour.software.bikerentalapplication.utility.Constants;
 
 public class AdminComplaint extends AdminBaseActivity {
     private String accessToken;
-
-    private void addcomplaint(ArrayList<Complaint> complaints) {
-        complaints.clear();
-        for (int i = 0; i < 10; i++) {
-            complaints.add(new Complaint(i, "Complaint" + i, "User" + i));
-        }
-    }
-
-    private void setComplaint() {
-        //code for binding array list with cycle adapter
-        //for more info see https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
-        ArrayList<Complaint> complaints = new ArrayList<Complaint>();
-        addcomplaint(complaints);
-        //  ComplaintAdapter adapter=new ComplaintAdapter(getBaseContext(),complaints);
-        ListView lview = findViewById(R.id.admin_lv);
-        // lview.setAdapter(adapter);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +38,7 @@ public class AdminComplaint extends AdminBaseActivity {
 
         accessToken = preferences.getString(Constants.STORED_ACCESS_TOKEN, "null");
         sendRequest();
-        //resolveComplaint("2");
         onCreateDrawer();
-        //setComplaint();
     }
 
     private void sendRequest() {
@@ -75,8 +47,6 @@ public class AdminComplaint extends AdminBaseActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                // Display the first 500 characters of the response string.
-                //System.out.print("Response : " + response);
                 Log.e("VOLLEY", "RESPONSE " + response);
                 ObjectMapper objectMapper = new ObjectMapper();
                 try {
@@ -97,31 +67,14 @@ public class AdminComplaint extends AdminBaseActivity {
         }) {
 
             @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                try {
-                    String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-                    //JSONObject jsonResponse = new JSONObject(jsonString);
-                    //jsonResponse.put("headers", new JSONObject(response.headers));
-                    return Response.success(jsonString, HttpHeaderParser.parseCacheHeaders(response));
-                } catch (UnsupportedEncodingException e) {
-                    return Response.error(new ParseError(e));
-                } //catch (JSONException je) {
-                //                    return Response.error(new ParseError(je));
-                //                }
-            }
-
-            @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
-                Log.e("VOLLEY", accessToken);
-
 
                 return params;
             }
         };
 
-        // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
 
@@ -148,8 +101,8 @@ public class AdminComplaint extends AdminBaseActivity {
                 });
 
 
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
+                AlertDialog alert = builder1.create();
+                alert.show();
 
             }
         }, new Response.ErrorListener() {
@@ -176,20 +129,6 @@ public class AdminComplaint extends AdminBaseActivity {
             }
 
             @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                try {
-                    String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-                    JSONObject jsonResponse = new JSONObject(jsonString);
-                    //jsonResponse.put("headers", new JSONObject(response.headers));
-                    return Response.success(jsonResponse.toString(), HttpHeaderParser.parseCacheHeaders(response));
-                } catch (UnsupportedEncodingException e) {
-                    return Response.error(new ParseError(e));
-                } catch (JSONException je) {
-                    return Response.error(new ParseError(je));
-                }
-            }
-
-            @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
@@ -197,7 +136,6 @@ public class AdminComplaint extends AdminBaseActivity {
 
                 return params;
             }
-
 
         };
 

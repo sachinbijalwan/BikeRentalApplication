@@ -41,6 +41,9 @@ import groupfour.software.bikerentalapplication.models.CycleInfo;
 public class RentCycle extends UserBaseActivity {
     private       String text        = ""; // Whatever you need to encode in the QR code
     private       String PREFS_NAME  = "USER";
+    private final String cycleBrand  = "Atlas";
+    private final int    locationId  = 1;
+    private final int    ownerId     = 1;
     private       String accessToken = "47420131-3f37-4bd0-b811";
 
     @Override
@@ -74,11 +77,8 @@ public class RentCycle extends UserBaseActivity {
 
     private void sendJsonString() {
         CycleInfo cycleInfo = new CycleInfo();
-        String cycleBrand = "Atlas";
         cycleInfo.setBrand(cycleBrand);
-        int locationId = 1;
         cycleInfo.setLocationId(locationId);
-        int ownerId = 1;
         cycleInfo.setOwnerId(ownerId);
 
         ObjectMapper objectMapper = new ObjectMapper();
