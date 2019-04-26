@@ -32,7 +32,6 @@ public class RideCycle extends BaseActivity {
     Button      btnAction;
     String      intentData = "";
     boolean     isEmail    = false;
-    private BarcodeDetector barcodeDetector;
     private CameraSource    cameraSource;
 
     @Override
@@ -85,7 +84,7 @@ public class RideCycle extends BaseActivity {
 
         // Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
 
-        barcodeDetector = new BarcodeDetector.Builder(this)
+        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE)
                 .build();
 

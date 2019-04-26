@@ -8,8 +8,6 @@ import groupfour.software.bikerentalapplication.R;
 
 public class AdminCycle extends BaseActivity {
 
-    private boolean cycle = true;
-
     private void addcycles(ArrayList<Cycle> cycles) {
         cycles.clear();
         for (int i = 0; i < 10; i++) {
@@ -52,7 +50,7 @@ public class AdminCycle extends BaseActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String c = extras.getString("cycle");
-            cycle = c.equals("1");
+            boolean cycle = c.equals("1");
             //The key argument here must match that used in the other activity
             //   Log.d("AFD","This is cycle "+(c=="1")+" dk "+c);
         }

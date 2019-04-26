@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 import groupfour.software.bikerentalapplication.R;
-import groupfour.software.bikerentalapplication.Utility.Constants;
+import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.models.ComplaintModel;
 
 public class AdminComplaint extends BaseActivity {
@@ -111,7 +111,7 @@ public class AdminComplaint extends BaseActivity {
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders()  {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
                 Log.e("VOLLEY", accessToken);
@@ -168,7 +168,7 @@ public class AdminComplaint extends BaseActivity {
             }
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("complaintId", complaintId);
 
@@ -190,7 +190,7 @@ public class AdminComplaint extends BaseActivity {
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
                 params.put("Content-Type", "application/x-www-form-urlencoded");

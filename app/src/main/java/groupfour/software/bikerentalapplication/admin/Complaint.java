@@ -1,9 +1,9 @@
 package groupfour.software.bikerentalapplication.admin;
 
 public class Complaint {
-    private int    complaintid;
-    private String complaint;
-    private String User;
+    private final int    complaintid;
+    private final String complaint;
+    private final String User;
 
     Complaint(int cid, String comp, String user) {
         complaintid = cid;

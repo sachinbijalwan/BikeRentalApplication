@@ -1,4 +1,4 @@
-package groupfour.software.bikerentalapplication.Utility;
+package groupfour.software.bikerentalapplication.utility;
 
 public class Constants {
     /* API Server */

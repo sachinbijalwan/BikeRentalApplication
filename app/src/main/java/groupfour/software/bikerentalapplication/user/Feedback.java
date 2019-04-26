@@ -45,7 +45,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import groupfour.software.bikerentalapplication.R;
-import groupfour.software.bikerentalapplication.Utility.Constants;
+import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.models.ComplaintModel;
 
 public class Feedback extends BaseActivity {
@@ -59,7 +59,6 @@ public class Feedback extends BaseActivity {
     String               intentData;
     AutoCompleteTextView textView;
 
-    private BarcodeDetector barcodeDetector;
     private CameraSource    cameraSource;
 
     @Override
@@ -134,12 +133,12 @@ public class Feedback extends BaseActivity {
             }
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 return requestBody == null ? null : requestBody.getBytes(StandardCharsets.UTF_8);
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
                 params.put("Access_Token", preferences.getString(Constants.STORED_ACCESS_TOKEN, ""));
@@ -166,7 +165,7 @@ public class Feedback extends BaseActivity {
     }
 
     private void initialiseDetectorsAndSources() {
-        barcodeDetector = new BarcodeDetector.Builder(this)
+        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE)
                 .build();
 

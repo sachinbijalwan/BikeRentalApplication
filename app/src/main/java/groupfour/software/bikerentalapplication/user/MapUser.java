@@ -2,27 +2,13 @@ package groupfour.software.bikerentalapplication.user;
 
 
 import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -33,21 +19,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.lang.reflect.Field;
-
 import groupfour.software.bikerentalapplication.R;
-import groupfour.software.bikerentalapplication.Utility.Constants;
-import groupfour.software.bikerentalapplication.login.LoginActivity;
+import groupfour.software.bikerentalapplication.utility.Constants;
 
-public class MapUser extends FragmentActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
+public class MapUser extends BaseActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
 
     private GoogleMap                   mMap;
-    private LocationManager             locationManager;
-    private FusedLocationProviderClient fusedLocationClient;
     private boolean                     addMarker = false;
-
-    private int activity = 0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +34,10 @@ public class MapUser extends FragmentActivity implements OnMapReadyCallback, Nav
         onCreateDrawer();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat
+                .checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, Constants.REQUEST_MAP_PERMISSIONS);
             return;
         }
@@ -131,45 +110,6 @@ public class MapUser extends FragmentActivity implements OnMapReadyCallback, Nav
 
     }
 
-    protected void onCreateDrawer() {
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.app_name);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout_user);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                super.onDrawerSlide(drawerView, slideOffset);
-                float slideX = drawerView.getWidth() * slideOffset;
-                getNavButtonView(toolbar).setZ(20);
-                getNavButtonView(toolbar).setTranslationX(slideX);
-            }
-        };
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = findViewById(R.id.nav_view_user);
-        navigationView.setNavigationItemSelectedListener(this);
-        Drawable icon = getDrawable(R.drawable.ic_motorcycle_black_24dp);
-        getNavButtonView(toolbar).setImageDrawable(icon);
-        getNavButtonView(toolbar).setColorFilter(getResources().getColor(android.R.color.white));
-
-    }
-
-    private ImageButton getNavButtonView(Toolbar toolbar) {
-        try {
-            Class<?> toolbarClass = Toolbar.class;
-            Field navButtonField = toolbarClass.getDeclaredField("mNavButtonView");
-            navButtonField.setAccessible(true);
-            ImageButton navButtonView = (ImageButton) navButtonField.get(toolbar);
-
-            return navButtonView;
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -200,8 +140,4 @@ public class MapUser extends FragmentActivity implements OnMapReadyCallback, Nav
         //                });
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
-    }
 }

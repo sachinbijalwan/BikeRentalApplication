@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import groupfour.software.bikerentalapplication.R;
-import groupfour.software.bikerentalapplication.Utility.Constants;
+import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.admin.AdminCycle;
 import groupfour.software.bikerentalapplication.models.PersonModel;
 import groupfour.software.bikerentalapplication.models.Session;

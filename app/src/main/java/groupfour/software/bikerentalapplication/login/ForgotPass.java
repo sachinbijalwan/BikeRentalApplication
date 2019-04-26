@@ -15,7 +15,6 @@ import groupfour.software.bikerentalapplication.R;
 public class ForgotPass extends AppCompatActivity {
 
     private EditText email, password, confirmpassword;
-    private Button getOTP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +23,7 @@ public class ForgotPass extends AppCompatActivity {
         email = findViewById(R.id.forgot_user);
         password = findViewById(R.id.otp_password);
         confirmpassword = findViewById(R.id.otp_confirm_password);
-        getOTP = findViewById(R.id.forgot_otp);
+        Button getOTP = findViewById(R.id.forgot_otp);
 
         getOTP.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

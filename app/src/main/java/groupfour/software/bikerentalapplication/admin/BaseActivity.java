@@ -19,7 +19,7 @@ import android.widget.ImageButton;
 import java.lang.reflect.Field;
 
 import groupfour.software.bikerentalapplication.R;
-import groupfour.software.bikerentalapplication.Utility.Constants;
+import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.login.LoginActivity;
 
 public class BaseActivity extends AppCompatActivity
@@ -40,9 +40,8 @@ public class BaseActivity extends AppCompatActivity
             Class<?> toolbarClass   = Toolbar.class;
             Field    navButtonField = toolbarClass.getDeclaredField("mNavButtonView");
             navButtonField.setAccessible(true);
-            ImageButton navButtonView = (ImageButton) navButtonField.get(toolbar);
 
-            return navButtonView;
+            return (ImageButton) navButtonField.get(toolbar);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }

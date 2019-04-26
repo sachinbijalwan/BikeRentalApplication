@@ -35,15 +35,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import groupfour.software.bikerentalapplication.R;
-import groupfour.software.bikerentalapplication.Utility.Constants;
+import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.models.CycleInfo;
 
 public class RentCycle extends BaseActivity {
     String text = ""; // Whatever you need to encode in the QR code
     private String PREFS_NAME  = "USER";
-    private String cycleBrand  = "Atlas";
-    private int    locationId  = 1;
-    private int    ownerId     = 1;
     private String accessToken = "47420131-3f37-4bd0-b811";
 
     @Override
@@ -77,8 +74,11 @@ public class RentCycle extends BaseActivity {
 
     public void sendJsonString() {
         CycleInfo cycleInfo = new CycleInfo();
+        String cycleBrand = "Atlas";
         cycleInfo.setBrand(cycleBrand);
+        int locationId = 1;
         cycleInfo.setLocationId(locationId);
+        int ownerId = 1;
         cycleInfo.setOwnerId(ownerId);
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -135,13 +135,13 @@ public class RentCycle extends BaseActivity {
             }
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 return requestBody == null ? null : requestBody.getBytes(StandardCharsets.UTF_8);
 
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
                 params.put("Content-Type", "application/json");

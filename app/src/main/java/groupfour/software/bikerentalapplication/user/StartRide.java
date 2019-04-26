@@ -35,16 +35,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import groupfour.software.bikerentalapplication.R;
-import groupfour.software.bikerentalapplication.Utility.Constants;
+import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.models.RideCycle;
 
 public class StartRide extends AppCompatActivity {
 
     RideCycle rideCycle;
     private TextView rideTime, rideAmount, rideEndTime;
-    private Button rideEnd;
-    private String cycleId;
-    private String personID = "2";
     private String accessToken;
 
 
@@ -54,15 +51,16 @@ public class StartRide extends AppCompatActivity {
         setContentView(R.layout.activity_start_ride);
         rideTime = findViewById(R.id.rideTime);
         rideAmount = findViewById(R.id.rideAmount);
-        rideEnd = findViewById(R.id.btnRideEnd);
+        Button rideEnd = findViewById(R.id.btnRideEnd);
         rideEndTime = findViewById(R.id.rideEndtime);
         Intent intent = getIntent();
-        cycleId = intent.getStringExtra("cycleId");
+        String cycleId = intent.getStringExtra("cycleId");
         //personID = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ID,"null");
         accessToken = PreferenceManager
                 .getDefaultSharedPreferences(getBaseContext())
                 .getString(Constants.STORED_ACCESS_TOKEN, "null");
 
+        String personID = "2";
         getStartTimeRequest(accessToken, cycleId, personID);
         rideEnd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -118,7 +116,7 @@ public class StartRide extends AppCompatActivity {
             }
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("startLocationId", "1");
                 params.put("cycleId", cycleId);
@@ -141,7 +139,7 @@ public class StartRide extends AppCompatActivity {
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
                 params.put("Content-Type", "application/x-www-form-urlencoded");
@@ -206,7 +204,7 @@ public class StartRide extends AppCompatActivity {
             }
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("endLocationId", endLocationId);
                 params.put("rideId", rideId);
@@ -229,7 +227,7 @@ public class StartRide extends AppCompatActivity {
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
                 params.put("Content-Type", "application/x-www-form-urlencoded");

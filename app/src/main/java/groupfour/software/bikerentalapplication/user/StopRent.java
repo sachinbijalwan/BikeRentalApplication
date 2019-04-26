@@ -40,7 +40,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import groupfour.software.bikerentalapplication.R;
-import groupfour.software.bikerentalapplication.Utility.Constants;
+import groupfour.software.bikerentalapplication.utility.Constants;
 
 public class StopRent extends BaseActivity {
 
@@ -50,7 +50,6 @@ public class StopRent extends BaseActivity {
     Button      btnAction;
     String      intentData = "";
     boolean     isEmail    = false;
-    private BarcodeDetector barcodeDetector;
     private CameraSource    cameraSource;
     private String          accessToken;
 
@@ -84,7 +83,7 @@ public class StopRent extends BaseActivity {
 
         // Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
 
-        barcodeDetector = new BarcodeDetector.Builder(this)
+        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE)
                 .build();
 
@@ -224,7 +223,7 @@ public class StopRent extends BaseActivity {
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
                 params.put("Content-Type", "application/json");

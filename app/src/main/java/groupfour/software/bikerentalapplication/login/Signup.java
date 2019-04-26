@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,7 +29,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import groupfour.software.bikerentalapplication.R;
-import groupfour.software.bikerentalapplication.Utility.Constants;
+import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.models.PersonModel;
 import groupfour.software.bikerentalapplication.models.UserModel;
 
@@ -156,6 +157,7 @@ public class Signup extends AppCompatActivity {
                             .putInt(Constants.STORED_ID, personModel.getId())
                             .apply();
                     jsonStr = objectMapper.writeValueAsString(userModel);
+                    Log.d("ADG",jsonStr);
 
                     sendUserDetails(jsonStr);
                     Toast

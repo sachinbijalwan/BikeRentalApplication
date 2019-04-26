@@ -20,7 +20,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -39,7 +38,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import groupfour.software.bikerentalapplication.R;
-import groupfour.software.bikerentalapplication.Utility.Constants;
+import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.models.LocationModel;
 
 
@@ -47,7 +46,6 @@ public class AdminLocation extends BaseActivity {
 
     private static final int      REQUEST_LOCATION_PERMISSION = 1;
     private              EditText locationName, latitude, longitude;
-    private Button submit;
     private String name, lat, longi;
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -60,13 +58,15 @@ public class AdminLocation extends BaseActivity {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         onCreateDrawer();
-        accessToken = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Constants.STORED_ACCESS_TOKEN, "null");
+        accessToken = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext())
+                .getString(Constants.STORED_ACCESS_TOKEN, "null");
 
         locationName = findViewById(R.id.locationName);
         latitude = findViewById(R.id.latitude);
         longitude = findViewById(R.id.longitude);
 
-        submit = findViewById(R.id.submit);
+        Button submit = findViewById(R.id.submit);
 
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -80,7 +80,7 @@ public class AdminLocation extends BaseActivity {
     }
 
     public void postAdminLocation() {
-        String              jsonStr       = null;
+        String jsonStr = null;
         final LocationModel locationModel = new LocationModel();
 
         locationModel.setName(locationName.getText().toString());
@@ -100,40 +100,41 @@ public class AdminLocation extends BaseActivity {
                 e.printStackTrace();
             }
         } else {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat
+                    .checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(AdminLocation.this, new
                         String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION_PERMISSION);
             }
             fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            // Got last known location. In some rare situations this can be null.
-                            if (location != null) {
-                                // Logic to handle location object
-                                locationModel.setLongitude(location.getLongitude());
-                                locationModel.setLatitude(location.getLatitude());
+                               .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                                   @Override
+                                   public void onSuccess(Location location) {
+                                       // Got last known location. In some rare situations this can be null.
+                                       if (location != null) {
+                                           // Logic to handle location object
+                                           locationModel.setLongitude(location.getLongitude());
+                                           locationModel.setLatitude(location.getLatitude());
 
-                                ObjectMapper objectMapper = new ObjectMapper();
-                                try {
+                                           ObjectMapper objectMapper = new ObjectMapper();
+                                           try {
 
-                                    // get Oraganisation object as a json string
-                                    String jsonStr = objectMapper.writeValueAsString(locationModel);
+                                               // get Oraganisation object as a json string
+                                               String jsonStr = objectMapper.writeValueAsString(locationModel);
 
-                                    // Displaying JSON String
-                                    System.out.println(jsonStr);
-                                    sendRequest(jsonStr);
+                                               // Displaying JSON String
+                                               System.out.println(jsonStr);
+                                               sendRequest(jsonStr);
 
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
+                                           } catch (IOException e) {
+                                               e.printStackTrace();
+                                           }
 
 
-                            } else {
-                                System.out.println("Location is Null ");
-                            }
-                        }
-                    });
+                                       } else {
+                                           System.out.println("Location is Null ");
+                                       }
+                                   }
+                               });
 
         }
 
@@ -142,7 +143,7 @@ public class AdminLocation extends BaseActivity {
 
     public void sendRequest(final String requestBody) {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String       url   = Constants.IPSERVER +  Constants.LOCATION;
+        String url = Constants.IPSERVER + Constants.LOCATION;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -177,7 +178,7 @@ public class AdminLocation extends BaseActivity {
             }
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 return requestBody == null ? null : requestBody.getBytes(StandardCharsets.UTF_8);
 
             }
@@ -199,7 +200,7 @@ public class AdminLocation extends BaseActivity {
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Access_Token", accessToken);
                 params.put("Content-Type", "application/json");
