@@ -41,6 +41,7 @@ public class AdminBaseActivity extends UserBaseActivity implements NavigationVie
             case R.id.logout:
                 logout();
                 break;
+
         }
 
         if (intent != null) {
@@ -48,7 +49,7 @@ public class AdminBaseActivity extends UserBaseActivity implements NavigationVie
             startActivity(intent);
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout_user);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
