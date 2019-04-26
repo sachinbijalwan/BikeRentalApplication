@@ -36,7 +36,7 @@ import groupfour.software.bikerentalapplication.R;
 import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.models.ComplaintModel;
 
-public class AdminComplaint extends BaseActivity {
+public class AdminComplaint extends AdminBaseActivity {
     private String accessToken;
 
     private void addcomplaint(ArrayList<Complaint> complaints) {

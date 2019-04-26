@@ -20,10 +20,10 @@ public class ForgotPass extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_pass);
-        email = findViewById(R.id.forgot_user);
+        email = findViewById(R.id.forgot_pass_user);
         password = findViewById(R.id.otp_password);
         confirmpassword = findViewById(R.id.otp_confirm_password);
-        Button getOTP = findViewById(R.id.forgot_otp);
+        Button getOTP = findViewById(R.id.btn_forgot_pass_request_otp);
 
         getOTP.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

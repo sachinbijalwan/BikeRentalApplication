@@ -22,7 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import groupfour.software.bikerentalapplication.R;
 import groupfour.software.bikerentalapplication.utility.Constants;
 
-public class MapUser extends BaseActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
+public class MapUser extends UserBaseActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
 
     private GoogleMap                   mMap;
     private boolean                     addMarker = false;
@@ -36,6 +36,8 @@ public class MapUser extends BaseActivity implements OnMapReadyCallback, Navigat
         mapFragment.getMapAsync(this);
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat
                 .checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, Constants.REQUEST_MAP_PERMISSIONS);

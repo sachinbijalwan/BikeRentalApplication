@@ -38,7 +38,7 @@ import groupfour.software.bikerentalapplication.R;
 import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.models.CycleInfo;
 
-public class RentCycle extends BaseActivity {
+public class RentCycle extends UserBaseActivity {
     String text = ""; // Whatever you need to encode in the QR code
     private String PREFS_NAME  = "USER";
     private String accessToken = "47420131-3f37-4bd0-b811";

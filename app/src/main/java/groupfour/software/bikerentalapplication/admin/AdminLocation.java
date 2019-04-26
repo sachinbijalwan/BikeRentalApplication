@@ -42,7 +42,7 @@ import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.models.LocationModel;
 
 
-public class AdminLocation extends BaseActivity {
+public class AdminLocation extends AdminBaseActivity {
 
     private static final int      REQUEST_LOCATION_PERMISSION = 1;
     private              EditText locationName, latitude, longitude;
