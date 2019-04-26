@@ -26,13 +26,14 @@ import groupfour.software.bikerentalapplication.R;
 
 public class RideCycle extends UserBaseActivity {
 
-    private static final int REQUEST_CAMERA_PERMISSION = 201;
-    SurfaceView surfaceView;
-    TextView    txtBarcodeValue;
-    Button      btnAction;
-    String      intentData = "";
-    boolean     isEmail    = false;
-    private CameraSource    cameraSource;
+    private static final int             REQUEST_CAMERA_PERMISSION = 201;
+    private              SurfaceView     surfaceView;
+    private              TextView        txtBarcodeValue;
+    private              Button          btnAction;
+    private              String          intentData                = "";
+    private              boolean         isEmail                   = false;
+    private              BarcodeDetector barcodeDetector;
+    private              CameraSource    cameraSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +85,7 @@ public class RideCycle extends UserBaseActivity {
 
         // Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
 
-        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this)
+        barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE)
                 .build();
 

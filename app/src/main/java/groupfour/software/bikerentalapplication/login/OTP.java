@@ -25,7 +25,7 @@ import groupfour.software.bikerentalapplication.utility.Constants;
 
 public class OTP extends AppCompatActivity {
 
-    String username;
+    private String   username;
     private EditText otp;
 
     @Override
@@ -49,7 +49,7 @@ public class OTP extends AppCompatActivity {
         });
     }
 
-    public void sendOTP() {
+    private void sendOTP() {
         String url = Constants.IPSERVER + Constants.USER + Constants.VALIDATE_REGISTRATION_OTP + "/" + username;
 
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());

@@ -46,6 +46,7 @@ public class AdminLocation extends AdminBaseActivity {
 
     private static final int      REQUEST_LOCATION_PERMISSION = 1;
     private              EditText locationName, latitude, longitude;
+    private Button submit;
     private String name, lat, longi;
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -79,8 +80,8 @@ public class AdminLocation extends AdminBaseActivity {
 
     }
 
-    public void postAdminLocation() {
-        String jsonStr = null;
+    private void postAdminLocation() {
+        String              jsonStr;
         final LocationModel locationModel = new LocationModel();
 
         locationModel.setName(locationName.getText().toString());
@@ -141,7 +142,7 @@ public class AdminLocation extends AdminBaseActivity {
 
     }
 
-    public void sendRequest(final String requestBody) {
+    private void sendRequest(final String requestBody) {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         String url = Constants.IPSERVER + Constants.LOCATION;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,

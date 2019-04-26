@@ -1,7 +1,6 @@
 package groupfour.software.bikerentalapplication.login;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -88,7 +88,7 @@ public class ForgotPasswordActivity extends UserBaseActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        got_username.setText("Username: " + userModel.getUsername());
+                        got_username.setText("Username: " + Objects.requireNonNull(userModel).getUsername());
                         got_password.setText("Password: " + userModel.getPassword());
 
                     }

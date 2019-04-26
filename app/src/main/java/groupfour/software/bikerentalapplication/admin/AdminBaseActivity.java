@@ -16,8 +16,12 @@ public class AdminBaseActivity extends UserBaseActivity implements NavigationVie
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.admin_main, menu);
+        getMenuInflater().inflate(R.menu.activity_admin_main_drawer, menu);
         return true;
+    }
+
+    protected void onCreateDrawer() {
+        onCreateDrawer(R.id.drawer_layout, R.id.nav_view);
     }
 
     @Override

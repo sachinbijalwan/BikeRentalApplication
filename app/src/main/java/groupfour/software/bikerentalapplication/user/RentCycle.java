@@ -39,9 +39,12 @@ import groupfour.software.bikerentalapplication.utility.Constants;
 import groupfour.software.bikerentalapplication.models.CycleInfo;
 
 public class RentCycle extends UserBaseActivity {
-    String text = ""; // Whatever you need to encode in the QR code
-    private String PREFS_NAME  = "USER";
-    private String accessToken = "47420131-3f37-4bd0-b811";
+    private       String text        = ""; // Whatever you need to encode in the QR code
+    private       String PREFS_NAME  = "USER";
+    private final String cycleBrand  = "Atlas";
+    private final int    locationId  = 1;
+    private final int    ownerId     = 1;
+    private       String accessToken = "47420131-3f37-4bd0-b811";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +62,7 @@ public class RentCycle extends UserBaseActivity {
 
     }
 
-    public void writeqrcode() {
+    private void writeqrcode() {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         ImageView imageView = findViewById(R.id.imgqrcode);
         try {
@@ -72,13 +75,10 @@ public class RentCycle extends UserBaseActivity {
         }
     }
 
-    public void sendJsonString() {
+    private void sendJsonString() {
         CycleInfo cycleInfo = new CycleInfo();
-        String cycleBrand = "Atlas";
         cycleInfo.setBrand(cycleBrand);
-        int locationId = 1;
         cycleInfo.setLocationId(locationId);
-        int ownerId = 1;
         cycleInfo.setOwnerId(ownerId);
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -104,7 +104,7 @@ public class RentCycle extends UserBaseActivity {
                 .show();
     }
 
-    public void sendRequest(final String requestBody) {
+    private void sendRequest(final String requestBody) {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         String url = Constants.IPSERVER + Constants.CYCLE;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
